@@ -15,8 +15,9 @@ public class TestServo extends LinearOpMode{
     public void runOpMode()  {
         while opModeIsActive(){
             double rx=gamepad1.left_stick_x;
-            if(rx>0):
+            if(rx>0) {
                 TestServo.setPower(0.6);
+            }
             else if(rx<0) {
                 TestServo.setPower(-0.6);
             }
