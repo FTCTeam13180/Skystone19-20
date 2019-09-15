@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name="BuildAuto", group="autonomusGroup1")
 
 public class BuildAuto extends LinearOpMode {
+    private RoboNavigator robonav;
 
 
     @Override
