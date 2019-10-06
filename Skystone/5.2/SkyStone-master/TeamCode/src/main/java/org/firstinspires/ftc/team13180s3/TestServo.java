@@ -16,6 +16,7 @@ public class TestServo extends LinearOpMode{
     private Servo Test1;
 
     public void runOpMode()  {
+        waitForStart();
         TestServo=opMode.hardwareMap.get(CRServo.class,"Ser");
         while (opModeIsActive()){
 
