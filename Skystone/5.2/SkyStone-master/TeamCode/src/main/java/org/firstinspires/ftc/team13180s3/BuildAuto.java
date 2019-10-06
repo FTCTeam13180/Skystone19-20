@@ -10,18 +10,16 @@ public class BuildAuto extends LinearOpMode {
     private RoboNavigator robotNavigator;
 
     @Override
-    public void runOpMode () {
-        robotNavigator = new RoboNavigator(this) ;
-        robotNavigator.init() ;
+    public void runOpMode() {
+        robotNavigator = new RoboNavigator(this);
+        robotNavigator.init();
         double NAVIGATOR_POWER = 0.5; // check
+        waitForStart();
+        while (opModeIsActive()) {
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 31.25*2.54, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 31.25*2.54, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 40*2.54, 10000);
 
-        //waitforstart() ;
-
-        try {
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, 0.5, 36, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 15, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 40, 10000);
-        } catch(Exception e) {
         }
     }
 }

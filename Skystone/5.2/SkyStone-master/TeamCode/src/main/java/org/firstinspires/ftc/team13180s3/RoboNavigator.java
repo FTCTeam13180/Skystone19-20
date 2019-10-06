@@ -41,7 +41,9 @@ public class RoboNavigator {
             opMode.telemetry.addData("RoboNavigator:", "Initialized");
         }
     }
-
+    public double toCM(double inches){
+        return inches*2.54;
+    }
     public void moveForward(double power) {
         topr.setPower(abs(power));
         topl.setPower(abs(power));
@@ -294,10 +296,10 @@ public class RoboNavigator {
      *  3) Driver stops the opmode running.
      *
      */
-    private static  final double ROBO_DIAMETER_CM = 65;
+    private static  final double ROBO_DIAMETER_CM = 61;
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared up
-    private static final double     WHEEL_DIAMETER_CM   = 10.0 ;     // For figuring circumference
+    private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
+    private static final double     WHEEL_DIAMETER_CM   = 10.16 ;     // For figuring circumference
     private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_CM * 3.1415);
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
