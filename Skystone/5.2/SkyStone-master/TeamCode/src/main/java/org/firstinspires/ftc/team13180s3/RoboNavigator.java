@@ -138,7 +138,14 @@ public class RoboNavigator {
         rearr.setPower((y-x)/power);
         rearl.setPower((x+y)/power);
     }
+    public void ForwardImu(double pos, double fin,double power){
+        double res=(pos-fin)/2;
+        topr.setPower(power+res);
+        topl.setPower(power-res);
+        rearr.setPower(power+res);
+        rearl.setPower(power-res);
 
+    }
     public void AccMecanum(double x,double y,double turn){
                                                                              //           / |
                                                                         //               /  |  y
