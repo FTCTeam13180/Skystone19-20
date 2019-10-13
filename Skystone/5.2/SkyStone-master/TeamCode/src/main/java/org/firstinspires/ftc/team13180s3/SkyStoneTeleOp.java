@@ -11,6 +11,11 @@ public class SkyStoneTeleOp extends LinearOpMode {
         roboNav.init();
         waitForStart();
         while (opModeIsActive()){
+            if(gamepad1.left_stick_x > 0)
+                roboNav.moveForward(0.5);
+            else if(gamepad1.left_stick_x < 0){
+                roboNav.moveBackward(0.5);
+            }
 
 
         }
