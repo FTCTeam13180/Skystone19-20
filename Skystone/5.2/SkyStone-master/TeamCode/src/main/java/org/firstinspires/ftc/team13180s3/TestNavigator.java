@@ -49,20 +49,6 @@ public class TestNavigator extends LinearOpMode {
             else if(Math.abs(r2x)>0 || Math.abs(r2y)>0){   //can go any direction 360 degrees based on controller input
                 robotnav.AnyMecanum(r2x,r2y);
             }
-            /*
-            else if (gamepad2.y){
-                robotnav.diaganolFrontRight(SPEED);
-            }
-            else if (gamepad2.x){
-                robotnav.diagonalFrontLeft(SPEED);
-            }
-            else if (gamepad2.b){
-                robotnav.diagonalBackRight(SPEED);
-            }
-            else if (gamepad2.a){
-                robotnav.diagonalBackLeft(SPEED);
-            }
-
 
             // EncoderMode
             else if (gamepad2.y) {
@@ -83,7 +69,7 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad2.right_bumper){
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,10000);
             }
-            */
+
            else {
                 robotnav.stopMotor();
             }

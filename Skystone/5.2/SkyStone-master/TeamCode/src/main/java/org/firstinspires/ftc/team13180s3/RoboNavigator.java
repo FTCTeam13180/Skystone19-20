@@ -110,27 +110,11 @@ public class RoboNavigator {
         topl.setPower(.25*-abs(power));
         rearr.setPower(.25*-abs(power));
     }
-    public double getAngle(double x,double y){
-        /*
-        atan is arctangent (inverse tangent). "angle" is the reference angle of the direction joystick is facing
-        following 3 if else statements get the total principal angle depending on which quadrant the joystick is pointed in
-        **EVERYTHING IS IN RADIANS**
-        */
-        return -1*Math.atan2(y,x);
-//        double angle=Math.atan2(y,x);
-/*        if(x<0 && y<0) {
-            angle += 180;
-        }
-        else if(x<0 && y>0){
-            angle=180-angle;
-        }
-        else if(x>0 && y<0) {
-            angle = 360 - angle;
-        }
-        */
-  //      return Math.toRadians(angle);
 
+    public double getAngle(double x,double y){
+        return -1*Math.atan2(y,x);
     }
+
     public void AnyMecanum(double x,double y){
         double power = Math.sqrt(x * x + y * y);
         topr.setPower((x+y)/power);
@@ -138,6 +122,7 @@ public class RoboNavigator {
         rearr.setPower((y-x)/power);
         rearl.setPower((x+y)/power);
     }
+
     public void ForwardImu(double pos, double fin,double power){
         double res=(pos-fin)/2;
         topr.setPower(power+res);
@@ -146,6 +131,7 @@ public class RoboNavigator {
         rearl.setPower(power-res);
 
     }
+
     public void AccMecanum(double x,double y,double turn){
                                                                              //           / |
                                                                         //               /  |  y
@@ -213,6 +199,7 @@ public class RoboNavigator {
         double p=Math.sin(angle+(0.25*Math.PI));
         return p*mult;
     }
+
     public void stopMotor() {
         topl.setPower(0);
         topr.setPower(0);
@@ -304,7 +291,7 @@ public class RoboNavigator {
      *
      */
     private static  final double ROBO_DIAMETER_CM = 61;
-    private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.16 ;     // For figuring circumference
     private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /

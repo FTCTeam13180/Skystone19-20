@@ -65,7 +65,6 @@ public class FieldPositioningShift extends LinearOpMode {
                 robonav.opMode.telemetry.addData ("difference:", "shiftRight (power=%f)", finalangle);
                 robonav.AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
 
-
             }
             else {
                 robonav.stopMotor();
