@@ -1,14 +1,19 @@
 package org.firstinspires.ftc.team13180s3;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import android.graphics.Color;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public class StoneColorSensor {
+    public LinearOpMode opMode;
     private ColorSensor colorSensor;
 
-    public void init(HardwareMap hardwareMap) {
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+    StoneColorSensor (LinearOpMode op)
+    {
+        opMode = op;
+    }
+
+    public void init() {
+        colorSensor = opMode.hardwareMap.get(ColorSensor.class, "colorSensor");
     }
 
     public ColorSensor getColorSensor() {

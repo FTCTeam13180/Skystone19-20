@@ -11,32 +11,25 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @TeleOp(name="TestIntake", group="manualmode")
 public class TestIntake extends LinearOpMode {
     public LinearOpMode opMode;
-    public DcMotor LeftIntake;
-    public DcMotor RightIntake;
+    private Intake intake;
+
     double power=0.6;
     @Override
     public void runOpMode() throws InterruptedException {
+        intake = new Intake(this);
+        intake.init();
+
         waitForStart();
-        LeftIntake=hardwareMap.get(DcMotor.class,"Lintake");
-        RightIntake=hardwareMap.get(DcMotor.class,"Rintake");
         while (opModeIsActive()){
             if(gamepad1.left_bumper){
-                LeftIntake.setPower(power);
-                RightIntake.setPower(-1*power);
+               intake.startIntake(power);
             }
             else if(gamepad1.right_bumper){
-                LeftIntake.setPower(-1*power);
-                RightIntake.setPower(power);
+                intake.startIntake(-power);
             }
             else{
-                LeftIntake.setPower(0);
-                RightIntake.setPower(0);
+                intake.stopIntake();
             }
-
         }
-
-
-
-
     }
 }

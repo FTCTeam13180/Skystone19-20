@@ -8,12 +8,18 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class LoadingZoneAuto extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
+    private Intake intake;
 
     @Override
     public void runOpMode() {
         robotNavigator = new RoboNavigator(this);
         robotNavigator.init();
-        stoneSenor = new StoneColorSensor();
+
+        stoneSenor = new StoneColorSensor(this);
+        stoneSenor.init();
+
+        intake = new Intake(this);
+        intake.init();
 
         double NAVIGATOR_POWER = 0.5; // check
         waitForStart();
@@ -31,7 +37,7 @@ public class LoadingZoneAuto extends LinearOpMode {
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 6*2.54, 10000);
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 6*2.54, 10000);
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 6*2.54, 10000);
-                    //Gripper code just turn it on
+                    intake.startIntake(0.6);
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 12*2.54, 10000);
                     break;
 

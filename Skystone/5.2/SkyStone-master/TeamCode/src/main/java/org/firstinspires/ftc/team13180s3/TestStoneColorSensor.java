@@ -10,7 +10,8 @@ public class TestStoneColorSensor extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        stoneSensor= new StoneColorSensor();
+        stoneSensor= new StoneColorSensor(this);
+        stoneSensor.init();
         waitForStart();
         while (opModeIsActive()) {
             if(stoneSensor.isBlackColor()){
