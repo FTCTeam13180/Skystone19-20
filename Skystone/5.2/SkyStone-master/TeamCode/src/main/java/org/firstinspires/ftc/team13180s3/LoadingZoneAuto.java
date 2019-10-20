@@ -2,11 +2,10 @@ package org.firstinspires.ftc.team13180s3;
 //osmehting
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@Autonomous(name="LandAuto", group="autonomusGroup1")
-public class LandAuto extends LinearOpMode {
+@Autonomous(name="LoadingZoneAuto", group="autonomusGroup1")
+public class LoadingZoneAuto extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
 
