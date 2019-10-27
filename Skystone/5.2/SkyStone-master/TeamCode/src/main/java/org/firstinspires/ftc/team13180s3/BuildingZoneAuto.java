@@ -18,17 +18,17 @@ public class BuildingZoneAuto extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             //goes up to the foundation to move it into the building zone
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 30.5*2.54, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 30.5*2.54, 10000);
 
             //HOOK comes down here
             servo_hook.setPosition(0.50);
 
             //pulls the foundation to the triangle build ZONE
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 28*2.54, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 28*2.54, 10000);
 
             servo_hook.setPosition(0.0);
 
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 30*2.54, 10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 30*2.54, 10000);
 
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 44*2.54, 10000);
             //going around the foundation to the other side of it
