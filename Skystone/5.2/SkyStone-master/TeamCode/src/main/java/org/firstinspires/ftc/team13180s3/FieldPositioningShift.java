@@ -53,18 +53,7 @@ public class FieldPositioningShift extends LinearOpMode {
                 robonav.turnRight(0.4);
             }
             else if(Math.abs(x)>0.15 || Math.abs(y)>0.15) {          //when direction inputted
-                double res = Math.toDegrees(robonav.getAngle(x, y)); //gets principal angle of joystick
-                pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
-                double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
-                double mult=Math.sqrt(x*x+y*y);
-                double ang=ImuToPrincipal(cur);
-                double finalangle=ReceiveDifference(ang,res);
-                finalangle=Math.toRadians(finalangle);
-                robonav.opMode.telemetry.addData ("current", "shiftRight (power=%f)", ang);
-                robonav.opMode.telemetry.addData ("joystick:", "shiftRight (power=%f)", res);
-                robonav.opMode.telemetry.addData ("difference:", "shiftRight (power=%f)", finalangle);
-                robonav.AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
-
+                robonav.OmniImu(x,y);
             }
             else {
                 robonav.stopMotor();

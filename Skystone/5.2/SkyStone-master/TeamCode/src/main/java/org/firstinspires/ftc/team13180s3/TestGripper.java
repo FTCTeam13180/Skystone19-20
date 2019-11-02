@@ -8,21 +8,18 @@ package org.firstinspires.ftc.team13180s3;
 @TeleOp(name="TestGripper", group="manualmode")
 public class TestGripper extends LinearOpMode {
 
-    private Servo test1;
-    private Servo test2;
+    public Grabber Gripper;
     @Override
     public void runOpMode() {
-        test1 = this.hardwareMap.get(Servo.class , "Ser1");
-        test2=this.hardwareMap.get(Servo.class,"Ser2");
+        Gripper=new Grabber(this);
+        Gripper.init();
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                test1.setPosition(1);
-                test2.setPosition(1);
+                Gripper.grabIn();
             }
             else if (gamepad1.b){
-                test1.setPosition(0);
-                test2.setPosition(0);
+                Gripper.release();
             }
         }
     }

@@ -1,11 +1,19 @@
 package org.firstinspires.ftc.team13180s3;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+import java.util.Locale;
 
 import static java.lang.Math.abs;
 
@@ -22,7 +30,8 @@ public class RoboNavigator {
     private DcMotor topr;
     private DcMotor rearr;
     private DcMotor rearl;
-
+    BNO055IMU imu;
+    Orientation pos;
     boolean logging = true;
 
     RoboNavigator (LinearOpMode op)
@@ -40,6 +49,15 @@ public class RoboNavigator {
         if(logging) {
             opMode.telemetry.addData("RoboNavigator:", "Initialized");
         }
+    }
+    public void initIMU(){
+        BNO055IMU.Parameters param = new BNO055IMU.Parameters();
+        param.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        param.calibrationDataFile = "BNO055IMUCalibration.json";
+        param.loggingEnabled      = true;
+        param.loggingTag          = "IMU";
+        imu = opMode.hardwareMap.get(BNO055IMU.class, "imu123");
+        imu.initialize(param);
     }
     public double toCM(double inches){
         return inches*2.54;
@@ -131,7 +149,19 @@ public class RoboNavigator {
         rearl.setPower(power-res);
 
     }
-
+    public void OmniImu(double x, double y){
+        double res = Math.toDegrees(getAngle(x, y)); //gets principal angle of joystick
+        pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //get robot position
+        double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
+        double mult=Math.sqrt(x*x+y*y);
+        double ang=ImuToPrincipal(cur);
+        double finalangle=ReceiveDifference(ang,res);
+        finalangle=Math.toRadians(finalangle);
+        opMode.telemetry.addData ("current", "shiftRight (power=%f)", ang);
+        opMode.telemetry.addData ("joystick:", "shiftRight (power=%f)", res);
+        opMode.telemetry.addData ("difference:", "shiftRight (power=%f)", finalangle);
+        AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
+    }
     public void AccMecanum(double x,double y,double turn){
                                                                              //           / |
                                                                         //               /  |  y
@@ -290,6 +320,32 @@ public class RoboNavigator {
      *  3) Driver stops the opmode running.
      *
      */
+
+    double ImuToPrincipal(double ang){
+        return ang+90;
+    }
+    double ReceiveDifference(double CurPos,double FinPos){
+        if(CurPos>FinPos){
+            CurPos-=FinPos;
+            CurPos=ImuToPrincipal(CurPos);
+            return CurPos;
+        }
+        else{
+            FinPos-=CurPos;
+            FinPos=360-FinPos;
+            FinPos=ImuToPrincipal(FinPos);
+            return FinPos;
+        }
+    }
+    String formatAngle(AngleUnit angUnit, double angle) {
+        return formatDegrees(AngleUnit.DEGREES.fromUnit(angUnit, angle));
+    }
+
+    String formatDegrees(double degrees){
+        return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
+    }
+
+
     private static  final double ROBO_DIAMETER_CM = 61;
     private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
