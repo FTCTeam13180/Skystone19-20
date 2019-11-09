@@ -13,7 +13,7 @@ public class TestIntake extends LinearOpMode {
     public LinearOpMode opMode;
     private Intake intake;
 
-    double power=0.8;
+    double power=1;
     @Override
     public void runOpMode() throws InterruptedException {
         intake = new Intake(this);

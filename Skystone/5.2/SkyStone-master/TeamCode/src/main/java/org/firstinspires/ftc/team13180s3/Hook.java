@@ -9,7 +9,7 @@ public class Hook {
         hook=opMode.hardwareMap.get(Servo.class,"Hook");
     }
     public void attach(){
-        hook.setPosition(1);
+        hook.setPosition(0.5);
     }
     public void detach(){
 
