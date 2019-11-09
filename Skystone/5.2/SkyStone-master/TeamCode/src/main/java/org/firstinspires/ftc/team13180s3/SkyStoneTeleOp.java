@@ -12,7 +12,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
     private Hook hook;
     final double vWinchPowerUp=1.0;
     final double vWinchPowerDown=0.6;
-    double down=0;
+    final double multiplier=0.5;
+    boolean HookPosition=False; //False=Up, True=Down
     public void runOpMode (){
         roboNav = new RoboNavigator(this);
         vWinch=new WinchUp(this);
@@ -29,12 +30,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
         while (opModeIsActive()){
             double rx=gamepad1.left_stick_x;
             double ry=gamepad1.left_stick_y;
-            boolean l1trigger=gamepad1.left_bumper;
-            boolean r1trigger=gamepad1.right_bumper;
-            boolean dpadup1=gamepad1.dpad_up;
-            boolean dpaddown1=gamepad1.dpad_down;
             boolean ybutton=gamepad1.y;
+          //  boolean r1trigger=gamepad1.right_bumper;
+            boolean abutton=gamepad1.a;
+           // boolean dpaddown1=gamepad1.dpad_down;
             boolean bbutton=gamepad1.b;
+
             double l2Trigger=gamepad2.left_trigger;
             double r2Trigger=gamepad2.right_trigger;
             boolean dpadUp=gamepad2.dpad_up;
@@ -42,18 +43,32 @@ public class SkyStoneTeleOp extends LinearOpMode {
             boolean rbutton=gamepad2.right_bumper;
             boolean lbutton=gamepad2.left_bumper;
 
-            if(dpadup1){
-                down-=0.2;
+            if(abutton){
+                if(multiplier<1) {
+                    multiplier += 0.1;
+                }
             }
-            else if(dpaddown1){
-                down+=0.2;
+            else if(bbutton){
+                if(multiplier>0.5) {
+                    multiplier -= 0.1;
+                }
+            }
+            if(ybutton){
+                if(ybutton=true) {
+                    hook.attach();
+                }
+                else{
+                    hook.detach();
+                }
             }
             if(Math.abs(rx)> 0.1 || Math.abs(ry) > 0.1){
-                roboNav.OmniImu(rx-down,ry-down);
+                roboNav.OmniImu(rx*multiplier,ry*multiplier);
             }
             else{
                 roboNav.stopMotor();
             }
+
+
             if(l2Trigger>0){
                 hWinch.goOut(l2Trigger);
             }
