@@ -9,6 +9,7 @@ public class LoadingZoneAuto extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
     private Intake intake;
+    private Grabber grab;
 
     @Override
     public void runOpMode() {
@@ -21,12 +22,21 @@ public class LoadingZoneAuto extends LinearOpMode {
         intake = new Intake(this);
         intake.init();
 
+        grab = new Grabber(this);
+        grab.init();
+
         double NAVIGATOR_POWER = 0.5; // check
         waitForStart();
         while (opModeIsActive()) {
             //This is assuming that we are next to the blue depot
-            telemetry.addLine("Front of Robot Should be facing away from depot");
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
+            telemetry.addLine("Front of Robot Should be forward");
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 44*2.54, 1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
+            grab.grabIn();
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,24*2.54,1000);
+            grab.release();
+
+            /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);
             while(stoneSenor.isBlackColor() == false){
                 stoneSenor.getColorSensor();
@@ -41,10 +51,12 @@ public class LoadingZoneAuto extends LinearOpMode {
                     robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 12*2.54, 10000);
                     break;
 
+
+
                 }
 
             }
-
+*/
         }
     }
 }
