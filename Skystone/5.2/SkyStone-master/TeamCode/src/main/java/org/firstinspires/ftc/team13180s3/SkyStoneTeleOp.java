@@ -12,6 +12,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
     private Hook hook;
     final double vWinchPowerUp=1.0;
     final double vWinchPowerDown=0.6;
+    double down=0;
     public void runOpMode (){
         roboNav = new RoboNavigator(this);
         vWinch=new WinchUp(this);
@@ -30,6 +31,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
             double ry=gamepad1.left_stick_y;
             boolean l1trigger=gamepad1.left_bumper;
             boolean r1trigger=gamepad1.right_bumper;
+            boolean dpadup1=gamepad1.dpad_up;
+            boolean dpaddown1=gamepad1.dpad_down;
             boolean ybutton=gamepad1.y;
             boolean bbutton=gamepad1.b;
             double l2Trigger=gamepad2.left_trigger;
@@ -38,10 +41,20 @@ public class SkyStoneTeleOp extends LinearOpMode {
             boolean dpadDown=gamepad2.dpad_down;
             boolean rbutton=gamepad2.right_bumper;
             boolean lbutton=gamepad2.left_bumper;
-            if(Math.abs(rx)>0.1 || Math.abs(ry)>0.1){
-                roboNav.OmniImu(rx,ry);
+
+            if(dpadup1){
+                down-=0.2;
             }
-            else if(l2Trigger>0){
+            else if(dpaddown1){
+                down+=0.2;
+            }
+            if(Math.abs(rx)> 0.1 || Math.abs(ry) > 0.1){
+                roboNav.OmniImu(rx-down,ry-down);
+            }
+            else{
+                roboNav.stopMotor();
+            }
+            if(l2Trigger>0){
                 hWinch.goOut(l2Trigger);
             }
             else if(r2Trigger>0){
@@ -63,17 +76,16 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 Gripper.grabIn();
             }
             else if(ybutton){
-                hook.attach(1);
+                hook.attach();
             }
             else if(bbutton){
-                hook.detach(1);
+                hook.detach();
             }
             else if (lbutton){
                 Gripper.release();
             }
 
             else{
-                roboNav.stopMotor();
                 hWinch.stop();
                 vWinch.stop();
             }

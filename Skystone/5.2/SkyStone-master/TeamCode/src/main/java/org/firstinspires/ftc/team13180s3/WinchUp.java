@@ -17,4 +17,14 @@ public class WinchUp {
     public void stop(){
         UpDown.setPower(0);
     }
+    public void goDownTime(double power, long time) {
+        goDown(power);
+        opMode.sleep(time);
+        stop();
+    }
+    public void goUpTime(double power, long time) {
+        goUp(power);
+        opMode.sleep(time);
+        stop();
+    }
 }

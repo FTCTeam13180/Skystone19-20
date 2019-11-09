@@ -8,11 +8,12 @@ public class Hook {
     public void init(){
         hook=opMode.hardwareMap.get(Servo.class,"Hook");
     }
-    public void attach(double deg){
-        hook.setPosition(deg);
+    public void attach(){
+        hook.setPosition(1);
     }
-    public void detach(double deg){
-        hook.setPosition(deg);
+    public void detach(){
+
+        hook.setPosition(0);
     }
 }
 

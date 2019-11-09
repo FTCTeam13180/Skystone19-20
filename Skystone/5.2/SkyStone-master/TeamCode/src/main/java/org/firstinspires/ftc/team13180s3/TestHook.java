@@ -13,11 +13,11 @@ public class TestHook extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()){
             if(gamepad1.a){
-                hook.attach(0.6);
+                hook.attach();
             }
 
             else if(gamepad1.b){
-                hook.detach(0);
+                hook.detach();
             }
         }
     }
