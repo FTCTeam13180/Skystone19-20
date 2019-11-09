@@ -17,4 +17,14 @@ public class WinchOut {
     public void stop(){
         InOut.setPower(0);
     }
+    public void goOutTime(double power, long time) {
+        goOut(power);
+        opMode.sleep(time);
+        stop();
+    }
+    public void goInTime(double power, long time) {
+        goIn(power);
+        opMode.sleep(time);
+        stop();
+    }
 }
