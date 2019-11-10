@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="LoadingZoneAuto", group="autonomusGroup1")
-public class LoadingZoneAuto extends LinearOpMode {
+@Autonomous(name="LoadingZoneWall", group="autonomusGroup1")
+public class LoadingZoneWall extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
     private Intake intake;
@@ -33,8 +33,10 @@ public class LoadingZoneAuto extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 44*2.54, 1000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
             grab.grabIn();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,24*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,36*2.54,1000);
             grab.release();
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,8*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,36*2.54,1000);
 
             /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);

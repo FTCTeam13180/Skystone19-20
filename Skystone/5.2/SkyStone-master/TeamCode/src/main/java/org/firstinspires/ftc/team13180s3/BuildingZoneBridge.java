@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="BuildingZoneAuto", group="autonomusGroup1")
-public class BuildingZoneAuto extends LinearOpMode {
+@Autonomous(name="BuildingZoneBridge", group="autonomusGroup1")
+public class BuildingZoneBridge extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private Hook hook;
     private Grabber grab;
@@ -38,18 +38,19 @@ public class BuildingZoneAuto extends LinearOpMode {
             robotNavigator.stopMotor();
 
             //goes up to the foundation to move it into the building zone
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 44*2.54, 5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 44*2.54, 5000);
 
             //HOOK comes down here
             hook.attach();
 
             //pulls the foundation to the triangle build ZONE
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 38*2.54 , 5000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATOR_POWER, 90, 100);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 38*2.54 , 5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATOR_POWER, 90, 100);
             hook.detach();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,48*2.54,1000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,12*2.54,1000);
-
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,48*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT, NAVIGATOR_POWER,90,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 24, 2000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,36,200);
             winchOut.goOutTime(0.6, 1000);
             winchUp.goDownTime(0.6, 2000);
             //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 24, 10000);
@@ -72,3 +73,4 @@ public class BuildingZoneAuto extends LinearOpMode {
         }
     }
 }
+
