@@ -12,23 +12,29 @@ public class TestRoboEncoder extends LinearOpMode {
 
         dcMotor = hardwareMap.get(DcMotor.class, "dcMotor");
         telemetry.addData("TestRoboEncoder", "Initialized");
-
+        dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
 
         while(opModeIsActive()){
             if(gamepad1.dpad_up) {
-                dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                telemetry.addData("Encoder Value = ", "%d", dcMotor.getCurrentPosition());
-                dcMotor.setTargetPosition(1);
-                dcMotor.setPower(1);
-                telemetry.addData("Encoder Value = ", "%d", dcMotor.getCurrentPosition());
+                dcMotor.setTargetPosition(1440);
+                dcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                dcMotor.setPower(10);
+                while(dcMotor.isBusy()){
+                    telemetry.addData("Encoder ValueS = ", "%d", dcMotor.getCurrentPosition());
+                    telemetry.update();
+                    idle();
+                }
+                dcMotor.setPower(0);
+                }
 
             }
-            else if (gamepad1.a) {
+            if (gamepad1.a) {
+                telemetry.addData("Encoder ValueS = ", "%d", dcMotor.getCurrentPosition());
                 telemetry.update();
             }
         }
     }
-}
+
 
