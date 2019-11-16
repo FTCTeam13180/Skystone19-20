@@ -37,13 +37,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
             boolean rightbumper1=gamepad1.right_bumper;
             boolean abutton=gamepad1.a;
             boolean bbutton=gamepad1.b;
+            boolean dpadleft=gamepad1.dpad_left;
 //GAMEPAD 2 (START B) CONTROLS
             boolean l2bumper=gamepad2.left_bumper;
             boolean r2bumper=gamepad2.right_bumper;
             boolean dpadUp=gamepad2.dpad_up;
             boolean dpadDown=gamepad2.dpad_down;
             boolean x2=gamepad2.x;
-
             if(abutton){
                 if(multiplier<1) {
                     multiplier += 0.1;
@@ -63,6 +63,9 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     hook.detach();
                     hookPosition=false;
                 }
+            }
+            if(dpadleft){
+                roboNav.initIMU();
             }
             if(Math.abs(rx)> 0.1 || Math.abs(ry) > 0.1){
                 roboNav.OmniImu(rx*multiplier,ry*multiplier);

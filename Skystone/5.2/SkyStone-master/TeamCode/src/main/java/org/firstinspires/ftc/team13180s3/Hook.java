@@ -3,17 +3,22 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 public class Hook {
     public LinearOpMode opMode;
-    private Servo hook;
+    private Servo hookl;
+    private Servo hookr;
+
     Hook(LinearOpMode op){opMode=op;}
     public void init(){
-        hook=opMode.hardwareMap.get(Servo.class,"Hook");
+        hookl=opMode.hardwareMap.get(Servo.class,"hookL");
+        hookr=opMode.hardwareMap.get(Servo.class,"hookR");
     }
     public void attach(){
-        hook.setPosition(0.5);
+
+        hookl.setPosition(1);
+        hookr.setPosition(0);
     }
     public void detach(){
-
-        hook.setPosition(0);
+        hookl.setPosition(0);
+        hookr.setPosition(1);
     }
 }
 
