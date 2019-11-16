@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
+
 @TeleOp(name="TestNavigator", group="manualmode")
 
 public class TestNavigator extends LinearOpMode {
@@ -52,7 +53,7 @@ public class TestNavigator extends LinearOpMode {
 
             // EncoderMode
             else if (gamepad2.y) {
-                robotnav.encoderDrive(RoboNavigator.DIRECTION.FORWARD, SPEED, 48*2.54, 5000 );
+                robotnav.encoderDrive(RoboNavigator.DIRECTION.FORWARD, SPEED, 48*2.54, 500000 );
             }
             else if (gamepad2.a) {
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, SPEED, 48*2.54, 5000 );
