@@ -130,15 +130,15 @@ public class RoboNavigator {
     }
 
     public double getAngle(double x,double y){
-        return -1*Math.atan2(y,x);
+        return Math.atan2(y,x);
     }
 
     public void AnyMecanum(double x,double y){
         double power = Math.sqrt(x * x + y * y);
-        topl.setPower((x+y)/power);
-        topr.setPower((y-x)/power);
-        rearl.setPower((y-x)/power);
-        rearr.setPower((x+y)/power);
+        topr.setPower((x+y)/power);
+        topl.setPower((y-x)/power);
+        rearr.setPower((y-x)/power);
+        rearl.setPower((x+y)/power);
     }
 
     public void ForwardImu(double pos, double fin,double power){
@@ -150,16 +150,18 @@ public class RoboNavigator {
 
     }
     public void OmniImu(double x, double y){
-        double res = Math.toDegrees(getAngle(x, y)); //gets principal angle of joystick
-        pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES); //get robot position
+        double res = Math.toDegrees(getAngle(x, y)); //gets standard angle of joystick
+        pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES); //get robot position
         double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
+        opMode.telemetry.addData("Raw Imu CurrentPosition: ","%f",cur);
         double mult=Math.sqrt(x*x+y*y);
         double ang=ImuToPrincipal(cur);
         double finalangle=ReceiveDifference(ang,res);
         finalangle=Math.toRadians(finalangle);
-        opMode.telemetry.addData ("current", "shiftRight (power=%f)", ang);
-        opMode.telemetry.addData ("joystick:", "shiftRight (power=%f)", res);
-        opMode.telemetry.addData ("difference:", "shiftRight (power=%f)", finalangle);
+        opMode.telemetry.addData ("CurrentPosition: ", "%f", ang);
+        opMode.telemetry.addData ("Joystick Input: ", "%f", res);
+        opMode.telemetry.addData ("Diff: ", "%f", finalangle);
+        opMode.telemetry.update();
         AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
     }
     public void AccMecanum(double x,double y,double turn){
