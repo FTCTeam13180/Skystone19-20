@@ -69,6 +69,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
             gripper_release=gamepad2.x;
             gripper_grab=gamepad2.y;
 
+            // Navigation Controls
             if(nav_speed_up){
                 if(multiplier<1) {
                     multiplier += 0.1;
@@ -79,55 +80,62 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     multiplier -= 0.1;
                 }
             }
+
             if(nav_init_IMU){
                 roboNav.initIMU();
             }
-            if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1){
-                roboNav.OmniImu(nav_omni_x*multiplier,nav_omni_y*multiplier);
+
+            if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1 || nav_left_turn || nav_right_turn){
+                if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1) {
+                    roboNav.OmniImu(nav_omni_x * multiplier, nav_omni_y * multiplier);
+                }
+                else if(nav_left_turn){
+                    roboNav.turnLeft(multiplier);
+                }
+                else if(nav_right_turn){
+                    roboNav.turnRight(multiplier);
+                }
             }
             else{
                 roboNav.stopMotor();
             }
 
-
+            // Arm Controls
             if(arm_out){
                 hWinch.goOut(1);
             }
             else if(arm_in){
                 hWinch.goIn(1);
             }
-            else if(arm_up){
+            else {
+                hWinch.stop();
+            }
+
+            if(arm_up){
                 vWinch.goUp(vWinchPowerUp);
             }
             else if(arm_down){
                 vWinch.goDown(vWinchPowerDown);
             }
-            else if(nav_left_turn){
-                roboNav.turnLeft(0.75);
+            else {
+                vWinch.stop();
             }
-            else if(nav_right_turn){
-                roboNav.turnRight(0.75);
+
+            if(gripper_release){
+                Gripper.release();
             }
+            else if(gripper_grab){
+                Gripper.grabIn();
+            }
+
+            // Foundation Hook Controls
             if(hook_attach){
                 hook.attach();
             }
             else if(hook_detach){
                 hook.detach();
             }
-            else if(gripper_release){
-                Gripper.release();
-            }
-            else if(gripper_grab){
-                Gripper.grabIn();
-            }
-            else{
-                hWinch.stop();
-                vWinch.stop();
-            }
-
         }
-
-
 
     }
 }
