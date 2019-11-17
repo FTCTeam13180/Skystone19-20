@@ -28,73 +28,96 @@ public class SkyStoneTeleOp extends LinearOpMode {
         Gripper.init();
         hook.init();
         waitForStart();
+
+        //GAMEPAD 1 (START A) NAVIGATOR CONTROLS
+        double nav_omni_x;
+        double nav_omni_y;
+        boolean nav_init_IMU;
+        boolean nav_left_turn;
+        boolean nav_right_turn;
+        boolean nav_speed_up;
+        boolean nav_speed_down;
+        boolean hook_attach;
+        boolean hook_detach;
+
+        //GAMEPAD 2 (START B) ARM CONTROLS
+        boolean arm_in;
+        boolean arm_out;
+        boolean arm_up;
+        boolean arm_down;
+        boolean gripper_release;
+        boolean gripper_grab;
+
+
         while (opModeIsActive()){
-//GAMEPAD 1 (START A) CONTROLS
-            double rx=gamepad1.left_stick_x;
-            double ry=gamepad1.left_stick_y;
-            boolean ybutton=gamepad1.y;
-            boolean xbutton=gamepad1.x;
-            boolean leftbumper1=gamepad1.left_bumper;
-            boolean rightbumper1=gamepad1.right_bumper;
-            boolean abutton=gamepad1.a;
-            boolean bbutton=gamepad1.b;
-            boolean dpadleft=gamepad1.dpad_left;
-//GAMEPAD 2 (START B) CONTROLS
-            boolean l2bumper=gamepad2.left_bumper;
-            boolean r2bumper=gamepad2.right_bumper;
-            boolean dpadUp=gamepad2.dpad_up;
-            boolean dpadDown=gamepad2.dpad_down;
-            boolean x2=gamepad2.x;
-            boolean y2=gamepad2.y;
-            if(abutton){
+            //GAMEPAD 1 (START A) NAVIGATOR CONTROLS
+            nav_omni_x=gamepad1.left_stick_x;
+            nav_omni_y=gamepad1.left_stick_y;
+            hook_attach=gamepad1.y;
+            hook_detach=gamepad1.x;
+            nav_left_turn=gamepad1.left_bumper;
+            nav_right_turn=gamepad1.right_bumper;
+            nav_speed_up=gamepad1.a;
+            nav_speed_down=gamepad1.b;
+            nav_init_IMU=gamepad1.dpad_left;
+
+            //GAMEPAD 2 (START B) ARM CONTROLS
+            arm_in=gamepad2.left_bumper;
+            arm_out=gamepad2.right_bumper;
+            arm_up=gamepad2.dpad_up;
+            arm_down=gamepad2.dpad_down;
+            gripper_release=gamepad2.x;
+            gripper_grab=gamepad2.y;
+
+            if(nav_speed_up){
                 if(multiplier<1) {
                     multiplier += 0.1;
                 }
             }
-            else if(bbutton){
+            else if(nav_speed_down){
                 if(multiplier>0.5) {
                     multiplier -= 0.1;
                 }
             }
-            if(dpadleft){
+            if(nav_init_IMU){
                 roboNav.initIMU();
             }
-            if(Math.abs(rx)> 0.1 || Math.abs(ry) > 0.1){
-                roboNav.OmniImu(rx*multiplier,ry*multiplier);
+            if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1){
+                roboNav.OmniImu(nav_omni_x*multiplier,nav_omni_y*multiplier);
             }
             else{
                 roboNav.stopMotor();
             }
 
 
-            if(r2bumper){
+            if(arm_out){
                 hWinch.goOut(1);
             }
-            else if(l2bumper){
+            else if(arm_in){
                 hWinch.goIn(1);
             }
-            else if(dpadUp){
+            else if(arm_up){
                 vWinch.goUp(vWinchPowerUp);
             }
-            else if(dpadDown){
+            else if(arm_down){
                 vWinch.goDown(vWinchPowerDown);
             }
-            else if(leftbumper1){
+            else if(nav_left_turn){
                 roboNav.turnLeft(0.75);
             }
-            else if(rightbumper1){
+            else if(nav_right_turn){
                 roboNav.turnRight(0.75);
             }
-            if(ybutton){
+            if(hook_attach){
                 hook.attach();
             }
-            else if(xbutton){
+            else if(hook_detach){
                 hook.detach();
             }
-            else if(x2){
+            else if(gripper_release){
                 Gripper.release();
             }
-            else if(y2){
+            else if(gripper_grab){
                 Gripper.grabIn();
             }
             else{
