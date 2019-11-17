@@ -3,7 +3,6 @@ package org.firstinspires.ftc.team13180s3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "TestRoboEncoder", group = "manualmode")
 public class TestRoboEncoder extends LinearOpMode {
@@ -15,8 +14,7 @@ public class TestRoboEncoder extends LinearOpMode {
         telemetry.addData("TestRoboEncoder", "Initialized");
         dcMotor.setDirection(DcMotor.Direction.FORWARD);
         dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
+        dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
