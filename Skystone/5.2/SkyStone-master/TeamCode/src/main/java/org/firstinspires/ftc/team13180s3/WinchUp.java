@@ -9,10 +9,10 @@ public class WinchUp {
         UpDown=opMode.hardwareMap.get(DcMotor.class,"verticalWinch");
     }
     public void goUp(double power){
-        UpDown.setPower(power);
+        UpDown.setPower(-power);
     }
     public void goDown(double power){
-        UpDown.setPower(-power);
+        UpDown.setPower(power);
     }
     public void stop(){
         UpDown.setPower(0);

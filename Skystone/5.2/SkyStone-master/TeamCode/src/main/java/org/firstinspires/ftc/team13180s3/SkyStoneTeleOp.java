@@ -33,6 +33,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
             double rx=gamepad1.left_stick_x;
             double ry=gamepad1.left_stick_y;
             boolean ybutton=gamepad1.y;
+            boolean xbutton=gamepad1.x;
             boolean leftbumper1=gamepad1.left_bumper;
             boolean rightbumper1=gamepad1.right_bumper;
             boolean abutton=gamepad1.a;
@@ -44,6 +45,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
             boolean dpadUp=gamepad2.dpad_up;
             boolean dpadDown=gamepad2.dpad_down;
             boolean x2=gamepad2.x;
+            boolean y2=gamepad2.y;
             if(abutton){
                 if(multiplier<1) {
                     multiplier += 0.1;
@@ -52,16 +54,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
             else if(bbutton){
                 if(multiplier>0.5) {
                     multiplier -= 0.1;
-                }
-            }
-            if(ybutton){
-                if(hookPosition=false) {
-                    hook.attach();
-                    hookPosition=true;
-                }
-                else{
-                    hook.detach();
-                    hookPosition=false;
                 }
             }
             if(dpadleft){
@@ -93,23 +85,18 @@ public class SkyStoneTeleOp extends LinearOpMode {
             else if(rightbumper1){
                 roboNav.turnRight(0.75);
             }
-            else if(ybutton){
+            if(ybutton){
                 hook.attach();
             }
-            else if(bbutton){
+            else if(xbutton){
                 hook.detach();
             }
-            else if (x2){
-                if(gripperPos==false){
-                    Gripper.grabIn();
-                    gripperPos=true;
-                }
-                else{
-                    Gripper.release();
-                    gripperPos=false;
-                }
+            else if(x2){
+                Gripper.release();
             }
-
+            else if(y2){
+                Gripper.grabIn();
+            }
             else{
                 hWinch.stop();
                 vWinch.stop();
