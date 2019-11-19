@@ -11,31 +11,33 @@ public class TestRoboEncoder extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         dcMotor = hardwareMap.get(DcMotor.class, "dcMotor");
-        telemetry.addData("TestRoboEncoder", "Initialized");
-        dcMotor.setDirection(DcMotor.Direction.FORWARD);
-        dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         waitForStart();
 
-        dcMotor.setTargetPosition(1440);
-        dcMotor.setPower(1);
-        dcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
+            if (gamepad1.dpad_up) {
+                dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            while(dcMotor.isBusy()){
-                telemetry.addData("IsBusy() cur = ", "%7d", dcMotor.getCurrentPosition());
+                telemetry.addData("TestRoboEncoder", "Initialized");
+
+                telemetry.addData("curr:", "%d", dcMotor.getCurrentPosition());
+
+                dcMotor.setTargetPosition(dcMotor.getCurrentPosition() + 1440);
+
+                telemetry.addData("target:", "%d", dcMotor.getTargetPosition());
+
+                dcMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                dcMotor.setPower(1.0);
+
                 telemetry.update();
             }
-            dcMotor.setPower(0);
 
-
-            }
             if (gamepad1.a) {
                 telemetry.addData("Encoder ValueS = ", "%7d", dcMotor.getCurrentPosition());
                 telemetry.update();
             }
         }
     }
-
+}
 
