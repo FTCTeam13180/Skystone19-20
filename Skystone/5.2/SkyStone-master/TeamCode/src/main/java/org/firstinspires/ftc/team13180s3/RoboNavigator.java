@@ -352,7 +352,7 @@ public class RoboNavigator {
     private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.16 ;     // For figuring circumference
-    private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION*280) /
+    private static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_CM * 3.1415);
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
     private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;

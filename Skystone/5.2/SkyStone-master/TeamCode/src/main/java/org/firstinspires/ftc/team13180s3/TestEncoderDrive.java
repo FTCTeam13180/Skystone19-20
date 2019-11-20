@@ -13,10 +13,10 @@ public class TestEncoderDrive extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             if(gamepad1.dpad_up){
-                robonav.encoderDrive(RoboNavigator.DIRECTION.FORWARD,0.6,24,10000);
+                robonav.encoderDrive(RoboNavigator.DIRECTION.FORWARD,0.6,24*2.54,10000);
             }
             else if(gamepad1.dpad_down){
-                robonav.encoderDrive(RoboNavigator.DIRECTION.FORWARD,0.6,24,10000);
+                robonav.encoderDrive(RoboNavigator.DIRECTION.FORWARD,0.6,24*2.54,10000);
             }
         }
     }
