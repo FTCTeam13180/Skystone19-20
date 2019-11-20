@@ -133,9 +133,10 @@ public class RoboNavigator {
         return Math.atan2(y,x);
     }
 
-    public void AnyMecanum(double x,double y){
+    public void AnyMecanum(double x,double y, double power_scale){
         double power = Math.sqrt(x * x + y * y);
         topr.setPower(power_scale*(y-x)/power);
+        topl.setPower(power_scale*(x+y)/power);
         rearr.setPower(power_scale*(x+y)/power);
         rearl.setPower(power_scale*(y-x)/power);
     }
