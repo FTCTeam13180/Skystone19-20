@@ -135,10 +135,9 @@ public class RoboNavigator {
 
     public void AnyMecanum(double x,double y){
         double power = Math.sqrt(x * x + y * y);
-        topr.setPower((x+y)/power);
-        topl.setPower((y-x)/power);
-        rearr.setPower((y-x)/power);
-        rearl.setPower((x+y)/power);
+        topr.setPower(power_scale*(y-x)/power);
+        rearr.setPower(power_scale*(x+y)/power);
+        rearl.setPower(power_scale*(y-x)/power);
     }
 
     public void ForwardImu(double pos, double fin,double power){
@@ -149,7 +148,7 @@ public class RoboNavigator {
         rearl.setPower(power-res);
 
     }
-    public void OmniImu(double x, double y){
+    public void OmniImu(double x, double y, double power_scale){
         double res = Math.toDegrees(getAngle(x, y)); //gets standard angle of joystick
         pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES); //get robot position
         double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
@@ -162,7 +161,7 @@ public class RoboNavigator {
         opMode.telemetry.addData ("Joystick Input: ", "%f", res);
         opMode.telemetry.addData ("Diff: ", "%f", finalangle);
         opMode.telemetry.update();
-        AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle));
+        AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle), power_scale);
     }
     public void AccMecanum(double x,double y,double turn){
                                                                              //           / |

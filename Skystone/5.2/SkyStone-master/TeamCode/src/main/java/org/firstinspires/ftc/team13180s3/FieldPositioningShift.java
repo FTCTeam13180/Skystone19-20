@@ -53,7 +53,7 @@ public class FieldPositioningShift extends LinearOpMode {
                 robonav.turnRight(0.4);
             }
             else if(Math.abs(x)>0.15 || Math.abs(y)>0.15) {          //when direction inputted
-                robonav.OmniImu(x,y);
+                robonav.OmniImu(x,y, 0.4);
             }
             else {
                 robonav.stopMotor();

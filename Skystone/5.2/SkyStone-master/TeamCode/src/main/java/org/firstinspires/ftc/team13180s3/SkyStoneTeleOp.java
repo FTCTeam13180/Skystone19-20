@@ -87,7 +87,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1 || nav_left_turn || nav_right_turn){
                 if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1) {
-                    roboNav.OmniImu(nav_omni_x * multiplier, nav_omni_y * multiplier);
+                    // VERY IMPORTANT: Gamepad joystick y-axis positive points downward, x-axis points right
+                    // Always remember to reverse joystick stick_y value.
+
+                    // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
+                    // roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
+                    roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
                 }
                 else if(nav_left_turn){
                     roboNav.turnLeft(multiplier);
