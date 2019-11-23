@@ -150,13 +150,18 @@ public class RoboNavigator {
 
     }
     public void OmniImu(double x, double y, double power_scale){
-        double res = Math.toDegrees(getAngle(x, y)); //gets standard angle of joystick
+        double res = getAngle(x, y); //gets standard angle of joystick
+        if (res<0){
+            res=Math.PI+Math.abs(res);
+        }
         pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES); //get robot position
         double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
         opMode.telemetry.addData("Raw Imu CurrentPosition: ","%f",cur);
         double mult=Math.sqrt(x*x+y*y);
         double ang=ImuToPrincipal(cur);
         double finalangle=ReceiveDifference(ang,res);
+        finalangle=finalangle%360;
+
         finalangle=Math.toRadians(finalangle);
         opMode.telemetry.addData ("CurrentPosition: ", "%f", ang);
         opMode.telemetry.addData ("Joystick Input: ", "%f", res);
@@ -231,7 +236,14 @@ public class RoboNavigator {
         double p=Math.sin(angle+(0.25*Math.PI));
         return p*mult;
     }
-
+    public void SwerveDrive(double angle, double turn, double power){
+        double d1= power*Math.sin(angle-(Math.PI/4))+turn;
+        double d2=power*Math.sin(angle+(Math.PI/4))+turn;
+        topl.setPower(d2);
+        topr.setPower(d1);
+        rearl.setPower(d1);
+        rearr.setPower(d2);
+    }
     public void stopMotor() {
         topl.setPower(0);
         topr.setPower(0);

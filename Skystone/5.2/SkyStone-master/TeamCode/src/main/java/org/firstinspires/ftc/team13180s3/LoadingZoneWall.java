@@ -10,6 +10,7 @@ public class LoadingZoneWall extends LinearOpMode {
     private StoneColorSensor stoneSenor;
     private Intake intake;
     private Grabber grab;
+    private Hook hook;
 
     @Override
     public void runOpMode() {
@@ -24,19 +25,30 @@ public class LoadingZoneWall extends LinearOpMode {
 
         grab = new Grabber(this);
         grab.init();
-
+        hook= new Hook(this);
+        hook.init();
         double NAVIGATOR_POWER = 0.5; // check
         waitForStart();
+        hook.detach();
         while (opModeIsActive()) {
             //This is assuming that we are next to the blue depot
             telemetry.addLine("Front of Robot Should be forward");
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 44*2.54, 1000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
+            telemetry.update();
+            //winch up
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 100000);
+            //winch out 5 inch
             grab.grabIn();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,36*2.54,1000);
+            //winch down
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,15*2.54,100000);
+            //spin left 90 degrees
+//            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
+//            grab.grabIn();
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,36*2.54,100000);
             grab.release();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,8*2.54,1000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,36*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,84*2.54,100000);
+            //spin right 90 degrees
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,24*2.54,100000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,72*2.54,100000);
 
             /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);

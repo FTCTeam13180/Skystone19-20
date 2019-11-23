@@ -68,9 +68,24 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.right_trigger > 0.1){
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,5000);
             }
+            if(gamepad2.left_stick_x>0.1 ||gamepad2.left_stick_y>0.1){
+                double ang=robotnav.getAngle(gamepad2.left_stick_x,gamepad2.left_stick_y);
+                if(ang<0){
+                    ang=Math.abs(ang)+Math.PI;
+                }
+                double turn=0;
+                if(gamepad2.left_trigger>0){
+                    turn=gamepad2.left_trigger;
+                }
+                else{
+                    turn=gamepad2.right_trigger;
+                }
+                robotnav.SwerveDrive(ang,turn,Math.sqrt(gamepad2.left_stick_x*gamepad2.left_stick_x+gamepad2.left_stick_y*gamepad2.left_stick_y));
+            }
             else {
                 robotnav.stopMotor();
             }
+
 
         }
     }
