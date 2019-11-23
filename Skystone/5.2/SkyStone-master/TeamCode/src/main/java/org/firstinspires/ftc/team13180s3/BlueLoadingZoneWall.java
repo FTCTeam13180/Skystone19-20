@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="LoadingZoneWall", group="autonomusGroup1")
-public class LoadingZoneWall extends LinearOpMode {
+@Autonomous(name="BlueLoadingZoneWall", group="autonomusGroup1")
+public class BlueLoadingZoneWall extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
     private Intake intake;
@@ -17,24 +17,27 @@ public class LoadingZoneWall extends LinearOpMode {
         robotNavigator = new RoboNavigator(this);
         robotNavigator.init();
 
-        stoneSenor = new StoneColorSensor(this);
-        stoneSenor.init();
+        //TODO
+        // stoneSenor = new StoneColorSensor(this);
+        //stoneSenor.init();
 
-        intake = new Intake(this);
-        intake.init();
+        //intake = new Intake(this);
+        //intake.init();
 
         grab = new Grabber(this);
         grab.init();
         hook= new Hook(this);
         hook.init();
         double NAVIGATOR_POWER = 0.5; // check
-        waitForStart();
         hook.detach();
+        waitForStart();
         while (opModeIsActive()) {
             //This is assuming that we are next to the blue depot
             telemetry.addLine("Front of Robot Should be forward");
             telemetry.update();
-            //winch up
+            //winch up(TODO)
+            // winch.up()
+            // go forward 25 inches
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 100000);
             //winch out 5 inch
             grab.grabIn();
