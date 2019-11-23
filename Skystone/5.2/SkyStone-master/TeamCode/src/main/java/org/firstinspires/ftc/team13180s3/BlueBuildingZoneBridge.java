@@ -46,7 +46,7 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
             */
 
             //goes up to the foundation to move it into the building zone
-            winchUp.encoderDrive(NAVIGATOR_POWER,10*2.54,1000);
+            //winchUp.encoderDrive(NAVIGATOR_POWER,10*2.54,1000);
             //winch down
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 30*2.54, 5000);
             sleep(1000);
@@ -57,7 +57,7 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
             sleep(1500);
 
             //pulls the foundation to the triangle build ZONE
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 30*2.54 , 5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 18*2.54 , 5000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATOR_POWER, 90, 3000);
             sleep(3000);
             hook.detach();
