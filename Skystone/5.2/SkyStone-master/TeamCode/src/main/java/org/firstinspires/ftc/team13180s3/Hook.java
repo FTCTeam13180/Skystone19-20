@@ -14,6 +14,7 @@ public class Hook {
         hook.setPosition(1);
     }
     public void detach(){
+
         hook.setPosition(0);
     }
 }

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TestWinch extends LinearOpMode {
     public WinchUp vert;
     public WinchOut horiz;
+    double landerpower = 0.6;
     @Override
     public void runOpMode() throws InterruptedException {
         vert=new WinchUp(this);
@@ -26,6 +27,12 @@ public class TestWinch extends LinearOpMode {
             else{
                 horiz.stop();
                 vert.stop();
+            }
+            if(gamepad2.a){
+                vert.encoderDrive(landerpower,5*2.54,1000);
+            }
+            if(gamepad2.x){
+                //
             }
         }
     }

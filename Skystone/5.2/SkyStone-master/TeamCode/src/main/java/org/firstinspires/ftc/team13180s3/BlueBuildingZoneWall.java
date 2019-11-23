@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="BuildingZoneBridge", group="autonomusGroup1")
-public class BuildingZoneBridge extends LinearOpMode {
+@Autonomous(name="BuildingZoneWall", group="autonomusGroup1")
+public class BlueBuildingZoneWall extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private Hook hook;
     private Grabber grab;
@@ -28,6 +28,8 @@ public class BuildingZoneBridge extends LinearOpMode {
 
         double NAVIGATOR_POWER = 0.5; // check
 
+        hook.detach();
+
         waitForStart();
 
         while (opModeIsActive()) {
@@ -45,16 +47,16 @@ public class BuildingZoneBridge extends LinearOpMode {
             //HOOK comes down here
             hook.attach();
 
-            sleep(1000);
+            sleep(1500);
 
             //pulls the foundation to the triangle build ZONE
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 30*2.54 , 5000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATOR_POWER, 90, 3000);
             sleep(3000);
             hook.detach();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER,48*2.54,1000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,36*2.54,2000);
-           // winchOut.goOutTime(0.6, 1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER,36*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,30*2.54,2000);
+            // winchOut.goOutTime(0.6, 1000);
             //winchUp.goDownTime(0.6, 2000);
             //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 24, 10000);
             //winchOut.goOutTime(0.6, 2000);
@@ -74,8 +76,6 @@ public class BuildingZoneBridge extends LinearOpMode {
 
             break;
 
-
         }
     }
 }
-

@@ -1,21 +1,33 @@
 package org.firstinspires.ftc.team13180s3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import static java.lang.Math.abs;
+
 public class WinchUp {
     public LinearOpMode opMode;
-    private DcMotor UpDown;
+    private DcMotor upDown;
+    private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    private static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    private static final double     WHINCH_DIAMETER_CM   = 0.7 ;     // For figuring circumference
+    static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHINCH_DIAMETER_CM * 3.1415);
     WinchUp(LinearOpMode op){opMode=op;}
     public void init(){
-        UpDown=opMode.hardwareMap.get(DcMotor.class,"verticalWinch");
+
+        upDown=opMode.hardwareMap.get(DcMotor.class,"verticalWinch");
     }
     public void goUp(double power){
-        UpDown.setPower(-power);
+        upDown.setPower(-power);
     }
     public void goDown(double power){
-        UpDown.setPower(power);
+        upDown.setPower(power);
     }
     public void stop(){
-        UpDown.setPower(0);
+        upDown.setPower(0);
     }
     public void goDownTime(double power, long time) {
         goDown(power);
@@ -26,5 +38,60 @@ public class WinchUp {
         goUp(power);
         opMode.sleep(time);
         stop();
+    }
+    public void encoderDrive(double speed,
+                             double cms,
+                             double timeoutMs) {
+        int newWinchUpTarget;
+
+        opMode.telemetry.addData("RoboLander:", "Resetting Encoders");    //
+        opMode.telemetry.update();
+
+        upDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Send telemetry message to indicate successful Encoder reset
+        opMode.telemetry.addData("Path0", "Starting at %7d",
+                upDown.getCurrentPosition());
+        opMode.telemetry.update();
+
+
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newWinchUpTarget = upDown.getCurrentPosition() + (int) (cms * COUNTS_PER_CM);
+            upDown.setTargetPosition(newWinchUpTarget);
+
+            // Turn On RUN_TO_POSITION
+            upDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            ElapsedTime runtime = new ElapsedTime();
+
+            runtime.reset();
+
+            upDown.setPower(abs(speed));
+
+            // keep looping while we are still active, and there is time left, and motor is running.
+            while (opMode.opModeIsActive() &&
+                    (runtime.seconds() < timeoutMs) &&
+                    (upDown.isBusy())) {
+
+                // Display it for the driver.
+                opMode.telemetry.addData("Path1", "Running to %7d", newWinchUpTarget);
+                opMode.telemetry.addData("Path2", "Running at %7d",
+                        upDown.getCurrentPosition());
+                opMode.telemetry.update();
+            }
+
+            // Stop all motion;
+            upDown.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            upDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        }
     }
 }
