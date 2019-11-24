@@ -75,7 +75,7 @@ public class TestNavigator extends LinearOpMode {
                 }
                 double turn=0;
                 if(gamepad2.left_trigger>0){
-                    turn=gamepad2.left_trigger;
+                    turn=-1*gamepad2.left_trigger;
                 }
                 else{
                     turn=gamepad2.right_trigger;

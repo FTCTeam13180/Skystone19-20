@@ -5,15 +5,20 @@ public class Hook {
     public LinearOpMode opMode;
     private Servo hook;
 
-    Hook(LinearOpMode op){opMode=op;}
-    public void init(){
-        hook=opMode.hardwareMap.get(Servo.class,"Hook");
+    Hook(LinearOpMode op) {
+        opMode = op;
     }
-    public void attach(){
+
+    public void init() {
+        hook = opMode.hardwareMap.get(Servo.class, "Hook");
+    }
+
+    public void attach() {
 
         hook.setPosition(1);
     }
-    public void detach(){
+
+    public void detach() {
 
         hook.setPosition(0);
     }

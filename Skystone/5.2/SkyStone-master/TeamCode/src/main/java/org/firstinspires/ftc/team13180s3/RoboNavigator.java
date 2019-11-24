@@ -236,13 +236,14 @@ public class RoboNavigator {
         double p=Math.sin(angle+(0.25*Math.PI));
         return p*mult;
     }
-    public void SwerveDrive(double angle, double turn, double power){
-        double d1= power*Math.sin(angle-(Math.PI/4))+turn;
-        double d2=power*Math.sin(angle+(Math.PI/4))+turn;
-        topl.setPower(d2);
-        topr.setPower(d1);
-        rearl.setPower(d1);
-        rearr.setPower(d2);
+    public void SwerveDrive(double angle,
+                            double turn, double power){
+        double d1= power*Math.sin(angle-(Math.PI/4));
+        double d2=power*Math.sin(angle+(Math.PI/4));
+        topl.setPower(d1+turn);
+        topr.setPower(d2-turn);
+        rearl.setPower(d2+turn);
+        rearr.setPower(d1-turn);
     }
     public void stopMotor() {
         topl.setPower(0);
@@ -360,7 +361,7 @@ public class RoboNavigator {
     }
 
 
-    private static  final double ROBO_DIAMETER_CM = 61.19;
+    private static  final double ROBO_DIAMETER_CM = 62.86;
     private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.16 ;     // For figuring circumference
@@ -368,7 +369,7 @@ public class RoboNavigator {
             (WHEEL_DIAMETER_CM * 3.1415);
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
     private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;
-    private static final double SHIFT_SLIPPAGE_CORRECTION = 1.35;
+    private static final double SHIFT_SLIPPAGE_CORRECTION = 1;
 
 
     private void setRunMode (DcMotor.RunMode runMode) {

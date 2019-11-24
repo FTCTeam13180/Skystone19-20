@@ -40,14 +40,14 @@ public class BlueLoadingZoneWall extends LinearOpMode {
             // go forward 25 inches
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
             //winch out 5 inch
-            grab.grabIn();
+            //grab.grabIn();
             //winch down
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,15*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,90,5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,95,5000);
 //            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
 //            grab.grabIn();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,36*2.54,10000);
-            grab.release();
+            //grab.release();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,84*2.54,10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,24*2.54,10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,72*2.54,10000);
@@ -73,6 +73,7 @@ public class BlueLoadingZoneWall extends LinearOpMode {
 
             }
 */
+        break;
         }
     }
 }

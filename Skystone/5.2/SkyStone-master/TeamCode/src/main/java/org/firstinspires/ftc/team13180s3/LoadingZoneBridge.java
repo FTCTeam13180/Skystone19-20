@@ -58,6 +58,8 @@ public class LoadingZoneBridge extends LinearOpMode {
 
             }
 */
+        break;
+
         }
     }
 }
