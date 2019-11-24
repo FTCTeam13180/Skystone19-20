@@ -13,11 +13,11 @@ Grabber {
 
     }
     public void grabIn(){
-        grab.setPosition(attachpos);
+        grab.setPosition(0.6);
 
     }
     public void release(){
-        grab.setPosition(0);
+        grab.setPosition(0.2);
 
     }
 }

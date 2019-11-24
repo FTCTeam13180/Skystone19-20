@@ -37,10 +37,6 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-           /* winchOut.goOutTime(0.6, 1000);
-            winchUp.goUpTime(0.6, 1000);
-            winchOut.goOutTime(0.6, 3000);
-            winchUp.goDownTime(0.6, 2000);*/
 
 
             //goes up to the foundation to move it into the building zone
@@ -61,7 +57,10 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
             hook.detach();
             sleep(1000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,28*2.54,2000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,36*2.54,2000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATOR_POWER,180,2000);
+            winchOut.goOutTime(0.6,1000);
+            winchUp.goDownTime(0.6,1000);
+            
            // winchOut.goOutTime(0.6, 1000);
             //winchUp.goDownTime(0.6, 2000);
             //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 24, 10000);
