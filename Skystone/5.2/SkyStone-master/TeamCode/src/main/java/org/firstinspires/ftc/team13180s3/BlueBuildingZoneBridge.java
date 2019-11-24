@@ -35,20 +35,18 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            /* Time based code (not using now as encoder is working)
-            /*
-            winchOut.goOutTime(0.6, 1000);
-            winchUp.goUpTime(0.6, 500);
+
+
+           /* winchOut.goOutTime(0.6, 1000);
+            winchUp.goUpTime(0.6, 1000);
             winchOut.goOutTime(0.6, 3000);
-            winchUp.goUpTime(0.6, 2000);
-            robotNavigator.shiftRightTime(0.6, 1000);
-            robotNavigator.stopMotor();
-            */
+            winchUp.goDownTime(0.6, 2000);*/
+
 
             //goes up to the foundation to move it into the building zone
             //winchUp.encoderDrive(NAVIGATOR_POWER,10*2.54,1000);
             //winch down
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 30*2.54, 5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 28.5*2.54, 5000);
             sleep(1000);
 
             //HOOK comes down here
@@ -57,12 +55,13 @@ public class BlueBuildingZoneBridge extends LinearOpMode {
             sleep(1500);
 
             //pulls the foundation to the triangle build ZONE
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 18*2.54 , 5000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATOR_POWER, 90, 3000);
-            sleep(3000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, NAVIGATOR_POWER, 100, 3000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,15*2.54,2000);
+            sleep(1000);
             hook.detach();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER,36*2.54,1000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,30*2.54,2000);
+            sleep(1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,28*2.54,2000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,36*2.54,2000);
            // winchOut.goOutTime(0.6, 1000);
             //winchUp.goDownTime(0.6, 2000);
             //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 24, 10000);
