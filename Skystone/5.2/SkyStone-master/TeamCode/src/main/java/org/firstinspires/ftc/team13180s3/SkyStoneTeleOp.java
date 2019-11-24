@@ -47,7 +47,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean arm_down;
         boolean gripper_release;
         boolean gripper_grab;
-
+        boolean shift_left;
+        boolean shift_right;
 
         while (opModeIsActive()){
             //GAMEPAD 1 (START A) NAVIGATOR CONTROLS
@@ -68,6 +69,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
             arm_down=gamepad2.dpad_down;
             gripper_release=gamepad2.x;
             gripper_grab=gamepad2.y;
+            shift_left = gamepad2.a;
+            shift_right = gamepad2.b;
 
             // Navigation Controls
             if(nav_speed_up){
@@ -94,7 +97,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     // roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
                     roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
                 }
-                else if(nav_left_turn){
+                // Allow tight turns while
+                if(nav_left_turn){
                     roboNav.turnLeft(multiplier);
                 }
                 else if(nav_right_turn){
@@ -131,6 +135,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
             else if(gripper_grab){
                 Gripper.grabIn();
+            }
+
+            if (shift_left) {
+                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, 0.6, 5, 5000);
+            }
+            else if (shift_right) {
+                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, 0.6, 5, 5000);
             }
 
             // Foundation Hook Controls
