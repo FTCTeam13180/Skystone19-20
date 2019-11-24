@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="BlueLoadingZoneWall", group="autonomusGroup1")
-public class BlueLoadingZoneWall extends LinearOpMode {
+@Autonomous(name="RedLoadingZoneBridge", group="autonomusGroup1")
+public class RedLoadingZoneBridge extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
     private Intake intake;
@@ -43,13 +43,13 @@ public class BlueLoadingZoneWall extends LinearOpMode {
             //grab.grabIn();
             //winch down
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,15*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,95,5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,NAVIGATOR_POWER,95,5000);
 //            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
 //            grab.grabIn();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,36*2.54,10000);
             //grab.release();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,84*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,24*2.54,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,24*2.54,10000);
             sleep(10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,72*2.54,10000);
 
@@ -74,7 +74,7 @@ public class BlueLoadingZoneWall extends LinearOpMode {
 
             }
 */
-        break;
+            break;
         }
     }
 }
