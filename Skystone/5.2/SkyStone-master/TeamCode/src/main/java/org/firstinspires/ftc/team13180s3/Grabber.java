@@ -13,11 +13,11 @@ Grabber {
 
     }
     public void grabIn(){
-        grab.setPosition(0.6);
+        grab.setPosition(0.1);
 
     }
     public void release(){
-        grab.setPosition(0.2);
+        grab.setPosition(0.6);
 
     }
 }

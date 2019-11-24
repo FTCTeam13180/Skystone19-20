@@ -71,7 +71,7 @@ public class WinchUp {
 
             runtime.reset();
 
-            upDown.setPower(abs(speed));
+            goUp(speed*(Math.abs(cms)/cms));
 
             // keep looping while we are still active, and there is time left, and motor is running.
             while (opMode.opModeIsActive() &&
@@ -86,7 +86,7 @@ public class WinchUp {
             }
 
             // Stop all motion;
-            upDown.setPower(0);
+            stop();
 
             // Turn off RUN_TO_POSITION
             upDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -22,5 +22,8 @@ public class Hook {
 
         hook.setPosition(0);
     }
+    public  void halfattach(double value){
+        hook.setPosition(value);
+    }
 }
 
