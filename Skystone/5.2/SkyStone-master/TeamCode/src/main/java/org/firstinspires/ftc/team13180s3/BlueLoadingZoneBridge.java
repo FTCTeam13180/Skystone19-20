@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="BlueLoadingZoneWall", group="autonomusGroup1")
-public class BlueLoadingZoneWall extends LinearOpMode {
+@Autonomous(name="BlueLoadingZoneBridge", group="autonomusGroup1")
+public class BlueLoadingZoneBridge extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private StoneColorSensor stoneSenor;
     private Intake intake;
@@ -49,9 +49,8 @@ public class BlueLoadingZoneWall extends LinearOpMode {
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,36*2.54,10000);
             //grab.release();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,84*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,24*2.54,10000);
             sleep(10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,72*2.54,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER/2,72*2.54,10000);
 
             /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);
@@ -74,7 +73,7 @@ public class BlueLoadingZoneWall extends LinearOpMode {
 
             }
 */
-        break;
+            break;
         }
     }
 }
