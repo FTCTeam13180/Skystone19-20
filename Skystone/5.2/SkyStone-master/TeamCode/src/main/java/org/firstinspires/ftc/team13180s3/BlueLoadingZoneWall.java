@@ -51,25 +51,26 @@ public class BlueLoadingZoneWall extends LinearOpMode {
             //winch out 5 inch
             //grab.grabIn();
             //winch down
-            outWinch.goOutTime(-0.6,1700);
+            outWinch.goOutTime(-0.6,1500);
             sleep(1000);
             upWinch.encoderDrive(NAVIGATOR_POWER,6*2.54,2200);
             sleep(500);
             grab.grabIn();
             sleep(500);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,15*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,97,5000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,100,5000);
 //            upWinch.encoderDrive(NAVIGATOR_POWER,5*2.54,1200);
 
 //            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
 //            grab.grabIn();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,36*2.54,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,44*2.54,10000);
             grab.release();
             //grab.release();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,60*2.54,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,68*2.54,10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,5*2.54,10000);
             sleep(5000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,54*2.54,10000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT,NAVIGATOR_POWER,7*2.54,10000);
 
             /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);

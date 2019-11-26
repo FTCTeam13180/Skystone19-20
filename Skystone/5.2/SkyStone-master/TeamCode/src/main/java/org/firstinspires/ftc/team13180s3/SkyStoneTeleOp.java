@@ -151,6 +151,9 @@ public class SkyStoneTeleOp extends LinearOpMode {
             else if(hook_detach){
                 hook.detach();
             }
+            else if(gamepad1.dpad_right){
+                hook.halfattach(0.5);
+            }
         }
 
     }

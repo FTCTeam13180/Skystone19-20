@@ -60,9 +60,10 @@ public class RedBuildingZoneBridge extends LinearOpMode {
             winchOut.goOutTime(-0.6,2600);
             hook.detach();
             winchUp.encoderDrive(NAVIGATOR_POWER,5*2.54,1000);
+            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,12*2.54,2000);
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,36*2.54,2000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER,24*2.54,2000);
-            //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,20*2.54,2000);
+
+            //robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,20*w 2.54,2000);
 
             // winchOut.goOutTime(0.6, 1000);
             //winchUp.goDownTime(0.6, 2000);
