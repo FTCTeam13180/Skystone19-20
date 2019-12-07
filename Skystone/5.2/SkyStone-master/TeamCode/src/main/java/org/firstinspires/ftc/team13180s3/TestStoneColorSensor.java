@@ -14,12 +14,11 @@ public class TestStoneColorSensor extends LinearOpMode {
         stoneSensor.init();
         waitForStart();
         while (opModeIsActive()) {
-            if(stoneSensor.isBlackColor()){
-                telemetry.addLine("Black");
-            }
-            else if(stoneSensor.isYellowColor()){
+            if(stoneSensor.yello()){
                 telemetry.addLine("Yellow");
-
+            }
+            else if(stoneSensor.yello()==false){
+                telemetry.addLine("Black");
             }
             telemetry.update();
         }
