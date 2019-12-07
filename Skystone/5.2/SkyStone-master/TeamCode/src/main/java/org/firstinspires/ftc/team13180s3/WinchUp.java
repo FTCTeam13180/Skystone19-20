@@ -39,6 +39,13 @@ public class WinchUp {
         opMode.sleep(time);
         stop();
     }
+    public void LevelUp(double levels){
+        encoderDrive(0.8,2.54*-4*levels,10000);
+    }
+    public void LevelDown(double levels){
+        encoderDrive(0.8,2.54*4*levels,10000);
+    }
+    //its reversed dont worry about it ^^
     public void encoderDrive(double speed,
                              double cms,
                              double timeoutMs) {
