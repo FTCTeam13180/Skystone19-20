@@ -122,10 +122,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             if(arm_up){
                 vWinch.goUp(vWinchPowerUp);
+                //vWinch.encoderDrive(1,6,1000);
             }
             else if(arm_down){
                 vWinch.goDown(vWinchPowerDown);
+                //vWinch.encoderDrive(1,-6,1000);
             }
+            //
             else {
                 vWinch.stop();
             }
