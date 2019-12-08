@@ -144,6 +144,8 @@ public class RoboNavigator {
                             double turn, double power){
         double d1= power*Math.sin(angle-(Math.PI/4));
         double d2=power*Math.sin(angle+(Math.PI/4));
+
+
         topl.setPower(d1+turn);
         topr.setPower(d2-turn);
         rearl.setPower(d2+turn);

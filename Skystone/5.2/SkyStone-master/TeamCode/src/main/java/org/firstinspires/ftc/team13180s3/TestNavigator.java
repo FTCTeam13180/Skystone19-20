@@ -69,7 +69,7 @@ public class TestNavigator extends LinearOpMode {
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,5000);
             }
             if(gamepad2.left_stick_x>0.1 ||gamepad2.left_stick_y>0.1){
-                double ang=robotnav.getAngle(gamepad2.left_stick_x,gamepad2.left_stick_y);
+                double ang=Math.atan2(gamepad2.left_stick_y,-gamepad2.left_stick_y);
                 if(ang<0){
                     ang=Math.abs(ang)+Math.PI;
                 }
