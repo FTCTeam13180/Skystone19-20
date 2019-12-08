@@ -31,7 +31,7 @@ public class RoboNavigator {
     private DcMotor rearr;
     private DcMotor rearl;
     BNO055IMU imu;
-    Orientation pos;
+    double delta=0;
     boolean logging = true;
 
     RoboNavigator (LinearOpMode op)
@@ -59,9 +59,11 @@ public class RoboNavigator {
         imu = opMode.hardwareMap.get(BNO055IMU.class, "imu123");
         imu.initialize(param);
     }
+
     public double toCM(double inches){
         return inches*2.54;
     }
+
     public void moveForward(double power) {
         topr.setPower(abs(power));
         topl.setPower(abs(power));
@@ -101,33 +103,6 @@ public class RoboNavigator {
             opMode.telemetry.addData ("RoboNavigator:", "shiftRight (power=%f)", power);
         }
     }
-    public void diaganolFrontRight (double power){
-        topl.setPower(abs(power));
-        rearr.setPower(abs(power));
-        topr.setPower(.25*abs(power));
-        rearl.setPower(.25*abs(power));
-    }
-
-    public void diagonalFrontLeft (double power){
-        topr.setPower(abs(power));
-        rearl.setPower(abs(power));
-        topl.setPower(.25*abs(power));
-        rearr.setPower(.25*abs(power));
-    }
-
-    public void diagonalBackRight (double power){
-        topl.setPower(-abs(power));
-        rearr.setPower(-abs(power));
-        topr.setPower(.25*-abs(power));
-        rearl.setPower(.25*-abs(power));
-    }
-
-    public void diagonalBackLeft (double power){
-        topr.setPower(-abs(power));
-        rearl.setPower(-abs(power));
-        topl.setPower(.25*-abs(power));
-        rearr.setPower(.25*-abs(power));
-    }
 
     public double getAngle(double x,double y){
         return Math.atan2(y,x);
@@ -140,102 +115,30 @@ public class RoboNavigator {
         rearr.setPower(power_scale*(x+y)/power);
         rearl.setPower(power_scale*(y-x)/power);
     }
-
-    public void ForwardImu(double pos, double fin,double power){
-        double res=(pos-fin)/2;
-        topr.setPower(power+res);
-        topl.setPower(power-res);
-        rearr.setPower(power+res);
-        rearl.setPower(power-res);
-
-    }
+/*    public void ResetImu(){
+        Orientation imu_O=imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+        double imu_R=imu_O.firstAngle;
+        delta=imu_R-delta;
+    }*/
     public void OmniImu(double x, double y, double power_scale){
-        double res = getAngle(x, y); //gets standard angle of joystick
-        if (res<0){
-            res=Math.PI+Math.abs(res);
-        }
-        pos = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES); //get robot position
-        double cur = Double.parseDouble(formatAngle(pos.angleUnit, pos.firstAngle)); //gets z angle (heading) in double format
-        opMode.telemetry.addData("Raw Imu CurrentPosition: ","%f",cur);
-        double mult=Math.sqrt(x*x+y*y);
-        double ang=ImuToPrincipal(cur);
-        double finalangle=ReceiveDifference(ang,res);
-        finalangle=finalangle%360;
+        double input_radian = Math.atan2(y,x); //gets standard angle of joystick
 
-        finalangle=Math.toRadians(finalangle);
-        opMode.telemetry.addData ("CurrentPosition: ", "%f", ang);
-        opMode.telemetry.addData ("Joystick Input: ", "%f", res);
-        opMode.telemetry.addData ("Diff: ", "%f", finalangle);
+        // Get IMU Orientation in radians for roll movement (around y-axis)
+        Orientation imu_orientation =
+                imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+
+        double imu_radian = imu_orientation.firstAngle+delta;
+
+        double corrected_radian = input_radian - imu_radian;
+
+        opMode.telemetry.addData ("Joystick Input: ", "%f", input_radian);
+        opMode.telemetry.addData ("CurrentPosition: ", "%f", imu_radian);
+
+        opMode.telemetry.addData ("Diff: ", "%f", corrected_radian);
         opMode.telemetry.update();
-        AnyMecanum(mult*Math.cos(finalangle),mult*Math.sin(finalangle), power_scale);
+        AnyMecanum(Math.cos(corrected_radian),Math.sin(corrected_radian), power_scale);
     }
-    public void AccMecanum(double x,double y,double turn){
-                                                                             //           / |
-                                                                        //               /  |  y
-        double mult=Math.sqrt(x*x+y*y); //hypotenuse of triangle formed by joystick x&y /___|
-                                                                       //                 x
-        /*also magnitude  is a multiplier for how fast robot will go
 
-        following 2 methods just plot angle on sin function sin(angle- 1/4pi) for back left and top right wheels
-        &   sin(angle+1/4pi) for top left and back right wheels power
-        functions just have an output of what power should be
-        That is for left joystick
-        */
-        double angle=getAngle(x,y);
-        angle=Math.toRadians(angle);
-        double PosP=getUnitCirclePos(angle,mult);
-        double NegP=getUnitCircleNeg(angle,mult);
-        //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles
-        PosP+=turn;
-        NegP+=turn;
-        if(Math.abs(PosP)>1 || Math.abs(NegP)>1){
-            PosP=PosP/(Math.max(PosP,NegP));
-            NegP=NegP/(Math.max(PosP,NegP));
-            //maintains proportion between both
-        }
-        topl.setPower(NegP);
-        rearl.setPower(PosP);
-        topr.setPower(PosP);
-        rearr.setPower(NegP);
-        /*
-        topl.setPower(PosP);
-        rearl.setPower(NegP);
-        topr.setPower(NegP);
-        rearr.setPower(PosP);
-        */
-        //ask rg if any questions
-    }
-    public void AngAccMecanum(double angle,double mult, double turn){
-
-        /*following 2 methods just plot angle on sin function sin(angle- 1/4pi) for back left and top right wheels
-        &   sin(angle+1/4pi) for top left and back right wheels power
-        functions just have an output of what power should be
-        That is for left joystick
-        */
-        double PosP=getUnitCirclePos(angle,mult);
-        double NegP=getUnitCircleNeg(angle,mult);
-        //turn is meant for right joystick: can add turn in the middle of a shift to avoid obstacles
-        PosP+=turn;
-        NegP+=turn;
-        if(Math.abs(PosP)>1 || Math.abs(NegP)>1){
-            PosP=PosP/(Math.max(PosP,NegP));
-            NegP=NegP/(Math.max(PosP,NegP));
-            //maintains proportion between both
-        }
-        topl.setPower(PosP);
-        rearl.setPower(NegP);
-        topr.setPower(NegP);
-        rearr.setPower(PosP);
-        //ask rg if any questions
-    }
-    private double getUnitCircleNeg(double angle,double mult){
-        double p=Math.sin(angle-(0.25*Math.PI));
-        return p*mult;
-    }
-    private double getUnitCirclePos(double angle,double mult){
-        double p=Math.sin(angle+(0.25*Math.PI));
-        return p*mult;
-    }
     public void SwerveDrive(double angle,
                             double turn, double power){
         double d1= power*Math.sin(angle-(Math.PI/4));
@@ -245,6 +148,7 @@ public class RoboNavigator {
         rearl.setPower(d2+turn);
         rearr.setPower(d1-turn);
     }
+
     public void stopMotor() {
         topl.setPower(0);
         topr.setPower(0);
@@ -272,23 +176,6 @@ public class RoboNavigator {
         if(logging) {
             opMode.telemetry.addData ("RoboNavigator:", "turnLeft (power=%f)", power);
         }
-    }
-
-    public void omniWheelDrive(double r, double robotAngle, double rightX) {
-        double v1 = r * Math.cos(robotAngle) + rightX;
-        double v2 = r * Math.sin(robotAngle) - rightX;
-        double v3 = r * Math.sin(robotAngle) + rightX;
-        double v4 = r * Math.cos(robotAngle) - rightX;
-
-        if(v1 != 0 && v2 != 0 && v3 != 0 && v4 != 0) {
-            opMode.telemetry.addData("OmniWheel:", "v1=%f v2=%f v3=%f v4=%f", v1, v2, v3, v4);
-        }
-
-
-        topl.setPower(v1);
-        topr.setPower(v2);
-        rearl.setPower(v3);
-        rearr.setPower(v4);
     }
 
     public void moveForwardTime(double power, long time) {
@@ -336,29 +223,6 @@ public class RoboNavigator {
      *
      */
 
-    double ImuToPrincipal(double ang){
-        return ang+90;
-    }
-    double ReceiveDifference(double CurPos,double FinPos){
-        if(CurPos>FinPos){
-            CurPos-=FinPos;
-            CurPos=ImuToPrincipal(CurPos);
-            return CurPos;
-        }
-        else{
-            FinPos-=CurPos;
-            FinPos=360-FinPos;
-            FinPos=ImuToPrincipal(FinPos);
-            return FinPos;
-        }
-    }
-    String formatAngle(AngleUnit angUnit, double angle) {
-        return formatDegrees(AngleUnit.DEGREES.fromUnit(angUnit, angle));
-    }
-
-    String formatDegrees(double degrees){
-        return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
-    }
 
 
     private static  final double ROBO_DIAMETER_CM = 62.86;
