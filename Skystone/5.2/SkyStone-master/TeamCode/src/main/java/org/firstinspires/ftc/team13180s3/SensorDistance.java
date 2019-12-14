@@ -7,18 +7,22 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class SensorDistance {
     public LinearOpMode opMode;
-    private DistanceSensor sensorDistance;
+    private DistanceSensor sensorDistanceRight;
+    private DistanceSensor sensorDistanceLeft;
 
     SensorDistance(LinearOpMode op) {
         opMode = op;
     }
 
     public void init() {
-        sensorDistance = opMode.hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+        sensorDistanceRight = opMode.hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+        sensorDistanceLeft = opMode.hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
     }
-    public double getDistance(){
-         return sensorDistance.getDistance(DistanceUnit.CM);
+    public double getDistanceR(){
+         return sensorDistanceRight.getDistance(DistanceUnit.CM);
     }
+    public double getDistanceL(){return sensorDistanceLeft.getDistance(DistanceUnit.CM);}
 
 }
 

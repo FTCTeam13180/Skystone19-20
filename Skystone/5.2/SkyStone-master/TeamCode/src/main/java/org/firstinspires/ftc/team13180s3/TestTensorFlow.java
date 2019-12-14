@@ -17,14 +17,12 @@ public class TestTensorFlow extends LinearOpMode {
                 detect.activate();
             }
             if(gamepad1.b){
-                boolean skytone = detect.scan();
-                /*if(skytone == true) {
-                    telemetry.addData("Yes", "Skystone Detected");
-                } else {
-                    telemetry.addData("No", "NO Skystone Detected");
+                boolean skystone = detect.scan();
+                if(skystone){
+                    telemetry.addLine("Skystone Found");
+                    telemetry.addData("skstone found", 10);
+
                 }
-                telemetry.update();
-                */
             }
 
             }
