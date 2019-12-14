@@ -12,7 +12,7 @@ public class RedLoadingZoneBridge extends LinearOpMode {
     private Grabber grab;
     private Hook hook;
     private WinchUp upWinch;
-    private WinchOut outWinch;
+    private Elevator outWinch;
 
     @Override
     public void runOpMode() {
@@ -31,7 +31,7 @@ public class RedLoadingZoneBridge extends LinearOpMode {
         hook= new Hook(this);
         hook.init();
         upWinch=new WinchUp(this);
-        outWinch=new WinchOut(this);
+        outWinch=new Elevator(this);
         upWinch.init();
         outWinch.init();
         double NAVIGATOR_POWER = 0.5; // check

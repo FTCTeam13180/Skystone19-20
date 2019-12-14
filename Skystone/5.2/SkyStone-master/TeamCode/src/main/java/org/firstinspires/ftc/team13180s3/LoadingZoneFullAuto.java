@@ -3,8 +3,6 @@ package org.firstinspires.ftc.team13180s3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-
 
 @Autonomous(name="LoadinZoneFullAuto", group="autonomusGroup1")
 public class LoadingZoneFullAuto extends LinearOpMode {
@@ -14,7 +12,7 @@ public class LoadingZoneFullAuto extends LinearOpMode {
     private Grabber grab;
     private Hook hook;
     private WinchUp upWinch;
-    private WinchOut outWinch;
+    private Elevator outWinch;
     private SkyStoneTensorFlow detect;
 
     @Override
@@ -26,7 +24,7 @@ public class LoadingZoneFullAuto extends LinearOpMode {
         hook= new Hook(this);
         hook.init();
         upWinch=new WinchUp(this);
-        outWinch=new WinchOut(this);
+        outWinch=new Elevator(this);
         upWinch.init();
         outWinch.init();
         detect = new SkyStoneTensorFlow();

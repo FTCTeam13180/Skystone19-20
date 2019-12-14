@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class SkyStoneTeleOp extends LinearOpMode {
     private RoboNavigator roboNav;
     private WinchUp vWinch;
-    private WinchOut hWinch;
+    private Elevator hWinch;
     private Grabber Gripper;
     private Hook hook;
     double vWinchPowerUp=1.0;
@@ -18,7 +18,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
     public void runOpMode (){
         roboNav = new RoboNavigator(this);
         vWinch=new WinchUp(this);
-        hWinch=new WinchOut(this);
+        hWinch=new Elevator(this);
         Gripper=new Grabber(this);
         hook=new Hook(this);
         roboNav.init();

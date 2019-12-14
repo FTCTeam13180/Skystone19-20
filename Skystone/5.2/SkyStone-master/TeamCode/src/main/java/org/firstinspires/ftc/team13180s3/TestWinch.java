@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="TestWinch", group="manualmode")
 public class TestWinch extends LinearOpMode {
     public WinchUp vert;
-    public WinchOut horiz;
+    public Elevator horiz;
     double landerpower = 0.6;
     @Override
     public void runOpMode() throws InterruptedException {
         vert=new WinchUp(this);
-        horiz= new WinchOut(this);
+        horiz= new Elevator(this);
         vert.init();
         horiz.init();
         waitForStart();
