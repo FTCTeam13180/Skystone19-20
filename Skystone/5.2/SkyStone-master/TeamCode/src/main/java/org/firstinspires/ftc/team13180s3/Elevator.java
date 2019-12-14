@@ -61,9 +61,7 @@ public class Elevator {
         upDownWinch.setPower(-abs(power));
     }
 
-    public void stopUpDown(){
-        upDownWinch.setPower(0);
-    }
+    public void stopUpDown(){ upDownWinch.setPower(0); }
 
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
