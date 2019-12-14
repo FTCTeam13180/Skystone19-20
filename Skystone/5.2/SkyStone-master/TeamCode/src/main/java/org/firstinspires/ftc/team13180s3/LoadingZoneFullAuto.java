@@ -9,8 +9,7 @@ public class LoadingZoneFullAuto extends LinearOpMode {
     private RoboNavigator robotNavigator;
     private Grabber grab;
     private Hook hook;
-    private WinchUp upWinch;
-    private Elevator outWinch;
+    private Elevator elevator;
     private SkyStoneTensorFlow detect;
 
     @Override
@@ -21,10 +20,8 @@ public class LoadingZoneFullAuto extends LinearOpMode {
         grab.init();
         hook= new Hook(this);
         hook.init();
-        upWinch=new WinchUp(this);
-        outWinch=new Elevator(this);
-        upWinch.init();
-        outWinch.init();
+        elevator =new Elevator(this);
+        elevator.init();
         detect = new SkyStoneTensorFlow();
         detect.initvuforia(this);
         detect.initTfod(this);
@@ -39,7 +36,7 @@ public class LoadingZoneFullAuto extends LinearOpMode {
             // winch.up()
             // go forward 25 inches
 
-            upWinch.encoderDrive(NAVIGATOR_POWER,-2.5*2.54,200);
+            elevator.upDownEncoderDrive(NAVIGATOR_POWER,-2.5*2.54,200);
             grab.release();
             robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
             //winch out 5 inch
@@ -53,9 +50,9 @@ public class LoadingZoneFullAuto extends LinearOpMode {
             else{
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
             }
-            outWinch.goOutByRotations(0.8,4);
+            elevator.goOutByRotations(0.8,4);
             sleep(1000);
-            upWinch.encoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+            elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
             sleep(500);
             grab.grabIn();
             sleep(500);
