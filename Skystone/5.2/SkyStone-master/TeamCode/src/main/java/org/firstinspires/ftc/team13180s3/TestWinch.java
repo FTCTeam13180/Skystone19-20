@@ -23,16 +23,23 @@ public class TestWinch extends LinearOpMode {
             } else if(Math.abs(sidedir)>.1) {
                 horiz.goOut(sidedir);
             }
-              else if(gamepad1.y){
-                horiz.goOutTime(0.8,1000);
+              else if(gamepad2.y){
+                horiz.goOutByRotations(1.0,5);
+            }
+              else if(gamepad2.x){
+                horiz.goInByRotations(1.0, 5);
+            }
+              else if(gamepad2.right_bumper){
+                  horiz.goOut(1.0);
+            }
+              else if(gamepad2.left_bumper){
+                  horiz.goIn(1.0);
             }
               else if(gamepad1.b){
-                vert.goUpTime(0.8,2000);
+                 vert.goUpTime(0.8,2000);
             }
              else if(gamepad2.a){
                 vert.encoderDrive(landerpower,2*2.54,5000);
-            } else if(gamepad2.x){
-                horiz.encoderDrive(landerpower,2*2.54,5000);
             }
             else{
                 horiz.stop();
