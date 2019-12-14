@@ -61,9 +61,7 @@ public class Elevator {
         upDownWinch.setPower(-abs(power));
     }
 
-    public void stopUpDown(){
-        upDownWinch.setPower(0);
-    }
+    public void stopUpDown(){ upDownWinch.setPower(0); }
 
     public void resetLevel() {
         upDownWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
