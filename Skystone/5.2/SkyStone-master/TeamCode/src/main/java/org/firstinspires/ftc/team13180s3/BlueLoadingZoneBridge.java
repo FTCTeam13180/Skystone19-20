@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name="BlueLoadingZoneBridge", group="autonomusGroup1")
 public class BlueLoadingZoneBridge extends LinearOpMode {
     private RoboNavigator robotNavigator;
-    private StoneColorSensor stoneSenor;
-    private Intake intake;
     private Grabber grab;
     private Hook hook;
     private WinchUp upWinch;
@@ -51,7 +49,7 @@ public class BlueLoadingZoneBridge extends LinearOpMode {
             //winch out 5 inch
             //grab.grabIn();
             //winch down
-            outWinch.goOutTime(-0.6,1500);
+            outWinch.goOutByRotations(0.6,4);
             sleep(1000);
             upWinch.encoderDrive(NAVIGATOR_POWER,6*2.54,2200);
             sleep(500);

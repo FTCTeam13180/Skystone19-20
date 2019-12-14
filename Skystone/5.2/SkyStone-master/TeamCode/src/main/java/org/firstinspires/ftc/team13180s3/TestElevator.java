@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="TestElevator", group="manualmode")
 public class TestElevator extends LinearOpMode {
     public Elevator elevator;
-    double landerpower = 0.6;
     @Override
     public void runOpMode() throws InterruptedException {
         elevator =new Elevator (this);
@@ -43,7 +42,7 @@ public class TestElevator extends LinearOpMode {
                   elevator.goDown(1.0);
             }
              else if(gamepad1.a){
-                elevator.encoderDrive(landerpower,2*2.54,5000);
+                elevator.upDownEncoderDrive(0.8,2*2.54,5000);
             }
              else{
                 elevator.stopInOut();

@@ -18,7 +18,7 @@ public class TestDistanceSensor extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()){
             if(gamepad1.a){
-                mydistance = distance.getDistance();
+                mydistance = distance.getDistanceR();
                 telemetry.addData("Distance: ", String.format(Locale.US, "%.02f", mydistance));
                 telemetry.update();
             }

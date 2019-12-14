@@ -64,8 +64,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="DcMotorEncoderTest: Auto Drive By Encoder", group="manualmode")
-public class DcMotorEncoderTest extends LinearOpMode {
+@Autonomous(name="TestDcMotorEncoder: Auto Drive By Encoder", group="manualmode")
+public class TestDcMotorEncoder extends LinearOpMode {
 
     /* Declare OpMode members. */
     DcMotor dcMotor ;

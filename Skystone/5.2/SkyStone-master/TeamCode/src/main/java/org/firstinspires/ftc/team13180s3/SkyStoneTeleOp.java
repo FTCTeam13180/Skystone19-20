@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "SkyStoneTeleOp", group = "manualmode")
 public class SkyStoneTeleOp extends LinearOpMode {
     private RoboNavigator roboNav;
-    private WinchUp vWinch;
-    private Elevator hWinch;
+    private Elevator elevator;
     private Grabber Gripper;
     private Hook hook;
     double vWinchPowerUp=1.0;
@@ -17,14 +16,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
     boolean gripperPos=false;
     public void runOpMode (){
         roboNav = new RoboNavigator(this);
-        vWinch=new WinchUp(this);
-        hWinch=new Elevator(this);
+        elevator =new Elevator(this);
         Gripper=new Grabber(this);
         hook=new Hook(this);
         roboNav.init();
         roboNav.initIMU();
-        vWinch.init();
-        hWinch.init();
+        elevator.init();
         Gripper.init();
         hook.init();
         waitForStart();
@@ -111,26 +108,26 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             // Arm Controls
             if(arm_out){
-                hWinch.goOut(1);
+                elevator.goOut(1);
             }
             else if(arm_in){
-                hWinch.goIn(1);
+                elevator.goIn(1);
             }
             else {
-                hWinch.stop();
+                elevator.stopInOut();
             }
 
             if(arm_up){
-                vWinch.goUp(vWinchPowerUp);
+                elevator.goUp(vWinchPowerUp);
                 //vWinch.encoderDrive(1,6,1000);
             }
             else if(arm_down){
-                vWinch.goDown(vWinchPowerDown);
+                elevator.goDown(vWinchPowerDown);
                 //vWinch.encoderDrive(1,-6,1000);
             }
             //
             else {
-                vWinch.stop();
+                elevator.stopUpDown();
             }
 
             if(gripper_release){
