@@ -65,6 +65,17 @@ public class Elevator {
         upDownWinch.setPower(0);
     }
 
+    public void resetLevel() {
+        upDownWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void goUpOneLevel() {
+        upDownEncoderDrive (1.0, 2.54 * 4, 3000);
+    }
+
+    public void goDownOneLevel() {
+        upDownEncoderDrive (1.0, -2.54 * 4, 3000);
+    }
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
