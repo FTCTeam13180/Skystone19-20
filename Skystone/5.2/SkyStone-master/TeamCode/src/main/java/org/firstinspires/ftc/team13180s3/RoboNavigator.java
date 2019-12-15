@@ -30,6 +30,7 @@ public class RoboNavigator {
     private DcMotor topr;
     private DcMotor rearr;
     private DcMotor rearl;
+    private double navigatorPower;
     BNO055IMU imu;
     double delta=0;
     boolean logging = true;
@@ -46,6 +47,7 @@ public class RoboNavigator {
         rearr = opMode.hardwareMap.get(DcMotor.class, "Rearr");
         topr.setDirection(DcMotor.Direction.REVERSE);
         rearr.setDirection(DcMotor.Direction.REVERSE);
+        navigatorPower = 1.0;
         if(logging) {
             opMode.telemetry.addData("RoboNavigator:", "Initialized");
         }
@@ -60,8 +62,12 @@ public class RoboNavigator {
         imu.initialize(param);
     }
 
-    public double toCM(double inches){
-        return inches*2.54;
+    public void setNavigatorPower (double p) {
+        navigatorPower = p;
+    }
+
+    public double getNavigatorPower () {
+        return navigatorPower;
     }
 
     /*
@@ -147,28 +153,28 @@ public class RoboNavigator {
      ************************
      */
 
-    public void moveForward (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.FORWARD, power, inches * 2.54, timeoutMs);
+    public void moveForward (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void moveBackward (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.BACKWARD, power, inches * 2.54, timeoutMs);
+    public void moveBackward (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.BACKWARD, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void shiftLeft (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.SHIFT_LEFT, power, inches * 2.54, timeoutMs);
+    public void shiftLeft (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.SHIFT_LEFT, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void shiftRight (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.SHIFT_RIGHT, power, inches * 2.54, timeoutMs);
+    public void shiftRight (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.SHIFT_RIGHT, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void turnLeft (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.TURN_LEFT, power, inches * 2.54, timeoutMs);
+    public void turnLeft (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_LEFT, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void turnRight (double power, double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.TURN_RIGHT, power, inches * 2.54, timeoutMs);
+    public void turnRight (double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_RIGHT, navigatorPower, inches * 2.54, timeoutMs);
     }
 
 
