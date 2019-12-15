@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="BuildingZoneWall", group="autonomusGroup1")
+@Autonomous(name="BlueBuildingZoneWall", group="autonomusGroup1")
 public class BlueBuildingZoneWall extends LinearOpMode {
     private BuildingZoneFullAuto fullAuto;
 
