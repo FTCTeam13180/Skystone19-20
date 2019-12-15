@@ -9,7 +9,8 @@ import static java.lang.Math.abs;
 public class Elevator {
     public LinearOpMode opMode;
     private CRServo inOutWinch;
-    private DcMotor upDownWinch;
+    private DcMotor upDownWinchL;
+    private DcMotor upDownWinchR;
 
 
     private final double MSECS_PER_ROTATION = 840;
@@ -20,7 +21,8 @@ public class Elevator {
 
     public void init() {
         inOutWinch = opMode.hardwareMap.get(CRServo.class, "horizontalWinch");
-        upDownWinch=opMode.hardwareMap.get(DcMotor.class,"verticalWinch");
+        upDownWinchL=opMode.hardwareMap.get(DcMotor.class,"verticalWinchL");
+        upDownWinchR=opMode.hardwareMap.get(DcMotor.class,"verticalWinchR");
     }
 
     //
@@ -54,17 +56,26 @@ public class Elevator {
     // UpDownWinch Controls used by elevator arm
     //
     public void goUp(double power){
-        upDownWinch.setPower(abs(power));
+
+        upDownWinchL.setPower(abs(power));
+        upDownWinchR.setPower(-abs(power));
     }
 
     public void goDown(double power){
-        upDownWinch.setPower(-abs(power));
+
+        upDownWinchL.setPower(-abs(power));
+        upDownWinchR.setPower(abs(power));
     }
 
-    public void stopUpDown(){ upDownWinch.setPower(0); }
+    public void stopUpDown(){
+        upDownWinchL.setPower(0);
+        upDownWinchR.setPower(0);
+    }
 
     public void resetLevel() {
-        upDownWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        upDownWinchL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDownWinchR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void goUpOneLevel() {
@@ -84,17 +95,20 @@ public class Elevator {
     public void upDownEncoderDrive(double speed,
                                    double cms,
                                    double timeoutMs) {
-        int newWinchUpTarget;
+        int newWinchUpTarget1;
+        int newWinchUpTarget2;
 
         opMode.telemetry.addData("Elevator:", "Resetting Encoders");    //
         opMode.telemetry.update();
 
-        upDownWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        upDownWinch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        upDownWinchL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDownWinchL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        upDownWinchR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDownWinchR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         opMode.telemetry.addData("Path0", "Starting at %7d",
-                upDownWinch.getCurrentPosition());
+                upDownWinchL.getCurrentPosition());
         opMode.telemetry.update();
 
 
@@ -102,11 +116,13 @@ public class Elevator {
         if (opMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newWinchUpTarget = upDownWinch.getCurrentPosition() + (int) (cms * COUNTS_PER_CM);
-            upDownWinch.setTargetPosition(newWinchUpTarget);
+            newWinchUpTarget1 = upDownWinchL.getCurrentPosition() + (int) (cms * COUNTS_PER_CM);
+            newWinchUpTarget2 = upDownWinchR.getCurrentPosition() + (int) (-cms * COUNTS_PER_CM);
+            upDownWinchL.setTargetPosition(newWinchUpTarget1);
+            upDownWinchR.setTargetPosition(newWinchUpTarget2);
 
             // Turn On RUN_TO_POSITION
-            upDownWinch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            upDownWinchL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             ElapsedTime runtime = new ElapsedTime();
@@ -118,12 +134,12 @@ public class Elevator {
             // keep looping while we are still active, and there is time left, and motor is running.
             while (opMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutMs) &&
-                    (upDownWinch.isBusy())) {
+                    (upDownWinchL.isBusy())&&(upDownWinchR.isBusy())) {
 
                 // Display it for the driver.
-                opMode.telemetry.addData("Path1", "Running to %7d", newWinchUpTarget);
+                opMode.telemetry.addData("Path1", "Running to %7d", newWinchUpTarget1);
                 opMode.telemetry.addData("Path2", "Running at %7d",
-                        upDownWinch.getCurrentPosition());
+                        upDownWinchR.getCurrentPosition(), upDownWinchL.getCurrentPosition());
                 opMode.telemetry.update();
             }
 
@@ -131,7 +147,8 @@ public class Elevator {
             stopUpDown();
 
             // Turn off RUN_TO_POSITION
-            upDownWinch.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            upDownWinchL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            upDownWinchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         }
     }
