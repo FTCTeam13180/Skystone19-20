@@ -64,6 +64,22 @@ public class RoboNavigator {
         return inches*2.54;
     }
 
+    /*
+     ******************************
+     * Basic Movement
+     ******************************
+     */
+
+    public void stopMotor() {
+        topl.setPower(0);
+        topr.setPower(0);
+        rearl.setPower(0);
+        rearr.setPower(0);
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "stopMotor ()");
+        }
+    }
+
     public void moveForward(double power) {
         topr.setPower(abs(power));
         topl.setPower(abs(power));
@@ -104,6 +120,63 @@ public class RoboNavigator {
         }
     }
 
+    public void turnRight (double power){
+        topl.setPower(abs(power));
+        topr.setPower(-abs(power));
+        rearl.setPower(abs(power));
+        rearr.setPower(-abs(power));
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "turnRight (power=%f)", power);
+        }
+    }
+
+    public void turnLeft (double power){
+        topl.setPower(-abs(power));
+        topr.setPower(abs(power));
+        rearl.setPower(-abs(power));
+        rearr.setPower(abs(power));
+        if(logging) {
+            opMode.telemetry.addData ("RoboNavigator:", "turnLeft (power=%f)", power);
+        }
+    }
+
+
+    /*
+     ************************
+     * Encoder based Basic Movement
+     ************************
+     */
+
+    public void moveForward (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.FORWARD, power, inches * 2.54, timeoutMs);
+    }
+
+    public void moveBackward (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.BACKWARD, power, inches * 2.54, timeoutMs);
+    }
+
+    public void shiftLeft (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.SHIFT_LEFT, power, inches * 2.54, timeoutMs);
+    }
+
+    public void shiftRight (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.SHIFT_RIGHT, power, inches * 2.54, timeoutMs);
+    }
+
+    public void turnLeft (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_LEFT, power, inches * 2.54, timeoutMs);
+    }
+
+    public void turnRight (double power, double inches, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_RIGHT, power, inches * 2.54, timeoutMs);
+    }
+
+
+    /*
+     *************************
+     * OmniDrives
+     *************************
+     */
     public double getAngle(double x,double y){
         return Math.atan2(y,x);
     }
@@ -140,6 +213,12 @@ public class RoboNavigator {
         AnyMecanum(Math.cos(corrected_radian),Math.sin(corrected_radian), power_scale);
     }
 
+
+    /*
+     *********************
+     * SwerveDrive
+     *********************
+     */
     public void SwerveDrive(double angle,
                             double turn, double power){
         double d1= power*Math.sin(angle-(Math.PI/4));
@@ -152,68 +231,6 @@ public class RoboNavigator {
         rearr.setPower(d1-turn);
     }
 
-    public void stopMotor() {
-        topl.setPower(0);
-        topr.setPower(0);
-        rearl.setPower(0);
-        rearr.setPower(0);
-        if(logging) {
-            opMode.telemetry.addData ("RoboNavigator:", "stopMotor ()");
-        }
-    }
-    public void turnRight (double power){
-        topl.setPower(abs(power));
-        topr.setPower(-abs(power));
-        rearl.setPower(abs(power));
-        rearr.setPower(-abs(power));
-        if(logging) {
-            opMode.telemetry.addData ("RoboNavigator:", "turnRight (power=%f)", power);
-        }
-    }
-
-    public void turnLeft (double power){
-        topl.setPower(-abs(power));
-        topr.setPower(abs(power));
-        rearl.setPower(-abs(power));
-        rearr.setPower(abs(power));
-        if(logging) {
-            opMode.telemetry.addData ("RoboNavigator:", "turnLeft (power=%f)", power);
-        }
-    }
-
-    public void moveForwardTime(double power, long time) {
-        moveForward(power);
-        opMode.sleep(time);
-        stopMotor();
-    }
-
-    public void moveBackwardTime(double power, long time) {
-        moveBackward(power);
-        opMode.sleep(time);
-        stopMotor();
-    }
-    public void shiftRightTime(double power, long time) {
-        shiftRight(power);
-        opMode.sleep(time);
-        stopMotor();}
-
-    public void shiftLeftTime(double power, long time) {
-        shiftLeft(power);
-        opMode.sleep(time);
-        stopMotor();
-    }
-
-    public void turnRightTime(double power, long time) {
-        turnRight(power);
-        opMode.sleep(time);
-        stopMotor();
-    }
-
-    public void turnLefttTime(double power, long time) {
-        turnLeft(power);
-        opMode.sleep(time);
-        stopMotor();
-    }
 
 
     /*
@@ -227,6 +244,10 @@ public class RoboNavigator {
      */
 
 
+    /*
+     * Internal Encoder Drive implementation
+     * Prefer not to use these functions directly. Instead use the Encoder based Basic Movement functions
+     */
 
     private static  final double ROBO_DIAMETER_CM = 62.86;
     private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
@@ -340,7 +361,7 @@ public class RoboNavigator {
 
             // Set Target Position
 
-        setTargetPosition(direction, cms);
+            setTargetPosition(direction, cms);
 
             // Turn On RUN_TO_POSITION
             setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
