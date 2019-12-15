@@ -169,12 +169,12 @@ public class RoboNavigator {
         encoderDrive(DIRECTION.SHIFT_RIGHT, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void turnLeft (double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.TURN_LEFT, navigatorPower, inches * 2.54, timeoutMs);
+    public void turnLeft (double degrees, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_LEFT, navigatorPower, degrees, timeoutMs);
     }
 
-    public void turnRight (double inches, long timeoutMs) {
-        encoderDrive(DIRECTION.TURN_RIGHT, navigatorPower, inches * 2.54, timeoutMs);
+    public void turnRight (double degrees, long timeoutMs) {
+        encoderDrive(DIRECTION.TURN_RIGHT, navigatorPower, degrees, timeoutMs);
     }
 
 
