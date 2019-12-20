@@ -63,12 +63,14 @@ public class BuildingZoneFullAuto {
         //pull foundation towards the bridges, away from north wall
         // then turning the foundation
         double turn_degrees = 210;
-        if (alliance == Alliance.BLUE)
+        if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
             robotNavigator.turnLeft(turn_degrees, 10000);
-        else
+        }
+        else{
             robotNavigator.shiftRight(12, 10000);
             robotNavigator.turnRight(turn_degrees, 10000);
+        }
 
         // Pushing foundation into depot
         robotNavigator.moveBackward(24,10000);

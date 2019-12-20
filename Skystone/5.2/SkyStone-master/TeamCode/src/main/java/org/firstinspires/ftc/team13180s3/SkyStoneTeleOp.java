@@ -154,6 +154,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
             else if(gamepad1.dpad_right){
                 hook.halfattach(0.5);
             }
+            if(gamepad2.dpad_right){
+                Gripper.rotateToDegrees_0();
+            }
+            else if(gamepad2.dpad_left){
+                Gripper.rotateToDegrees_180();
+            }
         }
 
     }
