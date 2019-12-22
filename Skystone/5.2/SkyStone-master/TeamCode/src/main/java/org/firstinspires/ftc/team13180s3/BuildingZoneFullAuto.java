@@ -67,10 +67,12 @@ public class BuildingZoneFullAuto {
             robotNavigator.shiftLeft(12, 10000);
             robotNavigator.turnLeft(turn_degrees, 10000);
         }
+
         else {
             robotNavigator.shiftRight(12, 10000);
             robotNavigator.turnRight(turn_degrees, 10000);
         }
+
         // Pushing foundation into depot
         robotNavigator.moveBackward(24,10000);
 
