@@ -53,20 +53,13 @@ public class LoadingZoneFullAuto {
         hook.detach();
 
 
-            //This is assuming that we are next to the blue depot
-            opMode.telemetry.addLine("Front of Robot Should be forward");
-            opMode.telemetry.update();
-            //winch up(TODO)
-            // winch.up()
-            // go forward 25 inches
-
-            elevator.upDownEncoderDrive(NAVIGATOR_POWER,-2.5*2.54,200);
-            grab.release();
-            
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
-            //winch out 5 inch
-            //grab.grabIn();
-            //winch down
+        opMode.telemetry.addLine("Front of Robot Should be forward");
+        opMode.telemetry.update();
+        opMode.sleep(100);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-2.5*2.54,200);
+        grab.release();
+        robotNavigator.moveForward(25,4000);
+/*  *** SKYSTONE DETECTION- ADD LATER ***
             detect.activate();
             if(detect.scan()){
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
@@ -75,46 +68,85 @@ public class LoadingZoneFullAuto {
             else{
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
             }
-            elevator.goOutByRotations(0.8,4);
-            opMode.sleep(1000);
-            elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
-            opMode.sleep(500);
-            grab.grabIn();
-            opMode.sleep(500);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,15*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT,NAVIGATOR_POWER,100,5000);
-//            upWinch.encoderDrive(NAVIGATOR_POWER,5*2.54,1200);
-
-//            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 4*2.54, 1000);
-//            grab.grabIn();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,44*2.54,10000);
-            grab.release();
-            //grab.release();
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD,NAVIGATOR_POWER,68*2.54,10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT,NAVIGATOR_POWER,5*2.54,10000);
-            opMode.sleep(5000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD,NAVIGATOR_POWER,54*2.54,10000);
-
-            /*robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 42*2.54, 10000);
-            robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 24*2.54, 10000);
-            while(stoneSenor.isBlackColor() == false){
-                stoneSenor.getColorSensor();
-                if (stoneSenor.isYellowColor() == true){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER,6*2.54, 10000);
-                }
-                else if(stoneSenor.isBlackColor()){
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.BACKWARD, NAVIGATOR_POWER, 6*2.54, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, NAVIGATOR_POWER, 6*2.54, 10000);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 6*2.54, 10000);
-                    intake.startIntake(0.6);
-                    robotNavigator.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, NAVIGATOR_POWER, 12*2.54, 10000);
-                    break;
-
-
-
-                }
-
-            }
 */
+        elevator.goOutByRotations(0.8,4);
+        opMode.sleep(500);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+        opMode.sleep(400);
+        grab.grabIn();
+        opMode.sleep(400);
+        robotNavigator.moveBackward(15,10000);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnLeft(100,5000);
+        else
+            robotNavigator.turnRight(100,5000);
+        robotNavigator.moveForward(72,10000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-6*2.54,5000);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnRight(100,5000);
+        else
+            robotNavigator.turnLeft(100,5000);
+        robotNavigator.moveForward(5,5000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,5000);
+        grab.release();
+        robotNavigator.moveBackward(5,5000);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnLeft(100,5000);
+        else
+            robotNavigator.turnRight(100,5000);
+        grab.release();
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,5000);
+        robotNavigator.moveBackward(72+7.75,10000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-8.5*2.54,2200);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnRight(100,5000);
+        else
+            robotNavigator.turnLeft(100,5000);
+
+
+        opMode.sleep(500);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+        robotNavigator.moveForward(2,5000);
+        opMode.sleep(400);
+        grab.grabIn();
+        opMode.sleep(400);
+        robotNavigator.moveBackward(2,5000);
+        //
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnLeft(100,5000);
+        else
+            robotNavigator.turnRight(100,5000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+        robotNavigator.moveForward(72+7.75,10000);
+
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-7*2.54,5000);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnRight(100,5000);
+        else
+            robotNavigator.turnLeft(100,5000);
+        robotNavigator.moveForward(7,5000);
+        grab.release();
+        robotNavigator.moveBackward(7,5000);
+        if(alliance==Alliance.BLUE)
+            robotNavigator.turnLeft(100,5000);
+        else
+            robotNavigator.turnRight(100,5000);
+        grab.release();
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,7*2.54,2200);
+        robotNavigator.moveBackward(110,10000);
+
+
+
+
+
+
+            if(parking==Parking.BRIDGE) {
+                if (alliance == Alliance.BLUE)
+                    robotNavigator.shiftLeft(5, 10000);
+                else
+                    robotNavigator.shiftRight(5,10000);
+            }
+            opMode.sleep(5000);
+            robotNavigator.moveForward(54,10000);
     }
 }
