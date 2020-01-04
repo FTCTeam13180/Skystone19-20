@@ -11,6 +11,7 @@ public class BuildingZoneFullAuto {
     private Elevator elevator;
     private Alliance alliance;
     private Parking parking;
+    private double NAVIGATOR_POWER=0.5;
 
     public enum Alliance {
         BLUE,
@@ -104,6 +105,15 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(36,10000);
 
         // ROBOT IS PARKED UNDER THE ALLIANCE SKYBRIDGE*/
+    }
+    public void HomePosition(){
+        grab.rotateToDegrees_180();
+        grab.grabIn();
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER, elevator.height-5,10000);
+        elevator.goInByRotations(0.4,4);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER, elevator.height,10000);
+
+
     }
 }
 

@@ -11,7 +11,8 @@ public class Elevator {
     private CRServo inOutWinch;
     private DcMotor upDownWinchL;
     private DcMotor upDownWinchR;
-
+    public int height=0;
+    public int outDistance=0;
 
     private final double MSECS_PER_ROTATION = 840;
 
@@ -31,7 +32,6 @@ public class Elevator {
     public void goOut(double power) {
         inOutWinch.setPower(abs(power));
     }
-
     public void goIn(double power) {
         inOutWinch.setPower(-abs(power));
     }
@@ -60,6 +60,16 @@ public class Elevator {
         upDownWinchL.setPower(abs(power));
         upDownWinchR.setPower(-abs(power));
     }
+    public void useEncoder(){
+        upDownWinchL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDownWinchL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        upDownWinchR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        upDownWinchR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+    public double currentEncoderPosition(){
+        return upDownWinchL.getCurrentPosition();
+    }
 
     public void goDown(double power){
 
@@ -87,17 +97,17 @@ public class Elevator {
     }
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    private static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
-    private static final double     WHINCH_DIAMETER_CM   = 2.2 ;     // For figuring circumference
-    static final double     COUNTS_PER_CM         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHINCH_DIAMETER_CM * 3.1415);
+    private static final double     DRIVE_GEAR_REDUCTION    = 0.333 ;     // This is < 1.0 if geared UP
+    private static final double     WHINCH_DIAMETER_IN   = 0.866 ;     // For figuring circumference
+    static final double     COUNTS_PER_IN         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHINCH_DIAMETER_IN * 3.1415);
 
     public void upDownEncoderDrive(double speed,
                                    double cms,
                                    double timeoutMs) {
         int newWinchUpTarget1;
         int newWinchUpTarget2;
-
+        height-=cms;
         opMode.telemetry.addData("Elevator:", "Resetting Encoders");    //
         opMode.telemetry.update();
 
@@ -116,8 +126,8 @@ public class Elevator {
         if (opMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newWinchUpTarget1 = upDownWinchL.getCurrentPosition() + (int) (cms * COUNTS_PER_CM);
-            newWinchUpTarget2 = upDownWinchR.getCurrentPosition() + (int) (-cms * COUNTS_PER_CM);
+            newWinchUpTarget1 = upDownWinchL.getCurrentPosition() + (int) (cms * COUNTS_PER_IN);
+            newWinchUpTarget2 = upDownWinchR.getCurrentPosition() + (int) (-cms * COUNTS_PER_IN);
             upDownWinchL.setTargetPosition(newWinchUpTarget1);
             upDownWinchR.setTargetPosition(newWinchUpTarget2);
 
@@ -140,7 +150,9 @@ public class Elevator {
                 opMode.telemetry.addData("Path1", "Running to %7d", newWinchUpTarget1);
                 opMode.telemetry.addData("Path2", "Running at %7d",
                         upDownWinchR.getCurrentPosition(), upDownWinchL.getCurrentPosition());
+
                 opMode.telemetry.update();
+                opMode.sleep(2000);
             }
 
             // Stop all motion;

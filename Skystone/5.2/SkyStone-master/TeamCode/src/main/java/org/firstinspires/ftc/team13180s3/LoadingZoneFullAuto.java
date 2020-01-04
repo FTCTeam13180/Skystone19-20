@@ -13,7 +13,7 @@ public class LoadingZoneFullAuto {
     private Alliance alliance;
     private Parking parking;
     private SkyStoneTensorFlow detect;
-
+    private double NAVIGATOR_POWER=0.5;
     public enum Alliance {
         BLUE,
         RED
@@ -34,7 +34,6 @@ public class LoadingZoneFullAuto {
         robotNavigator = new RoboNavigator(opMode);
         robotNavigator.init();
         robotNavigator.setNavigatorPower(0.8);
-
         hook = new Hook(opMode);
         hook.init();
         hook.detach();
@@ -49,15 +48,16 @@ public class LoadingZoneFullAuto {
         detect.initvuforia(opMode);
         detect.initTfod(opMode);
 
-        double NAVIGATOR_POWER = 0.5; // check
+
         hook.detach();
 
 
         opMode.telemetry.addLine("Front of Robot Should be forward");
         opMode.telemetry.update();
         opMode.sleep(100);
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-2.5*2.54,200);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-3*2.54,200);
         grab.release();
+        elevator.goOutByRotations(0.8,3.5);
         robotNavigator.moveForward(25,4000);
 /*  *** SKYSTONE DETECTION- ADD LATER ***
             detect.activate();
@@ -69,7 +69,7 @@ public class LoadingZoneFullAuto {
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
             }
 */
-        elevator.goOutByRotations(0.8,4);
+
         opMode.sleep(500);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
         opMode.sleep(400);
@@ -94,7 +94,6 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(100,5000);
         else
             robotNavigator.turnRight(100,5000);
-        grab.release();
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,5000);
         robotNavigator.moveBackward(72+7.75,10000);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,-8.5*2.54,2200);
@@ -105,21 +104,22 @@ public class LoadingZoneFullAuto {
 
 
         opMode.sleep(500);
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-6*2.54,2200);
         robotNavigator.moveForward(2,5000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,2200);
         opMode.sleep(400);
         grab.grabIn();
         opMode.sleep(400);
-        robotNavigator.moveBackward(2,5000);
+        robotNavigator.moveBackward(5,5000);
         //
         if(alliance==Alliance.BLUE)
             robotNavigator.turnLeft(100,5000);
         else
             robotNavigator.turnRight(100,5000);
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,6*2.54,2200);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,2200);
         robotNavigator.moveForward(72+7.75,10000);
 
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-7*2.54,5000);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-7.5*2.54,5000);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnRight(100,5000);
         else
@@ -131,7 +131,6 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(100,5000);
         else
             robotNavigator.turnRight(100,5000);
-        grab.release();
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,7*2.54,2200);
         robotNavigator.moveBackward(110,10000);
 
@@ -148,5 +147,14 @@ public class LoadingZoneFullAuto {
             }
             opMode.sleep(5000);
             robotNavigator.moveForward(54,10000);
+    }
+    public void HomePosition(){
+        grab.rotateToDegrees_180();
+        grab.grabIn();
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER, elevator.height-5,10000);
+        elevator.goInByRotations(0.4,4);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER, elevator.height,10000);
+
+
     }
 }

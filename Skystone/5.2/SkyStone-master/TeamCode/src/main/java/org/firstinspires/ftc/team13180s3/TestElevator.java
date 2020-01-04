@@ -42,7 +42,10 @@ public class TestElevator extends LinearOpMode {
                   elevator.goDown(1.0);
             }
              else if(gamepad1.a){
-                elevator.upDownEncoderDrive(0.8,2*2.54,5000);
+                elevator.upDownEncoderDrive(0.8,2*2.54,10000);
+            }
+            else if(gamepad1.b){
+                elevator.upDownEncoderDrive(0.8,20*2.54,10000);
             }
              else{
                 elevator.stopInOut();

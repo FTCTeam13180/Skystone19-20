@@ -14,6 +14,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
     double multiplier=0.5;
     boolean hookPosition = false; //False=Up, True=Down
     boolean gripperPos=false;
+
     public void runOpMode (){
         roboNav = new RoboNavigator(this);
         elevator =new Elevator(this);
@@ -46,7 +47,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean gripper_grab;
         boolean shift_left;
         boolean shift_right;
-
         while (opModeIsActive()){
             //GAMEPAD 1 (START A) NAVIGATOR CONTROLS
             nav_omni_x=gamepad1.left_stick_x;
@@ -163,5 +163,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
         }
 
     }
+
 }
 
