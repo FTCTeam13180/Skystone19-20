@@ -88,14 +88,28 @@ public class BuildingZoneFullAuto {
         /*
          * Lower the elevator to fit under bridge, move the hook out of way first.
          */
-        hook.attach();
         elevator.goOutByRotations(0.8,4);
-        hook.detach();
         elevator.upDownEncoderDrive(0.5,5*2.54,10000);
 
         /*
          * Move the robot under the bridge
          */
+        if(alliance == Alliance.BLUE){
+            robotNavigator.shiftRight(42,10000);
+        }
+        else
+            robotNavigator.shiftLeft(42,10000);
+        robotNavigator.moveForward(18,10000);
+        elevator.goOutByRotations(0.8,2);
+        elevator.upDownEncoderDrive(0.8, -5*2.54, 10000);
+        grab.grabIn();
+        if(alliance == Alliance.BLUE){
+            robotNavigator.shiftLeft(42,10000);
+        }
+        else
+            robotNavigator.shiftRight(42,10000);
+
+
         if (parking == Parking.WALL) {
             if (alliance == Alliance.BLUE)
                 robotNavigator.shiftRight(18, 10000);
@@ -103,6 +117,7 @@ public class BuildingZoneFullAuto {
                 robotNavigator.shiftLeft(18, 10000);
         }
         robotNavigator.moveForward(36,10000);
+
 
         // ROBOT IS PARKED UNDER THE ALLIANCE SKYBRIDGE*/
     }
