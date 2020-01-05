@@ -83,14 +83,19 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
+        if (alliance == Alliance.BLUE) {
+            robotNavigator.turnRight(50, 10000);
+        }
+
+        else {
+            robotNavigator.turnLeft(50, 10000);
+        }
+        opMode.sleep(2000);
         robotNavigator.moveForward(6,10000);
 
         /*
          * Lower the elevator to fit under bridge, move the hook out of way first.
          */
-        elevator.goOutByRotations(0.8,4);
-        elevator.upDownEncoderDrive(0.5,5*2.54,10000);
-
         /*
          * Move the robot under the bridge
          */

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="BlueLoadingZoneBridge", group="autonomusGroup1")
+@Autonomous(name="RedLoadingZoneBridge", group="autonomusGroup1")
 public class RedLoadingZoneBridge extends LinearOpMode {
     private LoadingZoneFullAuto fullAuto;
     @Override
