@@ -63,17 +63,20 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(12, 10000);
         //pull foundation towards the bridges, away from north wall
         // then turning the foundation
-        double turn_degrees = 190;
+        double turn_degrees = 200;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
             robotNavigator.turnLeft(turn_degrees, 10000);
+            robotNavigator.shiftRight(12,1000);
         } else {
             robotNavigator.shiftRight(12, 10000);
             robotNavigator.turnRight(turn_degrees, 10000);
+            robotNavigator.shiftLeft(12,1000);
         }
 
         // Pushing foundation into depot
-        robotNavigator.moveBackward(30, 10000);
+
+        robotNavigator.moveBackward(32, 10000);
 
         /*
          * Detach from the foundation
@@ -99,22 +102,22 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(24, 10000);
         elevator.goOutByRotations(0.8, 3);
         elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
+        grab.rotateToDegrees_180();
         grab.grabIn();
         robotNavigator.moveBackward(24, 10000);
         if (alliance == Alliance.BLUE) {
             robotNavigator.turnRight(90, 1000);
-            robotNavigator.moveForward(72, 1000);
+
 
         } else {
             robotNavigator.turnLeft(90, 10000);
-            robotNavigator.moveForward(72, 10000);
         }
-        //robotNavigator.moveForward(6, 1000);
+        robotNavigator.moveForward(72, 1000);
         grab.release();
         robotNavigator.moveBackward(24,1000);
         if(alliance == Alliance.BLUE){
             if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(18, 10000);
+                robotNavigator.shiftLeft(6, 10000);
             } else {
                 robotNavigator.shiftRight(18, 1000);
             }
