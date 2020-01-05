@@ -12,7 +12,6 @@ public class LoadingZoneFullAuto {
     private Elevator elevator;
     private Alliance alliance;
     private Parking parking;
-    private SkyStoneTensorFlow detect;
     private double NAVIGATOR_POWER=0.5;
     public enum Alliance {
         BLUE,
@@ -43,11 +42,6 @@ public class LoadingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-
-        detect = new SkyStoneTensorFlow();
-        detect.initvuforia(opMode);
-        detect.initTfod(opMode);
-
 
         hook.detach();
 
@@ -139,14 +133,14 @@ public class LoadingZoneFullAuto {
 
 
 
-            if(parking==Parking.BRIDGE) {
-                if (alliance == Alliance.BLUE)
-                    robotNavigator.shiftLeft(5, 10000);
-                else
-                    robotNavigator.shiftRight(5,10000);
-            }
-            opMode.sleep(5000);
-            robotNavigator.moveForward(54,10000);
+        if(parking==Parking.BRIDGE) {
+            if (alliance == Alliance.BLUE)
+                robotNavigator.shiftLeft(5, 10000);
+            else
+                robotNavigator.shiftRight(5,10000);
+        }
+        opMode.sleep(5000);
+        robotNavigator.moveForward(54,10000);
     }
     public void HomePosition(){
         grab.rotateToDegrees_180();
