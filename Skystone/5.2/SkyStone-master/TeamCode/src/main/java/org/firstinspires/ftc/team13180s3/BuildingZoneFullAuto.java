@@ -63,15 +63,15 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(12, 10000);
         //pull foundation towards the bridges, away from north wall
         // then turning the foundation
-        double turn_degrees = 200;
+        double turn_degrees = 190;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
             robotNavigator.turnLeft(turn_degrees, 10000);
-            robotNavigator.shiftRight(12,1000);
+            robotNavigator.shiftRight(24,1000);
         } else {
             robotNavigator.shiftRight(12, 10000);
             robotNavigator.turnRight(turn_degrees, 10000);
-            robotNavigator.shiftLeft(12,1000);
+            robotNavigator.shiftLeft(24,1000);
         }
 
         // Pushing foundation into depot
@@ -84,16 +84,13 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
-
         if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftRight(24, 10000);
-        }
-
-        else {
-            robotNavigator.shiftLeft(24, 10000);
+            robotNavigator.shiftLeft(6, 1000);
+        } else {
+            robotNavigator.shiftRight(6, 10000);
         }
         //opMode.sleep(2000);
-        //robotNavigator.moveForward(6,10000);
+        //robotNavigator.moveForward(6,10000)
         robotNavigator.moveForward(68, 10000);
         if (alliance == Alliance.BLUE) {
             robotNavigator.turnLeft(90, 1000);
@@ -105,13 +102,12 @@ public class BuildingZoneFullAuto {
         //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.rotateToDegrees_180();
         grab.grabIn();
-        robotNavigator.moveBackward(24, 10000);
         if (alliance == Alliance.BLUE) {
-            robotNavigator.turnRight(90, 1000);
+            robotNavigator.turnLeft(90, 1000);
 
 
         } else {
-            robotNavigator.turnLeft(90, 10000);
+            robotNavigator.turnRight(90, 10000);
         }
         robotNavigator.moveForward(68, 1000);
         elevator.upDownEncoderDrive(0.8,5 *2.54,1000);
