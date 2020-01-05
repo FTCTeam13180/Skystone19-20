@@ -24,12 +24,13 @@ public class Grabber {
     }
 
     public void grabIn() {
-        grab.setPosition(0.1);
+        grab.setPosition(-1);
+
 
     }
 
     public void release() {
-        grab.setPosition(0.6);
+        grab.setPosition(0);
 
     }
 
