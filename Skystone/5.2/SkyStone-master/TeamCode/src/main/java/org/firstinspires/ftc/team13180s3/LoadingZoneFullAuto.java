@@ -12,7 +12,6 @@ public class LoadingZoneFullAuto {
     private Elevator elevator;
     private Alliance alliance;
     private Parking parking;
-    private SkyStoneTensorFlow detect;
     private double NAVIGATOR_POWER=0.5;
     public enum Alliance {
         BLUE,
@@ -43,11 +42,6 @@ public class LoadingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-
-        detect = new SkyStoneTensorFlow();
-        detect.initvuforia(opMode);
-        detect.initTfod(opMode);
-
 
         hook.detach();
 
