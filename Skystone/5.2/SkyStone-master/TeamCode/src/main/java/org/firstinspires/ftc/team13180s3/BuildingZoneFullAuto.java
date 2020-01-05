@@ -76,7 +76,7 @@ public class BuildingZoneFullAuto {
 
         // Pushing foundation into depot
 
-        robotNavigator.moveBackward(32, 10000);
+        robotNavigator.moveBackward(34, 10000);
 
         /*
          * Detach from the foundation
@@ -84,13 +84,14 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
-        /*if (alliance == Alliance.BLUE) {
-            robotNavigator.turnRight(50, 10000);
+
+        if (alliance == Alliance.BLUE) {
+            robotNavigator.shiftRight(24, 10000);
         }
 
         else {
-            robotNavigator.turnLeft(50, 10000);
-        }*/
+            robotNavigator.shiftLeft(24, 10000);
+        }
         //opMode.sleep(2000);
         //robotNavigator.moveForward(6,10000);
         robotNavigator.moveForward(68, 10000);
@@ -99,9 +100,9 @@ public class BuildingZoneFullAuto {
         } else {
             robotNavigator.turnRight(90, 10000);
         }
-        robotNavigator.moveForward(24, 10000);
+        //robotNavigator.moveForward(24, 10000);=[+
         elevator.goOutByRotations(0.8, 3);
-        elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
+        //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.rotateToDegrees_180();
         grab.grabIn();
         robotNavigator.moveBackward(24, 10000);
@@ -112,7 +113,9 @@ public class BuildingZoneFullAuto {
         } else {
             robotNavigator.turnLeft(90, 10000);
         }
-        robotNavigator.moveForward(72, 1000);
+        robotNavigator.moveForward(68, 1000);
+        elevator.upDownEncoderDrive(0.8,5 *2.54,1000);
+        robotNavigator.moveForward(10,10000);
         grab.release();
         robotNavigator.moveBackward(24,1000);
         if(alliance == Alliance.BLUE){
