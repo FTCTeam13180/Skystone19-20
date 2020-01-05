@@ -43,6 +43,7 @@ public class LoadingZoneFullAuto {
         elevator = new Elevator(opMode);
         elevator.init();
 
+
         hook.detach();
 
 
@@ -69,32 +70,31 @@ public class LoadingZoneFullAuto {
         opMode.sleep(400);
         grab.grabIn();
         opMode.sleep(400);
-        robotNavigator.moveBackward(15,10000);
+        robotNavigator.moveBackward(5,10000);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnLeft(100,5000);
+            robotNavigator.turnLeft(90,5000);
         else
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         robotNavigator.moveForward(72,10000);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,-6*2.54,5000);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         else
-            robotNavigator.turnLeft(100,5000);
-        robotNavigator.moveForward(5,5000);
+            robotNavigator.turnLeft(90,5000);
+        robotNavigator.moveForward(15,5000);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,5000);
         grab.release();
-        robotNavigator.moveBackward(5,5000);
+        robotNavigator.moveBackward(15,5000);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnLeft(100,5000);
+            robotNavigator.turnLeft(90,5000);
         else
-            robotNavigator.turnRight(100,5000);
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,5000);
+            robotNavigator.turnRight(90,5000);
         robotNavigator.moveBackward(72+7.75,10000);
-        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-8.5*2.54,2200);
+        elevator.upDownEncoderDrive(NAVIGATOR_POWER,-5.5*2.54,2200);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         else
-            robotNavigator.turnLeft(100,5000);
+            robotNavigator.turnLeft(90,5000);
 
 
         opMode.sleep(500);
@@ -107,24 +107,24 @@ public class LoadingZoneFullAuto {
         robotNavigator.moveBackward(5,5000);
         //
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnLeft(100,5000);
+            robotNavigator.turnLeft(90,5000);
         else
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,3*2.54,2200);
         robotNavigator.moveForward(72+7.75,10000);
 
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,-7.5*2.54,5000);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         else
-            robotNavigator.turnLeft(100,5000);
-        robotNavigator.moveForward(7,5000);
+            robotNavigator.turnLeft(90,5000);
+        robotNavigator.moveForward(17,5000);
         grab.release();
-        robotNavigator.moveBackward(7,5000);
+        robotNavigator.moveBackward(17,5000);
         if(alliance==Alliance.BLUE)
-            robotNavigator.turnLeft(100,5000);
+            robotNavigator.turnLeft(90,5000);
         else
-            robotNavigator.turnRight(100,5000);
+            robotNavigator.turnRight(90,5000);
         elevator.upDownEncoderDrive(NAVIGATOR_POWER,7*2.54,2200);
         robotNavigator.moveBackward(110,10000);
 
