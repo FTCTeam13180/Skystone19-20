@@ -117,14 +117,12 @@ public class Elevator {
         upDownWinchR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        opMode.telemetry.addData("Path0", "Starting at %7d",
-                upDownWinchL.getCurrentPosition());
+        opMode.telemetry.addData("Path0", "Starting at %7d", upDownWinchL.getCurrentPosition());
         opMode.telemetry.update();
 
 
         // Ensure that the opmode is still active
         if (opMode.opModeIsActive()) {
-
             // Determine new target position, and pass to motor controller
             newWinchUpTarget1 = upDownWinchL.getCurrentPosition() + (int) (cms * COUNTS_PER_IN);
             newWinchUpTarget2 = upDownWinchR.getCurrentPosition() + (int) (-cms * COUNTS_PER_IN);

@@ -45,7 +45,7 @@ public class BuildingZoneFullAuto {
         elevator = new Elevator(opMode);
         elevator.init();
 
-        opMode.sleep(20000);
+        opMode.sleep(2000);
         // Set hook in attach position
         hook.halfattach(0.5);
 
@@ -94,29 +94,41 @@ public class BuildingZoneFullAuto {
         /*
          * Move the robot under the bridge
          */
+        robotNavigator.moveForward(72,10000);
         if(alliance == Alliance.BLUE){
-            robotNavigator.shiftRight(42,10000);
+            robotNavigator.turnLeft(100,1000);
         }
-        else
-            robotNavigator.shiftLeft(42,10000);
-        robotNavigator.moveForward(18,10000);
+        else {
+            robotNavigator.turnRight(100, 10000);
+        }
+        robotNavigator.moveForward(24,10000);
         elevator.goOutByRotations(0.8,2);
         elevator.upDownEncoderDrive(0.8, -5*2.54, 10000);
         grab.grabIn();
+        robotNavigator.moveBackward(24,10000);
         if(alliance == Alliance.BLUE){
-            robotNavigator.shiftLeft(42,10000);
+            robotNavigator.turnRight(200,1000);
+            robotNavigator.shiftRight(96,1000);
+
         }
-        else
-            robotNavigator.shiftRight(42,10000);
-
-
+        else {
+            robotNavigator.turnLeft(100, 10000);
+            robotNavigator.shiftLeft(96,10000);
+        }
+        robotNavigator.moveForward(6,1000);
+        grab.release();
+        if(alliance == Alliance.BLUE){
+            robotNavigator.shiftRight(48,1000);
+        }
+        else {
+            robotNavigator.shiftLeft(48, 10000);
+        }
         if (parking == Parking.WALL) {
-            if (alliance == Alliance.BLUE)
-                robotNavigator.shiftRight(18, 10000);
-            else
-                robotNavigator.shiftLeft(18, 10000);
+                robotNavigator.moveForward(18, 10000);
         }
-        robotNavigator.moveForward(36,10000);
+        else{
+            robotNavigator.moveBackward(18,1000);
+        }
 
 
         // ROBOT IS PARKED UNDER THE ALLIANCE SKYBRIDGE*/
