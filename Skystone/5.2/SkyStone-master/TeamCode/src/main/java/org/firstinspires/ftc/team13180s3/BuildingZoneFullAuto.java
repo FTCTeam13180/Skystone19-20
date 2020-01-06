@@ -85,9 +85,9 @@ public class BuildingZoneFullAuto {
         hook.detach();
         opMode.sleep(200);
         if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftLeft(6, 1000);
+            robotNavigator.shiftRight(6, 1000);
         } else {
-            robotNavigator.shiftRight(6, 10000);
+            robotNavigator.shiftLeft(6, 10000);
         }
         //opMode.sleep(2000);
         //robotNavigator.moveForward(6,10000)
