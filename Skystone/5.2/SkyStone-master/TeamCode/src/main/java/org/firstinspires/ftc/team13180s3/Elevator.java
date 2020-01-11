@@ -173,9 +173,10 @@ public class Elevator {
     }
     int rotations = 9;
     public void playposition(){
-        goOutByRotations(0.8,rotations);
+        goOutByRotations(1.0,rotations);
     }
     public void homeposition(){
-       goOutByRotations(0.8,-rotations);
+
+        goInByRotations(1.0,rotations);
     }
 }
