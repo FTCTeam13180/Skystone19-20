@@ -171,7 +171,7 @@ public class Elevator {
 
         }
     }
-    int rotations = 9;
+    int rotations = 6;
     public void playposition(){
         goOutByRotations(1.0,rotations);
     }

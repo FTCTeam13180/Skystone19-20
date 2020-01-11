@@ -11,7 +11,7 @@ public class Grabber {
     //spinner servo for the rotation on grabber
     private Servo spinner;
 
-    private final double FINE_ROTATION_INCREMENT = 0.05;
+    private final double FINE_ROTATION_INCREMENT = 0.1;
 
     Grabber(LinearOpMode op) {
         opMode = op;

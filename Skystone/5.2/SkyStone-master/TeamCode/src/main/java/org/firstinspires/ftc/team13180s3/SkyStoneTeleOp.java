@@ -41,17 +41,16 @@ public class SkyStoneTeleOp extends LinearOpMode {
         //GAMEPAD 2 (START B) ARM CONTROLS
         boolean arm_in;
         boolean arm_out;
-        boolean arm_up;
-        boolean arm_down;
+        double arm_vert;
         boolean gripper_release;
         boolean gripper_grab;
-        boolean shift_left;
-        boolean shift_right;
+        boolean grabber_spin_left;
+        boolean grabber_spin_right;
+        double shift;
         /*
         Anton:
         left bumper--> arm in
         right bumper  arm out
-        updown is same
         dpad left/right--> spin grabber
         right stick--> shift left/right rlly slowly
         a is close
@@ -72,14 +71,14 @@ public class SkyStoneTeleOp extends LinearOpMode {
             nav_init_IMU=gamepad1.dpad_left;
 
             //GAMEPAD 2 (START B) ARM CONTROLS
-            arm_in=gamepad2.x;
-            arm_out=gamepad2.y;
-            arm_up=gamepad2.dpad_up;
-            arm_down=gamepad2.dpad_down;
-            gripper_release=gamepad2.left_bumper;
-            gripper_grab=gamepad2.right_bumper;
-            shift_left = gamepad2.a;
-            shift_right = gamepad2.b;
+            arm_in=gamepad2.left_bumper;
+            arm_out=gamepad2.right_bumper;
+            arm_vert=gamepad2.left_stick_y;
+            gripper_release=gamepad2.b;
+            gripper_grab=gamepad2.a;
+            shift = gamepad2.right_stick_x;
+            grabber_spin_left=gamepad2.dpad_left;
+            grabber_spin_right=gamepad2.dpad_right;
 
             // Navigation Controls
             if(nav_speed_up){
@@ -93,9 +92,9 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 }
             }
 
-            if(nav_init_IMU){
-                roboNav.initIMU();
-            }
+//            if(nav_init_IMU){
+//                roboNav.ResetImu();
+//            }
 
             if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1 || nav_left_turn || nav_right_turn){
                 if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1) {
@@ -129,12 +128,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 elevator.stopInOut();
             }
 
-            if(arm_up){
-                elevator.goUp(vWinchPowerUp);
+            if(arm_vert>0){
+                elevator.goUp(arm_vert);
                 //vWinch.encoderDrive(1,6,1000);
             }
-            else if(arm_down){
-                elevator.goDown(vWinchPowerDown);
+            else if(arm_vert<0){
+                elevator.goDown(-1*arm_vert);
                 //vWinch.encoderDrive(1,-6,1000);
             }
             //
@@ -149,18 +148,18 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 Gripper.grabIn();
             }
 
-            if(gamepad2.dpad_right){
-                Gripper.rotateToDegrees_0();
+            if(grabber_spin_left){
+                Gripper.rotateIncrementalAntiClockwise();
             }
-            else if(gamepad2.dpad_left){
-                Gripper.rotateToDegrees_180();
+            else if(grabber_spin_right){
+                Gripper.rotateIncrementalClockwise();
             }
 
-            if (shift_left) {
-                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, 0.6, 5, 5000);
+            if (shift<0) {
+                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, shift*-1, 5, 5000);
             }
-            else if (shift_right) {
-                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, 0.6, 5, 5000);
+            else if (shift>0) {
+                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, shift, 5, 5000);
             }
 
             // Foundation Hook Controls
