@@ -84,9 +84,9 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         robotNavigator.moveBackward(12,1000);
         if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftRight(12, 1000);
+            robotNavigator.shiftRight(15, 1000);
         } else {
-            robotNavigator.shiftLeft(12, 10000);
+            robotNavigator.shiftLeft(15, 10000);
         }
         //opMode.sleep(2000);
         //robotNavigator.moveForward(6,10000)
@@ -96,9 +96,10 @@ public class BuildingZoneFullAuto {
         } else {
             robotNavigator.turnRight(90, 10000);
         }
+        robotNavigator.moveBackward(6,1000);
         grab.rotateToDegrees_180();
         elevator.playposition();
-        robotNavigator.moveForward(6, 10000);
+        //robotNavigator.moveBackward(6, 10000);
         //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.grabIn();
         if (alliance == Alliance.BLUE) {

@@ -54,7 +54,7 @@ public class LoadingZoneFullAuto {
         grab.rotateToDegrees_180();
         grab.release();
         elevator.goUpByRotations(1,1.3);
-        robotNavigator.moveForward(19,4000);
+        robotNavigator.moveForward(20,4000);
 /*  *** SKYSTONE DETECTION- ADD LATER ***
             detect.activate();
             if(detect.scan()){
@@ -76,7 +76,7 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(90,5000);
         else
             robotNavigator.turnRight(90,5000);
-        robotNavigator.moveForward(72,10000);
+        robotNavigator.moveForward(65,10000);
         elevator.goUpByRotations(1,1.3);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnRight(90,5000);
@@ -90,7 +90,7 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(90,5000);
         else
             robotNavigator.turnRight(90,5000);
-        robotNavigator.moveBackward(72+7.75,10000);
+        robotNavigator.moveBackward(65+7.75,10000);
         elevator.goUpByRotations(1,1.3);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnRight(90,5000);
@@ -110,7 +110,7 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(90,5000);
         else
             robotNavigator.turnRight(90,5000);
-        robotNavigator.moveForward(72+7.75,10000);
+        robotNavigator.moveForward(65+7.75,10000);
 
         elevator.goUpByRotations(1,2);
         if(alliance==Alliance.BLUE)
