@@ -47,6 +47,18 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean gripper_grab;
         boolean shift_left;
         boolean shift_right;
+        /*
+        Anton:
+        left bumper--> arm in
+        right bumper  arm out
+        updown is same
+        dpad left/right--> spin grabber
+        right stick--> shift left/right rlly slowly
+        a is close
+        b is open
+        left stick elevator up
+        */
+
         while (opModeIsActive()){
             //GAMEPAD 1 (START A) NAVIGATOR CONTROLS
             nav_omni_x=gamepad1.left_stick_x;
