@@ -60,12 +60,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
             nav_init_IMU=gamepad1.dpad_left;
 
             //GAMEPAD 2 (START B) ARM CONTROLS
-            arm_in=gamepad2.left_bumper;
-            arm_out=gamepad2.right_bumper;
+            arm_in=gamepad2.x;
+            arm_out=gamepad2.y;
             arm_up=gamepad2.dpad_up;
             arm_down=gamepad2.dpad_down;
-            gripper_release=gamepad2.x;
-            gripper_grab=gamepad2.y;
+            gripper_release=gamepad2.left_bumper;
+            gripper_grab=gamepad2.right_bumper;
             shift_left = gamepad2.a;
             shift_right = gamepad2.b;
 
@@ -108,10 +108,10 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             // Arm Controls
             if(arm_out){
-                elevator.goOut(1);
+                elevator.playposition();
             }
             else if(arm_in){
-                elevator.goIn(1);
+                elevator.homeposition();
             }
             else {
                 elevator.stopInOut();

@@ -28,7 +28,6 @@ public class BuildingZoneFullAuto {
         this.alliance = al;
         this.parking = pa;
     }
-
     public void run() {
 
         robotNavigator = new RoboNavigator(opMode);
@@ -77,17 +76,17 @@ public class BuildingZoneFullAuto {
         // Pushing foundation into depot
 
         robotNavigator.moveBackward(34, 10000);
-
         /*
          * Detach from the foundation
          */
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
+        robotNavigator.moveBackward(12,1000);
         if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftRight(6, 1000);
+            robotNavigator.shiftRight(12, 1000);
         } else {
-            robotNavigator.shiftLeft(6, 10000);
+            robotNavigator.shiftLeft(12, 10000);
         }
         //opMode.sleep(2000);
         //robotNavigator.moveForward(6,10000)
@@ -97,10 +96,10 @@ public class BuildingZoneFullAuto {
         } else {
             robotNavigator.turnRight(90, 10000);
         }
-        //robotNavigator.moveForward(24, 10000);=[+
-        elevator.goOutByRotations(0.8, 3);
-        //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.rotateToDegrees_180();
+        elevator.playposition();
+        robotNavigator.moveForward(6, 10000);
+        //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.grabIn();
         if (alliance == Alliance.BLUE) {
             robotNavigator.turnLeft(90, 1000);
@@ -110,24 +109,32 @@ public class BuildingZoneFullAuto {
             robotNavigator.turnRight(90, 10000);
         }
         robotNavigator.moveForward(68, 1000);
-        elevator.upDownEncoderDrive(0.8,5 *2.54,1000);
-        robotNavigator.moveForward(10,10000);
+        elevator.goUpByRotations(1,0.75);
+        robotNavigator.moveForward(9,10000);
+        if (alliance == Alliance.BLUE) {
+            robotNavigator.shiftLeft(12,1000);
+
+        } else {
+            robotNavigator.shiftRight(12, 1000);
+        }
         grab.release();
-        robotNavigator.moveBackward(24,1000);
+        robotNavigator.moveBackward(48,1000);
         if(alliance == Alliance.BLUE){
             if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(6, 10000);
+                robotNavigator.shiftLeft(18, 10000);
             } else {
-                robotNavigator.shiftRight(18, 1000);
+                robotNavigator.shiftRight(6, 1000);
             }
         }
         else {
             if (parking == Parking.WALL) {
                     robotNavigator.shiftRight(18, 10000);
                 } else {
-                    robotNavigator.shiftLeft(18, 1000);
+                    robotNavigator.shiftLeft(6, 1000);
                 }
             }
+        elevator.goDownByRotations(1,0.75);
+        robotNavigator.moveBackward(24,1000);
     }
 
 

@@ -24,7 +24,7 @@ public class Grabber {
     }
 
     public void grabIn() {
-        grab.setPosition(-1);
+        grab.setPosition(1);
 
 
     }

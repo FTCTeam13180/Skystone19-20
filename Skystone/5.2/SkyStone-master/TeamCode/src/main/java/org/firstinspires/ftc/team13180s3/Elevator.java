@@ -51,7 +51,16 @@ public class Elevator {
         opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
         stopInOut();
     }
-
+    public void goUpByRotations(double power, double rotations) {
+        goUp(power);
+        opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
+        stopUpDown();
+    }
+    public void goDownByRotations(double power, double rotations) {
+        goDown(power);
+        opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
+        stopUpDown();
+    }
     //
     // UpDownWinch Controls used by elevator arm
     //
@@ -97,10 +106,10 @@ public class Elevator {
     }
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    private static final double     DRIVE_GEAR_REDUCTION    = 0.333 ;     // This is < 1.0 if geared UP
-    private static final double     WHINCH_DIAMETER_IN   = 0.866 ;     // For figuring circumference
+    private static final double     DRIVE_GEAR_REDUCTION    = 4/3 ;     // This is < 1.0 if geared UP
+    private static final double     WHINCH_DIAMETER_IN   = 0.675 ;     // For figuring circumference
     static final double     COUNTS_PER_IN         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHINCH_DIAMETER_IN * 3.1415);
+            (WHINCH_DIAMETER_IN * 3.1415*2);
 
     public void upDownEncoderDrive(double speed,
                                    double cms,
@@ -161,5 +170,12 @@ public class Elevator {
             upDownWinchR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         }
+    }
+    int rotations = 9;
+    public void playposition(){
+        goOutByRotations(0.8,rotations);
+    }
+    public void homeposition(){
+       goOutByRotations(0.8,-rotations);
     }
 }
