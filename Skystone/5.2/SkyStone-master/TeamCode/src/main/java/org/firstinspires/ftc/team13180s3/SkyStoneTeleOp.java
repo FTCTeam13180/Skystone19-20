@@ -137,6 +137,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 Gripper.grabIn();
             }
 
+            if(gamepad2.dpad_right){
+                Gripper.rotateToDegrees_0();
+            }
+            else if(gamepad2.dpad_left){
+                Gripper.rotateToDegrees_180();
+            }
+
             if (shift_left) {
                 roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, 0.6, 5, 5000);
             }
@@ -153,12 +160,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
             else if(gamepad1.dpad_right){
                 hook.halfattach(0.5);
-            }
-            if(gamepad2.dpad_right){
-                Gripper.rotateToDegrees_0();
-            }
-            else if(gamepad2.dpad_left){
-                Gripper.rotateToDegrees_180();
             }
         }
 

@@ -41,11 +41,13 @@ public class Grabber {
 
     public void rotateToDegrees_90()
     {
+
         spinner.setPosition(0.5);
     }
 
     public void rotateToDegrees_180()
     {
+
         spinner.setPosition(1.0);
     }
 
