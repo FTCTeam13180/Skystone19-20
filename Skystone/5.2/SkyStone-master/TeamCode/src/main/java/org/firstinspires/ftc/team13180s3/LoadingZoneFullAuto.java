@@ -88,7 +88,8 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(180,5000);
         else
             robotNavigator.turnRight(180,5000);
-        robotNavigator.moveBackward(6.5,5000);
+        hook.halfattach(0.5);
+        robotNavigator.moveBackward(7,5000);
        //SHIVAMS ROTATION PORTION
         hook.attach();
         opMode.sleep(200);
