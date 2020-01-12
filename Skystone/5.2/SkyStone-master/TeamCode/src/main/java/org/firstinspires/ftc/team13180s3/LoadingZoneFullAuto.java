@@ -68,7 +68,7 @@ public class LoadingZoneFullAuto {
         grab.grabIn();
         opMode.sleep(200);
 
-        robotNavigator.moveBackward(9,10000);
+        robotNavigator.moveBackward(8,10000);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnLeft(90,5000);
         else
@@ -79,17 +79,20 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnRight(90,5000);
         else
             robotNavigator.turnLeft(90,5000);
-        robotNavigator.moveForward(7,5000);
+        robotNavigator.moveForward(6.5,5000);
         grab.release();
         opMode.sleep(100);
 
-        robotNavigator.moveBackward(7,5000);
+        robotNavigator.moveBackward(6.5,5000);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnLeft(180,5000);
         else
             robotNavigator.turnRight(180,5000);
-        robotNavigator.moveBackward(7,5000);
+        robotNavigator.moveBackward(6.5,5000);
        //SHIVAMS ROTATION PORTION
+        hook.attach();
+        opMode.sleep(200);
+        robotNavigator.moveForward(12,5000);
         double turn_degrees = 190;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
@@ -110,6 +113,7 @@ public class LoadingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
+        robotNavigator.moveForward(20,5000);
 
         //SHIVAMS ROTATION --------------------------------------------
 /*---------------------------------------------
