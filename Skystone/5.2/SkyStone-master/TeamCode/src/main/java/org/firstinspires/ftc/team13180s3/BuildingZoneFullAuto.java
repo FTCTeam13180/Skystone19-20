@@ -113,27 +113,21 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(68, 1000);
         elevator.goUpByRotations(1,1.3);
         robotNavigator.moveForward(24,10000);
-        if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftLeft(8,1000);
-
-        } else {
-            robotNavigator.shiftRight(8, 1000);
-        }
         grab.release();
         elevator.goDownByRotations(1,1.3);
         robotNavigator.moveBackward(48,1000);
         if(alliance == Alliance.BLUE){
             if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(12, 10000);
+                robotNavigator.shiftLeft(6, 10000);
             } else {
-                robotNavigator.shiftRight(6, 1000);
+                robotNavigator.shiftRight(18, 1000);
             }
         }
         else {
             if (parking == Parking.WALL) {
-                    robotNavigator.shiftRight(12, 10000);
+                    robotNavigator.shiftRight(6, 10000);
                 } else {
-                    robotNavigator.shiftLeft(6, 1000);
+                    robotNavigator.shiftLeft(18, 1000);
                 }
             }
 
