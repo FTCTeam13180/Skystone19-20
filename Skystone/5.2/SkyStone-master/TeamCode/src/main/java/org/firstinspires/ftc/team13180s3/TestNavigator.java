@@ -35,18 +35,22 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.dpad_right) {
                 robotnav.shiftRight(SPEED);
             }
-            else if (gamepad1.right_bumper) {
+            if (gamepad1.right_bumper) {
                 robotnav.turnRight(SPEED);
             }
-            else if (gamepad1.left_bumper) {
+            if (gamepad1.left_bumper) {
                 robotnav.turnLeft(SPEED);
             }
-            else if(Math.abs(gamepad1.left_stick_x)>0.1 || Math.abs(gamepad1.left_stick_y)>0.1){   //can go any direction 360 degrees based on controller input
-                telemetry.addData("left_stick", "x=%f, y=%f", gamepad1.left_stick_x, gamepad1.left_stick_y);
-                telemetry.update();
-                // VERY IMPORTANT: Gamepad joystick y-axis positive points downward, x-axis points right
-                // Always remember to reverse joystick stick_y value.
-                robotnav.AnyMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, SPEED);
+            if(Math.abs(gamepad1.left_stick_x)>0.1 || Math.abs(gamepad1.left_stick_y)>0.1){   //can go any direction 360 degrees based on controller input
+                if(Math.abs(gamepad1.left_stick_x)> 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1) {
+                    // VERY IMPORTANT: Gamepad joystick y-axis positive points downward, x-axis points right
+                    // Always remember to reverse joystick stick_y value.
+
+                    // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
+                    //roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
+                    robotnav.OmniImu(gamepad1.left_stick_x, -gamepad1.left_stick_y, SPEED);
+                }
+                // Allow tight turns while
             }
 
             // EncoderMode

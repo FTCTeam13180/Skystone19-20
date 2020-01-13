@@ -179,4 +179,10 @@ public class Elevator {
 
         goInByRotations(1.0,rotations);
     }
+    public void goOutbyOne(){
+        goOutByRotations(1.0,1);
+    }
+    public void goInbyOne(){
+        goInByRotations(1.0,1);
+    }
 }
