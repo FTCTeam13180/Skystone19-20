@@ -43,7 +43,7 @@ public class BuildingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-        opMode.sleep(15000);
+        opMode.sleep(20000);
         // Set hook in attach position
         hook.halfattach(0.5);
 
@@ -72,7 +72,6 @@ public class BuildingZoneFullAuto {
         }
 
         // Pushing foundation into depot
-
         robotNavigator.moveBackward(34, 10000);
         /*
          * Detach from the foundation
@@ -81,18 +80,17 @@ public class BuildingZoneFullAuto {
         hook.detach();
         opMode.sleep(200);
         robotNavigator.moveBackward(6,1000);
-        robotNavigator.moveForward(24, 10000);
         if(alliance == Alliance.BLUE){
             if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(12, 10000);
+                robotNavigator.shiftRight(23, 10000);
             }
         }
         else {
             if (parking == Parking.WALL) {
-                robotNavigator.shiftRight(18, 10000);
+                robotNavigator.shiftLeft(23, 10000);
             }
         }
-        robotNavigator.moveForward(12,10000);
+        robotNavigator.moveForward(36, 10000);
        /* if (alliance == Alliance.BLUE) {
             robotNavigator.shiftRight(15, 1000);
         } else {
