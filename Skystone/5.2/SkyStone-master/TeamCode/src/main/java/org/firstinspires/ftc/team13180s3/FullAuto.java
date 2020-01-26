@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-public class LoadingZoneFullAuto {
+public class FullAuto {
     private LinearOpMode opMode;
     private RoboNavigator robotNavigator;
     private Hook hook;
@@ -12,6 +12,7 @@ public class LoadingZoneFullAuto {
     private Elevator elevator;
     private Alliance alliance;
     private Parking parking;
+    private Side side;
     private double NAVIGATOR_POWER=0.5;
     public enum Alliance {
         BLUE,
@@ -23,7 +24,12 @@ public class LoadingZoneFullAuto {
         WALL
     }
 
-    LoadingZoneFullAuto (LinearOpMode op, Alliance al, Parking pa) {
+    public enum Side{
+        Build,
+        Load
+    }
+
+    FullAuto (LinearOpMode op, Alliance al, Parking pa) {
         this.opMode = op;
         this.alliance = al;
         this.parking = pa;
@@ -50,11 +56,31 @@ public class LoadingZoneFullAuto {
 
         opMode.telemetry.addLine("Front of Robot Should be forward");
         opMode.telemetry.update();
+        if(side == Side.Build){
+            robotNavigator.moveForward(24,1000);
+            if (alliance == Alliance.BLUE) {
+                robotNavigator.turnLeft(90,1000);
+            } else {
+                robotNavigator.turnRight(90,10000);
+            }
+            robotNavigator.moveForward(70,1000);
+            if (alliance == Alliance.BLUE) {
+                robotNavigator.turnRight(90,1000);
+            } else {
+                robotNavigator.turnLeft(90,1000);
+            }
+            //robotNavigator.moveBackward(24,1000);
+
+
+        }
 
         elevator.playposition();
         grab.rotateToDegrees_0();
- //       grab.release();
-        robotNavigator.moveForward(24,4000);
+        //       grab.release()
+
+        if(side== Side.Load){
+            robotNavigator.moveForward(24,4000);
+        }
 /*  *** SKYSTONE DETECTION- ADD LATER ***
             detect.activate();
             if(detect.scan()){

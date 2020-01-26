@@ -43,8 +43,7 @@ public class BuildingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-
-        opMode.sleep(200);
+        opMode.sleep(15000);
         // Set hook in attach position
         hook.halfattach(0.5);
 
@@ -61,7 +60,7 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(12, 10000);
         //pull foundation towards the bridges, away from north wall
         // then turning the foundation
-        double turn_degrees = 190;
+        double turn_degrees = 175;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
             robotNavigator.turnLeft(turn_degrees, 10000);
@@ -81,16 +80,28 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
-        robotNavigator.moveBackward(12,1000);
-        if (alliance == Alliance.BLUE) {
+        robotNavigator.moveBackward(6,1000);
+        robotNavigator.moveForward(24, 10000);
+        if(alliance == Alliance.BLUE){
+            if (parking == Parking.WALL) {
+                robotNavigator.shiftLeft(12, 10000);
+            }
+        }
+        else {
+            if (parking == Parking.WALL) {
+                robotNavigator.shiftRight(18, 10000);
+            }
+        }
+        robotNavigator.moveForward(12,10000);
+       /* if (alliance == Alliance.BLUE) {
             robotNavigator.shiftRight(15, 1000);
         } else {
             robotNavigator.shiftLeft(15, 10000);
-        }
+        }*/
         //opMode.sleep(2000);
         //robotNavigator.moveForward(6,10000)
-        robotNavigator.moveForward(68, 10000);
-        if (alliance == Alliance.BLUE) {
+
+        /*if (alliance == Alliance.BLUE) {
             robotNavigator.turnLeft(90, 1000);
         } else {
             robotNavigator.turnRight(90, 10000);
@@ -102,7 +113,7 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(14, 10000);
         //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
         grab.grabIn();
-        robotNavigator.moveBackward(8,1000);
+        robotNavigator.moveBackward(14,1000);
         if (alliance == Alliance.BLUE) {
             robotNavigator.turnLeft(90, 1000);
 
@@ -115,21 +126,9 @@ public class BuildingZoneFullAuto {
         robotNavigator.moveForward(24,10000);
         grab.release();
         elevator.goDownByRotations(1,1.3);
-        robotNavigator.moveBackward(48,1000);
-        if(alliance == Alliance.BLUE){
-            if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(6, 10000);
-            } else {
-                robotNavigator.shiftRight(18, 1000);
-            }
-        }
-        else {
-            if (parking == Parking.WALL) {
-                    robotNavigator.shiftRight(6, 10000);
-                } else {
-                    robotNavigator.shiftLeft(18, 1000);
-                }
-            }
+        robotNavigator.moveBackward(48,1000);*/
+
+
 
 
     }
