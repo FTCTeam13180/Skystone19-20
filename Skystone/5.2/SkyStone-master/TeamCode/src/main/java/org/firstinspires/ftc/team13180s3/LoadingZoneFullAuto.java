@@ -45,7 +45,7 @@ public class LoadingZoneFullAuto {
         elevator.init();
 
 
-//        hook.detach();
+//        ho+ok.detach();
 
 
         opMode.telemetry.addLine("Front of Robot Should be forward");
@@ -75,12 +75,15 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnRight(90,5000);
         robotNavigator.moveForward(69,10000);
         elevator.goUpByRotations(1,1.6);
-        if(alliance==Alliance.BLUE)
+        if(alliance==Alliance.BLUE){
             robotNavigator.turnRight(90,5000);
-        else
+        }
+        else{
             robotNavigator.turnLeft(90,5000);
-        robotNavigator.moveForward(4,5000);
-        elevator.goDownByRotations(1,0.8);
+        }
+        robotNavigator.moveForward(8.5,5000);
+        //
+        // elevator.goDownByRotations(1,0.8);
         grab.release();
         opMode.sleep(100);
 
@@ -99,7 +102,7 @@ public class LoadingZoneFullAuto {
        /* robotNavigator.turnLeft(5,1000);
         robotNavigator.turnRight(10,1000);
         robotNavigator.turnLeft(5,1000);*/
-        robotNavigator.moveForward(17,5000);
+        robotNavigator.moveForward(20,5000);
         double turn_degrees = 210;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
@@ -124,17 +127,17 @@ public class LoadingZoneFullAuto {
 
         if(alliance == Alliance.BLUE){
             if (parking == parking.WALL) {
-                robotNavigator.shiftRight(20, 10000);
+                robotNavigator.shiftRight(23, 10000);
             }
         }
         else {
             if (parking == parking.WALL) {
 
-                robotNavigator.shiftLeft(20, 10000);
-                robotNavigator.shiftRight(3, 10000);
+                robotNavigator.shiftLeft(23, 10000);
+
             }
         }
-        elevator.goDownByRotations(1,0.5);
+        elevator.goDownByRotations(1,1);
         robotNavigator.moveForward(36,5000);
 //        elevator.homeposition();
 //        opMode.sleep(200);
