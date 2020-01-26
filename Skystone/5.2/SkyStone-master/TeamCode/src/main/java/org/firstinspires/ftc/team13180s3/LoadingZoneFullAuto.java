@@ -123,22 +123,23 @@ public class LoadingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
-        robotNavigator.moveBackward(5, 10000);
+        robotNavigator.moveBackward(15, 10000);
 
         if(alliance == Alliance.BLUE){
             if (parking == parking.WALL) {
                 robotNavigator.shiftRight(23, 10000);
+                robotNavigator.shiftLeft(4,1000);
             }
             else
-                robotNavigator.shiftRight(4, 10000);
+                robotNavigator.shiftLeft(8, 10000);
         }
         else {
             if (parking == parking.WALL) {
-
                 robotNavigator.shiftLeft(23, 10000);
+                robotNavigator.shiftRight(4,1000);
             }
             else
-                robotNavigator.shiftLeft(4, 10000);
+                robotNavigator.shiftRight(8, 10000);
         }
         elevator.goDownByRotations(1,1);
         robotNavigator.moveForward(36,5000);
