@@ -43,7 +43,7 @@ public class BuildingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-        opMode.sleep(20000);
+        opMode.sleep(15000);
         // Set hook in attach position
         hook.halfattach(0.5);
 
@@ -78,7 +78,7 @@ public class BuildingZoneFullAuto {
         opMode.sleep(200);
         hook.detach();
         opMode.sleep(200);
-        robotNavigator.moveBackward(7,1000);
+        robotNavigator.moveBackward(15,1000);
         if(alliance == Alliance.BLUE){
             if (parking == Parking.WALL) {
                 robotNavigator.shiftRight(23, 10000);

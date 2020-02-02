@@ -94,14 +94,14 @@ public class LoadingZoneFullAuto {
         hook.halfattach(0.5);
         robotNavigator.moveBackward(9,5000);
         hook.attach();
-        opMode.sleep(250);
+        opMode.sleep(200);
         robotNavigator.setNavigatorPower(0.4);
         robotNavigator.moveBackward(1.5,5000);
         robotNavigator.setNavigatorPower(1.0);
        /* robotNavigator.turnLeft(5,1000);
         robotNavigator.turnRight(10,1000);
         robotNavigator.turnLeft(5,1000);*/
-        robotNavigator.moveForward(20,5000);
+        robotNavigator.moveForward(24,5000);
         double turn_degrees = 210;
         if (alliance == Alliance.BLUE) {
             robotNavigator.shiftLeft(12, 10000);
@@ -128,19 +128,21 @@ public class LoadingZoneFullAuto {
 
         if(alliance == Alliance.BLUE){
             if (parking == parking.WALL) {
-                robotNavigator.shiftRight(23, 10000);
-                robotNavigator.shiftLeft(4,1000);
+                robotNavigator.shiftRight(25, 10000);
+                robotNavigator.shiftLeft(2,1000);
             }
-            else
-                robotNavigator.shiftLeft(12, 10000);
+            /*else
+                robotNavigator.shiftLeft(4, 10000);*/
         }
         else {
             if (parking == parking.WALL) {
-                robotNavigator.shiftLeft(23, 10000);
-                robotNavigator.shiftRight(4,1000);
+                robotNavigator.shiftLeft(25, 10000);
+                robotNavigator.shiftRight(2,1000);
             }
-            else
-                robotNavigator.shiftRight(12, 10000);
+            /*else
+                robotNavigator.shiftRight(4, 10000);
+                //
+                */
         }
         elevator.goDownByRotations(1,1);
         robotNavigator.moveForward(36,5000);

@@ -89,6 +89,7 @@ public class FullAuto {
             }
             else{
                 robotNavigator.encoderDrive(RoboNavigator.DIRECTION.FORWARD, NAVIGATOR_POWER, 25*2.54, 4000);
+                //shutupshutupshutupshutup
             }
 */
 
