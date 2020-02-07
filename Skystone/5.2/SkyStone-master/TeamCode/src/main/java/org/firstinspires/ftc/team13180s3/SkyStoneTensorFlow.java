@@ -47,7 +47,7 @@ public class SkyStoneTensorFlow {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = op.hardwareMap.get(WebcamName.class, "Webcam 1");
+        //parameters.cameraName = op.hardwareMap.get(WebcamName.class, "Webcam 1");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);

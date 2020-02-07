@@ -171,7 +171,7 @@ public class Elevator {
 
         }
     }
-    int rotations = 6;
+    int rotations = 3; //used to be 6, but for qual 3, geared 2:1
     public void playposition(){
 
         goOutByRotations(1.0,rotations);

@@ -19,8 +19,8 @@ public class TestTensorFlow extends LinearOpMode {
             if(gamepad1.b){
                 boolean skystone = detect.scan();
                 if(skystone){
-                    telemetry.addLine("Skystone Found");
-                    telemetry.addData("skstone found", 10);
+                    telemetry.addData("Skystone Found",1);
+                    telemetry.update();
 
                 }
             }
