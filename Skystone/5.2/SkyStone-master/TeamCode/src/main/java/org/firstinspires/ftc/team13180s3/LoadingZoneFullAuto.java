@@ -87,6 +87,8 @@ public class LoadingZoneFullAuto {
         opMode.sleep(100);
 
         robotNavigator.moveBackward(4,5000);
+        grab.rotateToDegrees_180();
+        elevator.goInByRotations(1.0,1);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnLeft(180,5000);
         else
@@ -121,10 +123,11 @@ public class LoadingZoneFullAuto {
          */
 
         opMode.sleep(200);
-        hook.detach();
+        hook.detach(); //rikhil was here
         opMode.sleep(200);
-        robotNavigator.moveBackward(15, 10000);
+        /* robotNavigator.moveBackward(15, 10000);
         robotNavigator.moveForward(2,10000);
+
 
         if(alliance == Alliance.BLUE){
             if (parking == parking.WALL) {
@@ -132,7 +135,7 @@ public class LoadingZoneFullAuto {
                 robotNavigator.shiftLeft(2,1000);
             }
             /*else
-                robotNavigator.shiftLeft(4, 10000);*/
+                robotNavigator.shiftLeft(4, 10000);
         }
         else {
             if (parking == parking.WALL) {
@@ -142,10 +145,13 @@ public class LoadingZoneFullAuto {
             /*else
                 robotNavigator.shiftRight(4, 10000);
                 //
-                */
+
         }
         elevator.goDownByRotations(1,1);
         robotNavigator.moveForward(36,5000);
+        */
+        elevator.goOutByRotations(1.0,1);
+        grab.rotateToDegrees_0();
 //        elevator.homeposition();
 //        opMode.sleep(200);
 

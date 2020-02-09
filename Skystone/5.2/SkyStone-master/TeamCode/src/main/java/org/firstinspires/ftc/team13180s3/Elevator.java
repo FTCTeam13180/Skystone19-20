@@ -30,10 +30,10 @@ public class Elevator {
     // InOutWinch Controls used by telescopic arm
     //
     public void goOut(double power) {
-        inOutWinch.setPower(-abs(power));
+        inOutWinch.setPower(abs(power));
     }
     public void goIn(double power) {
-        inOutWinch.setPower(abs(power));
+        inOutWinch.setPower(-abs(power));
     }
 
     public void stopInOut() {
@@ -171,7 +171,7 @@ public class Elevator {
 
         }
     }
-    int rotations = 3; //used to be 6, but for qual 3, geared 2:1
+    double rotations = 3.5; //used to be 6, but for qual 3, geared 2:1
     public void playposition(){
 
         goOutByRotations(1.0,rotations);
