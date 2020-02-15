@@ -54,8 +54,8 @@ public class RoboNavigator {
     }
     public void initIMU(){
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
-        param.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        param.calibrationDataFile = "BNO055IMUCalibration.json";
+        //param.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        //param.calibrationDataFile = "BNO055IMUCalibration.json";
         param.loggingEnabled      = true;
         param.loggingTag          = "IMU";
         imu = opMode.hardwareMap.get(BNO055IMU.class, "imu123");

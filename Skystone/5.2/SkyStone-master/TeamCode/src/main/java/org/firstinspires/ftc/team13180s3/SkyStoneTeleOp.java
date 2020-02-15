@@ -104,8 +104,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     // Always remember to reverse joystick stick_y value.
 
                     // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
-                    //roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
-                    roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
+                    roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
+                    //roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
                 }
                 // Allow tight turns while
                 if(nav_left_turn){
