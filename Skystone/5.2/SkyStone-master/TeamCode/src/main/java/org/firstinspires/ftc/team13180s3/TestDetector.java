@@ -38,26 +38,21 @@ public class TestDetector extends LinearOpMode {
                 for(Recognition recog: blocks){
 
                         if(recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)){
-                            telemetry.addData("Hello",8);
                             telemetry.addData("Image Width: ", recog.getImageWidth());
                             telemetry.addData("Image Height",recog.getImageHeight());
                             telemetry.addData("Label", recog.getLabel());
                             telemetry.addData("Left", recog.getLeft());
                             telemetry.addData("Right", recog.getRight());
-                            if(recog.getLeft() < 100){
-                                float x = Math.abs((recog.getRight()-recog.getLeft())/8);
-                                telemetry.addData("X", x);
+                            float x  = Math.abs((recog.getRight()- recog.getLeft()) / 2);
+                            if(x < 180){
                                 telemetry.addLine("Position 2");
                                 //robo.shiftRight(3,10000);
                                 robo.shiftRight(4.25,1000);
                                 foundSkytone = true;
                                 break;
                             }
-                            else if (recog.getLeft() > 400){
+                            else if (x > 400){
                                 telemetry.addLine("Position 3");
-                                float x = Math.abs((recog.getRight()-recog.getLeft())/8);
-                                telemetry.addData("X", x);
-
                                 //robo.shiftRight(12,1000);
                                 robo.shiftRight(11.75,1000);
                                 foundSkytone = true;
