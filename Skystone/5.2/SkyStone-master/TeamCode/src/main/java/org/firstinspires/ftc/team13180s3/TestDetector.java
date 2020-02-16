@@ -49,6 +49,7 @@ public class TestDetector extends LinearOpMode {
                                 telemetry.addLine("Position 2");
                                 //robo.shiftRight(3,10000);
                                 robo.shiftRight(4.25,1000);
+                                break;
                             }
                             else if (recog.getRight() > 500){
                                 float x = Math.abs((recog.getRight()-recog.getLeft())/8);
@@ -56,11 +57,13 @@ public class TestDetector extends LinearOpMode {
                                 telemetry.addLine("Position 3");
                                 //robo.shiftRight(12,1000);
                                 robo.shiftRight(11.75,1000);
+                                break;
                             }
                         }
                         else{
                             robo.shiftLeft(4.5,1000);
                             telemetry.addLine("Position 1");
+                            break;
                         }
                         telemetry.update();
                     }
