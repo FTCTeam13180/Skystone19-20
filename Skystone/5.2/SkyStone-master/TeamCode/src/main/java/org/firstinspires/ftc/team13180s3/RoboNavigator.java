@@ -55,6 +55,7 @@ public class RoboNavigator {
     public void initIMU(){
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
         param.angleUnit           = BNO055IMU.AngleUnit.RADIANS;
+        param.gyroBandwidth = BNO055IMU.GyroBandwidth.HZ523;
         //param.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         //param.calibrationDataFile = "BNO055IMUCalibration.json";
         param.loggingEnabled      = true;
