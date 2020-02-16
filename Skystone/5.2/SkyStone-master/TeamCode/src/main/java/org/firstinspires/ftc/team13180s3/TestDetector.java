@@ -16,6 +16,7 @@ public class TestDetector extends LinearOpMode {
         robo = new RoboNavigator(this);
         robo.init();
         waitForStart();
+        boolean foundSkytone = false;
         while (opModeIsActive()){
             if(gamepad1.b){
                 List<Recognition> blocks = detect.scan();
@@ -49,25 +50,30 @@ public class TestDetector extends LinearOpMode {
                                 telemetry.addLine("Position 2");
                                 //robo.shiftRight(3,10000);
                                 robo.shiftRight(4.25,1000);
+                                foundSkytone = true;
                                 break;
                             }
-                            else if (recog.getRight() > 500){
+                            else if (recog.getLeft() > 400){
+                                telemetry.addLine("Position 3");
                                 float x = Math.abs((recog.getRight()-recog.getLeft())/8);
                                 telemetry.addData("X", x);
-                                telemetry.addLine("Position 3");
+
                                 //robo.shiftRight(12,1000);
                                 robo.shiftRight(11.75,1000);
+                                foundSkytone = true;
                                 break;
                             }
                         }
                         else{
-                            robo.shiftLeft(4.5,1000);
                             telemetry.addLine("Position 1");
+                            robo.shiftLeft(4.5,1000);
                             break;
                         }
                         telemetry.update();
                     }
-                robo.moveForward(24,10000);
+                if(foundSkytone) {
+                    robo.moveForward(24,10000);
+                }
             }
         }
 
