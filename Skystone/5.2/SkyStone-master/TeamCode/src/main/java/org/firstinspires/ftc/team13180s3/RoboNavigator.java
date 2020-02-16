@@ -54,12 +54,24 @@ public class RoboNavigator {
     }
     public void initIMU(){
         BNO055IMU.Parameters param = new BNO055IMU.Parameters();
+        param.angleUnit           = BNO055IMU.AngleUnit.RADIANS;
         //param.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         //param.calibrationDataFile = "BNO055IMUCalibration.json";
         param.loggingEnabled      = true;
         param.loggingTag          = "IMU";
         imu = opMode.hardwareMap.get(BNO055IMU.class, "imu123");
         imu.initialize(param);
+
+        // Wait for gyroscope to be calibrated
+        opMode.telemetry.addLine ("Starting Gyro Calibration");
+        opMode.telemetry.update();
+        while(!imu.isGyroCalibrated()) {
+            opMode.sleep(50);
+            opMode.idle();
+        }
+        opMode.telemetry.addLine ("Completed Gyro Calibration");
+        opMode.telemetry.update();
+
     }
 
     public void setNavigatorPower (double p) {
@@ -196,9 +208,11 @@ public class RoboNavigator {
     }
 
     public void ResetImu(){
+        /*
         Orientation imu_O=imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
         double imu_R=imu_O.firstAngle;
         delta=imu_R-delta;
+        */
     }
 
     public void OmniImu(double x, double y, double power_scale){
