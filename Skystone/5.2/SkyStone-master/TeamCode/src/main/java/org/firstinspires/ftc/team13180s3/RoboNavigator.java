@@ -208,6 +208,9 @@ public class RoboNavigator {
         Orientation imu_orientation =
                 imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
 
+        // IMU is installed PI/2 off from the front of the robot.
+        // Adding PI/2 degrees change the reference to front of the robot
+
         double imu_radian = imu_orientation.firstAngle+delta;
 
         double corrected_radian = input_radian - imu_radian;
