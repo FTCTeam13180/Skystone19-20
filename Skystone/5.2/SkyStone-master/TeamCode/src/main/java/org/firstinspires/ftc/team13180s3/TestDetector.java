@@ -67,6 +67,7 @@ public class TestDetector extends LinearOpMode {
                         }
                         telemetry.update();
                     }
+                robo.moveForward(24,10000);
             }
         }
 
