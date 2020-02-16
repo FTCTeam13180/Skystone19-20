@@ -70,6 +70,11 @@ public class RoboNavigator {
             opMode.idle();
         }
         opMode.telemetry.addLine ("Completed Gyro Calibration");
+        Orientation imu_orientation =
+                imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+        double imu_radian = imu_orientation.firstAngle;
+        opMode.telemetry.addData ("Initialized at angle: ", "%f", imu_radian);
+
         opMode.telemetry.update();
 
     }
