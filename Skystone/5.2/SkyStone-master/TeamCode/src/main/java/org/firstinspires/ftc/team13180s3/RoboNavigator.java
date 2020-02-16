@@ -221,6 +221,7 @@ public class RoboNavigator {
         */
     }
 
+
     public void OmniImu(double x, double y, double power_scale){
         double input_radian = Math.atan2(y,x); //gets standard angle of joystick
 
@@ -242,6 +243,17 @@ public class RoboNavigator {
         AnyMecanum(Math.cos(corrected_radian),Math.sin(corrected_radian), power_scale);
     }
 
+    public void PrintImuRadians(){
+        // Get IMU Orientation in radians for roll movement (around y-axis)
+        Orientation imu_orientation =
+                imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+
+
+        double imu_radian = imu_orientation.firstAngle;
+
+        opMode.telemetry.addData ("CurrentPosition: ", "%f", imu_radian);
+        opMode.telemetry.update();
+    }
 
     /*
      *********************
