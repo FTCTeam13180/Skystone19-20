@@ -35,41 +35,60 @@ public class TestDetector extends LinearOpMode {
             }
             else if(gamepad1.a){
                 List<Recognition> blocks = detect.scan();
-                for(Recognition recog: blocks){
+                int numblocks = blocks.size();
+                int i = 0;
+                telemetry.addData("Number Of Blocks", numblocks);
+                if(numblocks < 2){
+                    robo.moveForward(3,1000);
+                    blocks = detect.scan();
+                    numblocks = blocks.size();
+                }
+                if(numblocks == 2){
+                    for(Recognition recog: blocks){
+                        telemetry.addData("Image Width: ", recog.getImageWidth());
+                        telemetry.addData("Image Height",recog.getImageHeight());
+                        telemetry.addData("Label", recog.getLabel());
+                        telemetry.addData("Left", recog.getLeft());
+                        telemetry.addData("Right", recog.getRight());
+                        telemetry.addData("I", i);
+
 
                         if(recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)){
-                            telemetry.addData("Image Width: ", recog.getImageWidth());
-                            telemetry.addData("Image Height",recog.getImageHeight());
-                            telemetry.addData("Label", recog.getLabel());
-                            telemetry.addData("Left", recog.getLeft());
-                            telemetry.addData("Right", recog.getRight());
                             float x  = Math.abs((recog.getRight()- recog.getLeft()) / 2);
                             if(x < 180){
                                 telemetry.addLine("Position 2");
                                 //robo.shiftRight(3,10000);
                                 robo.shiftRight(4.25,1000);
                                 foundSkytone = true;
+                                telemetry.addData("Found skytone. i=", i);
+                                telemetry.addData("X=",x);
                                 break;
                             }
-                            else if (x > 400){
+                            else if (x > 320){
                                 telemetry.addLine("Position 3");
                                 //robo.shiftRight(12,1000);
                                 robo.shiftRight(11.75,1000);
                                 foundSkytone = true;
+                                telemetry.addData("found skytone i=", i);
+                                telemetry.addData("X=",x);
                                 break;
                             }
                         }
                         else{
                             telemetry.addLine("Position 1");
                             robo.shiftLeft(4.5,1000);
-                            break;
                         }
-                        telemetry.update();
+
+                        i++;
                     }
-                if(foundSkytone) {
-                    robo.moveForward(24,10000);
+                    if(foundSkytone) {
+                        robo.moveForward(24,10000);
+                    }
                 }
+
+                telemetry.update();
             }
+
         }
 
         detect.shutdown();
