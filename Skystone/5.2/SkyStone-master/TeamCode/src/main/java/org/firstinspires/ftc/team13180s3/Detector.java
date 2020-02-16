@@ -71,6 +71,7 @@ public class Detector{
 
     public List<Recognition> scan(){
         List <Recognition> recognitions= tfod.getUpdatedRecognitions();
+        opMode.sleep(1000);
         while(recognitions==null){
             recognitions=tfod.getUpdatedRecognitions();
         }
