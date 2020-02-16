@@ -16,6 +16,7 @@ public class TestIMU extends LinearOpMode {
 
         robotnav = new RoboNavigator(this);
         robotnav.init();
+        robotnav.initIMU();
 
         waitForStart();
 
@@ -23,9 +24,6 @@ public class TestIMU extends LinearOpMode {
 
             if (gamepad1.a) {
                 robotnav.PrintImuRadians();
-            }
-            else {
-                robotnav.stopMotor();
             }
         }
     }

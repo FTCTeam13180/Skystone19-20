@@ -246,12 +246,13 @@ public class RoboNavigator {
     public void PrintImuRadians(){
         // Get IMU Orientation in radians for roll movement (around y-axis)
         Orientation imu_orientation =
-                imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
-
+                imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS);
 
         double imu_radian = imu_orientation.firstAngle;
 
         opMode.telemetry.addData ("CurrentPosition: ", "%f", imu_radian);
+        opMode.telemetry.addData("Orientation.toString", imu_orientation.toString());
+
         opMode.telemetry.update();
     }
 
