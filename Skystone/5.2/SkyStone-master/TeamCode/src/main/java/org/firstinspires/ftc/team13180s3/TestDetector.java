@@ -15,6 +15,7 @@ public class TestDetector extends LinearOpMode {
         detect.init();
         robo = new RoboNavigator(this);
         robo.init();
+        robo.setLogging(false);
         waitForStart();
         boolean foundSkytone = false;
         while (opModeIsActive()){
@@ -39,7 +40,7 @@ public class TestDetector extends LinearOpMode {
                 int i = 0;
                 telemetry.addData("Number Of Blocks", numblocks);
                 if(numblocks < 2){
-                    robo.moveForward(3,1000);
+                    robo.shiftRight(3,1000);
                     blocks = detect.scan();
                     numblocks = blocks.size();
                 }
@@ -54,39 +55,40 @@ public class TestDetector extends LinearOpMode {
 
 
                         if(recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)){
-                            float x  = Math.abs((recog.getRight()- recog.getLeft()) / 2);
-                            if(x < 180){
+                            float x = recog.getRight();
+
+                            //second closest to bridge if i == 1;
+                            if(i == 1){
                                 telemetry.addLine("Position 2");
-                                //robo.shiftRight(3,10000);
-                                robo.shiftRight(4.25,1000);
+                                robo.shiftRight(5,1000);
                                 foundSkytone = true;
                                 telemetry.addData("Found skytone. i=", i);
                                 telemetry.addData("X=",x);
                                 break;
                             }
-                            else if (x > 320){
+                            //Closer to bridge if i == 0
+                            else if (i == 0){
                                 telemetry.addLine("Position 3");
-                                //robo.shiftRight(12,1000);
-                                robo.shiftRight(11.75,1000);
+                                robo.shiftRight(20,1000);
                                 foundSkytone = true;
                                 telemetry.addData("found skytone i=", i);
                                 telemetry.addData("X=",x);
                                 break;
                             }
                         }
-                        else{
-                            telemetry.addLine("Position 1");
-                            robo.shiftLeft(4.5,1000);
-                        }
-
                         i++;
                     }
                     if(foundSkytone) {
-                        robo.moveForward(24,10000);
+                        telemetry.update();
+                        robo.moveForward(15,10000);
+                    }
+                    else{
+                        robo.shiftLeft(6,1000);
+                        robo.moveForward(18,10000);
                     }
                 }
 
-                telemetry.update();
+
             }
 
         }

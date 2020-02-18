@@ -74,6 +74,8 @@ public class Detector{
         opMode.sleep(1000);
         while(recognitions==null){
             recognitions=tfod.getUpdatedRecognitions();
+            opMode.telemetry.addData("Scanning",8);
+            opMode.telemetry.update();
         }
 /*
         float left_bound=0;
