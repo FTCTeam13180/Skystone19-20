@@ -58,9 +58,6 @@ public class Detector{
             opMode.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        if (tfod != null){
-            tfod.activate();
-        }
     }
 
     public void shutdown() {
@@ -70,27 +67,18 @@ public class Detector{
     }
 
     public List<Recognition> scan(){
+
+        tfod.activate();
+
         List <Recognition> recognitions= tfod.getUpdatedRecognitions();
-        opMode.sleep(1000);
-        while(recognitions==null){
+        int retry = 0;
+        while((recognitions==null || recognitions.size() != 2) && retry < 5){
             recognitions=tfod.getUpdatedRecognitions();
-            opMode.telemetry.addData("Scanning",8);
-            opMode.telemetry.update();
+            opMode.telemetry.addData("Scanning Retry=", retry);
         }
-/*
-        float left_bound=0;
-        float right_bound=0;
-        float blocks[][]=new float[3][3];
-        int i=0;
-        for(Recognition recog: recognitions){
-            blocks[i][0]=recog.getWidth();
-            blocks[i][1]=recog.getLab;
+        opMode.telemetry.update();
+        tfod.deactivate();
 
-
-        }
-        return (right_bound+left_bound)/2;
-
- */
         return recognitions;
     }
 
