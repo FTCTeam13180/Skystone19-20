@@ -10,6 +10,7 @@ public class RedLoadingZoneBridge extends LinearOpMode {
     @Override
     public void runOpMode() {
         fullAuto= new LoadingZoneFullAuto(this, LoadingZoneFullAuto.Alliance.RED, LoadingZoneFullAuto.Parking.BRIDGE);
+        fullAuto.init();
         waitForStart();
         while(opModeIsActive()){
             fullAuto.run();

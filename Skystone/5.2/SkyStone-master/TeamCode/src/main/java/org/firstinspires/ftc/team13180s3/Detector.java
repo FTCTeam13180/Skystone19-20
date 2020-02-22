@@ -68,19 +68,19 @@ public class Detector{
 
     public List<Recognition> scan(){
 
-        tfod.activate();
+        //tfod.activate();
 
         List <Recognition> recognitions= tfod.getUpdatedRecognitions();
         int retry = 0;
         while((recognitions==null || recognitions.size() != 2) && retry < 5){
             recognitions=tfod.getUpdatedRecognitions();
             opMode.telemetry.addData("Scanning Retry=", retry);
+            retry++;
         }
         opMode.telemetry.update();
-        tfod.deactivate();
+        //tfod.deactivate();
 
         return recognitions;
     }
-
-}
+            }
 
