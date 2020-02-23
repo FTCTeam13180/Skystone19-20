@@ -37,6 +37,12 @@ public class LoadingZoneFullAuto {
 
     private int skystone() {
         List<Recognition> blocks = detect.scan();
+        if(blocks == null) {
+            // Did not find skytone after five retry, so return and move forward
+            robotNavigator.moveForward(15,1000);
+            return 2;
+
+        }
         int numblocks = blocks.size();
         int i = 0;
         if (numblocks < 2) {
@@ -136,14 +142,14 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnRight(90,5000);
         }
         //moving to foundation after gettign first skystone based on position
-        if(position==0){
-            robotNavigator.moveForward(95,50000);
+        if(position==1){
+            robotNavigator.moveForward(72,50000);
         }
-        else if(position==1){
-            robotNavigator.moveForward(84,50000);
+        else if(position==0){
+            robotNavigator.moveForward(64,50000);
         }
         else{
-            robotNavigator.moveForward(69,50000);
+            robotNavigator.moveForward(80,50000);
         }
 
 
@@ -152,9 +158,11 @@ public class LoadingZoneFullAuto {
         else
             robotNavigator.turnLeft(90,5000);
 
-        elevator.goUpByRotations(1,1.6);
+        elevator.goUpByRotations(1,4);
+        opMode.sleep(100);
         hook.halfattach(.5);
-        robotNavigator.moveForward(24,10000);
+        robotNavigator.moveForward(6,10000);
+        opMode.sleep(100);
         hook.attach();
         robotNavigator.setNavigatorPower(0.4);
         robotNavigator.moveForward(1.5,5000);
@@ -171,9 +179,9 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(turnAngle,1000);
         }
         hook.detach();
-        robotNavigator.moveForward(48,1000);
+        robotNavigator.moveForward(24,1000);
         robotNavigator.moveBackward(5,1000);
-        elevator.goDownByRotations(1,1.6);
+        elevator.goDownByRotations(1,4);
         if(position==0){
             robotNavigator.moveBackward(104,100);
         }
@@ -205,11 +213,11 @@ public class LoadingZoneFullAuto {
         if(position==2){
             robotNavigator.moveForward(95,50000);
         }
-        elevator.goUpByRotations(1,1.6);
+        elevator.goUpByRotations(1,4);
         robotNavigator.moveForward(65,1000);
         grab.release();
         robotNavigator.moveBackward(5,1000);
-        elevator.goDownByRotations(1,1.6);
+        elevator.goDownByRotations(1,4);
         robotNavigator.moveBackward(50,1000);
 
 

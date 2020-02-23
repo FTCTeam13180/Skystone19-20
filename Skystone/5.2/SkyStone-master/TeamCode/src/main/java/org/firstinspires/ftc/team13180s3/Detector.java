@@ -57,6 +57,13 @@ public class Detector{
         else {
             opMode.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
+        /**
+         * Activate TensorFlow Object Detection before we wait for the start command.
+         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+         **/
+        if (tfod != null) {
+            tfod.activate();
+        }
 
     }
 
@@ -68,8 +75,6 @@ public class Detector{
 
     public List<Recognition> scan(){
 
-        //tfod.activate();
-
         List <Recognition> recognitions= tfod.getUpdatedRecognitions();
         int retry = 0;
         while((recognitions==null || recognitions.size() != 2) && retry < 5){
@@ -78,9 +83,8 @@ public class Detector{
             retry++;
         }
         opMode.telemetry.update();
-        //tfod.deactivate();
 
         return recognitions;
     }
-            }
+}
 

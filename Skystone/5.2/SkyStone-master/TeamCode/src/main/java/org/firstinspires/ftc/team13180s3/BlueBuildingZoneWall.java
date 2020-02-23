@@ -15,6 +15,8 @@ public class BlueBuildingZoneWall extends LinearOpMode {
                 BuildingZoneFullAuto.Alliance.BLUE,
                 BuildingZoneFullAuto.Parking.WALL);
 
+
+
         waitForStart();
 
         while (opModeIsActive()) {

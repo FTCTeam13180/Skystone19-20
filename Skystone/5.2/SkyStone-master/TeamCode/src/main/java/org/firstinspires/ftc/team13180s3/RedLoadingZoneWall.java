@@ -10,6 +10,7 @@ public class RedLoadingZoneWall extends LinearOpMode {
     @Override
     public void runOpMode() {
         fullAuto= new LoadingZoneFullAuto(this, LoadingZoneFullAuto.Alliance.RED, LoadingZoneFullAuto.Parking.WALL);
+        fullAuto.init();
         waitForStart();
         while(opModeIsActive()){
             fullAuto.run();
