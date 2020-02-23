@@ -143,13 +143,13 @@ public class LoadingZoneFullAuto {
         }
         //moving to foundation after gettign first skystone based on position
         if(position==1){
-            robotNavigator.moveForward(72,50000);
+            robotNavigator.moveForward(80,50000);
         }
         else if(position==0){
-            robotNavigator.moveForward(64,50000);
+            robotNavigator.moveForward(72,50000);
         }
         else{
-            robotNavigator.moveForward(80,50000);
+            robotNavigator.moveForward(88,50000);
         }
 
 
@@ -158,7 +158,7 @@ public class LoadingZoneFullAuto {
         else
             robotNavigator.turnLeft(90,5000);
 
-        elevator.goUpByRotations(1,4);
+        elevator.goUpByInches(1,6);
         opMode.sleep(100);
         hook.halfattach(.5);
         robotNavigator.moveForward(6,10000);
@@ -171,17 +171,16 @@ public class LoadingZoneFullAuto {
         int turnAngle=90;
         //have to test turn angle
         if(alliance == Alliance.RED){
-            robotNavigator.shiftLeft(12,1000);
             robotNavigator.turnRight(turnAngle,1000);
         }
         else{
-            robotNavigator.shiftRight(12,1000);
+
             robotNavigator.turnLeft(turnAngle,1000);
         }
         hook.detach();
         robotNavigator.moveForward(24,1000);
         robotNavigator.moveBackward(5,1000);
-        elevator.goDownByRotations(1,4);
+        elevator.goDownByInches(1,6);
         if(position==0){
             robotNavigator.moveBackward(104,100);
         }
@@ -213,11 +212,11 @@ public class LoadingZoneFullAuto {
         if(position==2){
             robotNavigator.moveForward(95,50000);
         }
-        elevator.goUpByRotations(1,4);
+        elevator.goUpByInches(1,6);
         robotNavigator.moveForward(65,1000);
         grab.release();
         robotNavigator.moveBackward(5,1000);
-        elevator.goDownByRotations(1,4);
+        elevator.goDownByInches(1,6);
         robotNavigator.moveBackward(50,1000);
 
 

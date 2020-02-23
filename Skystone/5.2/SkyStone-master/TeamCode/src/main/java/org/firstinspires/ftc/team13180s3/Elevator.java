@@ -12,6 +12,9 @@ public class Elevator {
     private DcMotor upDownWinchL;
     private DcMotor upDownWinchR;
     public int height=0;
+    public int gearRatio = 2;
+    public double circumference = 0.7;
+    public int levels = 5;
     public int outDistance=0;
 
     private final double MSECS_PER_ROTATION = 840;
@@ -56,9 +59,20 @@ public class Elevator {
         opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
         stopUpDown();
     }
+    
+    public void goUpByInches(double power, double inches){
+        goUp(power);
+        opMode.sleep((long)((inches/((circumference*3.14)*(levels-1)*(gearRatio))) * MSECS_PER_ROTATION));
+        stopUpDown();
+    }
     public void goDownByRotations(double power, double rotations) {
         goDown(power);
         opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
+        stopUpDown();
+    }
+    public void goDownByInches(double power, double inches){
+        goDown(power);
+        opMode.sleep((long)((inches/((circumference*3.14)*(levels-1)*(gearRatio))) * MSECS_PER_ROTATION));
         stopUpDown();
     }
     //

@@ -291,7 +291,7 @@ public class RoboNavigator {
      * Prefer not to use these functions directly. Instead use the Encoder based Basic Movement functions
      */
 
-    private static  final double ROBO_DIAMETER_CM = 62.86;
+    private static final double ROBO_DIAMETER_CM = 62.86;
     private static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: Andymark Motor Encoder
     private static final double     DRIVE_GEAR_REDUCTION    = 0.776 ;     // This is < 1.0 if geared up
     private static final double     WHEEL_DIAMETER_CM   = 10.16 ;     // For figuring circumference
@@ -421,7 +421,7 @@ public class RoboNavigator {
                     (runtime.milliseconds() < timeoutMs) &&
                     (isBusy())) {
 
-                // Display it for the driver.
+                // Display it for the driver.zz
                 logCurrentPosition();
             }
 
