@@ -84,14 +84,10 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             // Navigation Controls
             if(nav_speed_up){
-                if(multiplier<1) {
-                    multiplier += 0.1;
-                }
+                multiplier= 1.0;
             }
             else if(nav_speed_down){
-                if(multiplier>0.5) {
-                    multiplier -= 0.1;
-                }
+                multiplier = 0.5;
             }
 
             if(nav_init_IMU){
@@ -106,8 +102,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
                     telemetry.addData("", "x=%f, y=%f", nav_omni_x, nav_omni_y);
 
-                    roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
-                    //roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
+//                    roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
+                    roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
                 }
                 // Allow tight turns while
                 if(nav_left_turn){
@@ -176,7 +172,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 hook.detach();
             }
             else if(gamepad1.dpad_right){
-                hook.halfattach(0.5);
+                hook.halfattach(0.4);
             }
         }
 
