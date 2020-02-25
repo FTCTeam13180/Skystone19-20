@@ -79,11 +79,13 @@ public class Detector{
         int retry = 0;
         while((recognitions==null || recognitions.size() != 2) && retry < 5){
             recognitions=tfod.getUpdatedRecognitions();
-            opMode.telemetry.addData("Scanning Retry=", retry);
             retry++;
         }
-        opMode.telemetry.update();
 
+        if (recognitions != null)
+            opMode.telemetry.addData("Recognitions: ", recognitions.toString());
+        else
+            opMode.telemetry.addData("Recognitions: ", "null");
         return recognitions;
     }
 }

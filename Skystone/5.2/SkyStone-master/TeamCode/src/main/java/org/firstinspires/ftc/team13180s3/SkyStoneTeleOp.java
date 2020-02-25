@@ -72,6 +72,7 @@ public class SkyStoneTeleOp extends LinearOpMode {
             nav_speed_down=gamepad1.b;
             nav_init_IMU=gamepad1.dpad_left;
 
+
             //GAMEPAD 2 (START B) ARM CONTROLS
             arm_in=gamepad2.left_bumper;
             arm_out=gamepad2.right_bumper;
@@ -90,9 +91,9 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 multiplier = 0.5;
             }
 
-            if(nav_init_IMU){
-                roboNav.ResetImu();
-            }
+//            if(nav_init_IMU){
+//                roboNav.ResetImu();
+//            }
 
             if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1 || nav_left_turn || nav_right_turn){
                 if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1) {
@@ -103,7 +104,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     telemetry.addData("", "x=%f, y=%f", nav_omni_x, nav_omni_y);
 
 //                    roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
-                    roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
+//                    roboNav.AnyMecanum(nav_omni_x, -nav_omni_y, multiplier);
+                    roboNav.AnyMecanumSwerve(nav_omni_x, -nav_omni_y, multiplier);
                 }
                 // Allow tight turns while
                 if(nav_left_turn){

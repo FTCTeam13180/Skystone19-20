@@ -12,7 +12,7 @@ public class Elevator {
     private DcMotor upDownWinchL;
     private DcMotor upDownWinchR;
     public int height=0;
-    public int gearRatio = 2;
+    public double gearRatio = 0.5;
     public double circumference = 0.7;
     public int levels = 5;
     public int outDistance=0;
@@ -185,7 +185,7 @@ public class Elevator {
 
         }
     }
-    double rotations = 3.5; //used to be 6, but for qual 3, geared 2:1
+    double rotations = 3; //used to be 6, but for qual 3, geared 2:1
     public void playposition(){
 
         goOutByRotations(1.0,rotations);

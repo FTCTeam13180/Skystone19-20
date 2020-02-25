@@ -33,7 +33,7 @@ public class RoboNavigator {
     private double navigatorPower;
     BNO055IMU imu;
     double delta=0;
-    boolean logging = true;
+    boolean logging = false;
 
     RoboNavigator (LinearOpMode op)
     {
@@ -213,6 +213,31 @@ public class RoboNavigator {
         rearl.setPower(power_scale*(y-x)/power);
     }
 
+    public void AnyMecanumSwerve(double x,double y, double power_scale){
+        double power = Math.sqrt(x * x + y * y);
+
+        // Floor the y to certain value.
+        // This controls how fast the robot makes the sharpest turns
+        // Higher the value the faster robot will be at the turns
+        y = (y > 0 && y < 0.707) ? 0.707 : y;
+        y = (y < 0 && y > -0.707) ? -0.707 : y;
+
+        // Ceil the turns to certain value
+        // This controls how sharp the turns can be.
+        // Higher the value, the sharper the turns. Lower value is better for smooth turns.
+        x = (x > 0 && x > 0.5) ? 0.5 : x;
+        x = (x < 0 && x < -0.5) ? -0.5 : x;
+
+        // Reverse x direction for lateral inversion of turns when moving backwards.
+        if (y<0)
+            x = -x;
+
+        topr.setPower(power_scale*(y-x)/power);
+        topl.setPower(power_scale*(y+x)/power);
+        rearr.setPower(power_scale*(y-x)/power);
+        rearl.setPower(power_scale*(y+x)/power);
+    }
+
     public void ResetImu(){
         /*
         Orientation imu_O=imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
@@ -299,7 +324,7 @@ public class RoboNavigator {
             (WHEEL_DIAMETER_CM * 3.1415);
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
     private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;
-    private static final double SHIFT_SLIPPAGE_CORRECTION = 1;
+    private static final double SHIFT_SLIPPAGE_CORRECTION = 1.14;
 
 
     private void setRunMode (DcMotor.RunMode runMode) {

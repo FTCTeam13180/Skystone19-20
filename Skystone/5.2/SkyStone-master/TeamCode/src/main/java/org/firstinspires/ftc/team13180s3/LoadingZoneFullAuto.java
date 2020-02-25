@@ -37,74 +37,71 @@ public class LoadingZoneFullAuto {
 
     private int skystone() {
         List<Recognition> blocks = detect.scan();
-        if(blocks == null) {
-            // Did not find skytone after five retry, so return and move forward
-            robotNavigator.moveForward(15,1000);
-            return 2;
 
-        }
-        int numblocks = blocks.size();
-        int i = 0;
-        if (numblocks < 2) {
+        if (blocks == null || blocks.size() != 2) {
             if(alliance == Alliance.RED){
-                robotNavigator.shiftRight(3, 1000);
+                robotNavigator.shiftRight(3, 10000);
             }
             else{
-                robotNavigator.shiftLeft(3, 1000);
+                robotNavigator.shiftLeft(3, 10000);
             }
 
             blocks = detect.scan();
-            numblocks = blocks.size();
         }
+
+        int numblocks = 0;
+
+        if (blocks!= null)
+            numblocks = blocks.size();
+
+        int i = 0;
+
+        // Align to the skystone
         if (numblocks == 2) {
             for (Recognition recog : blocks) {
                 if (recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)) {
+                    foundSkytone = true;
+                    opMode.telemetry.addData("found skytone i=", i);
 
-
-                    //second closest to bridge if i == 1;
-                    if (i == 1) {
-                        opMode.telemetry.addLine("Position 2");
-                        if(alliance == Alliance.RED){
-                            robotNavigator.shiftRight(5, 1000);
-                        }
-                        else{
-                            robotNavigator.shiftLeft(5, 1000);
-                        }
-                        foundSkytone = true;
-                        opMode.telemetry.addData("Found skytone. i=", i);
-                        break;
-                    }
                     //Closer to bridge if i == 0
-                    else if (i == 0) {
-                        opMode.telemetry.addLine("Position 3");
-                        if(alliance ==Alliance.RED){
-                            robotNavigator.shiftRight(20, 1000);
+                    if (i == 0) {
+                        if (alliance == Alliance.RED) {
+                            robotNavigator.shiftRight(12, 10000);
+                        } else {
+                            robotNavigator.shiftLeft(12, 10000);
                         }
-                        else{
-                            robotNavigator.shiftLeft(20,1000);
-                        }
-                        foundSkytone = true;
-                        opMode.telemetry.addData("found skytone i=", i);
-                        break;
                     }
+                    //second closest to bridge if i == 1;
+                    else if (i == 1) {
+                        if (alliance == Alliance.RED) {
+                            robotNavigator.shiftRight(4, 10000);
+                        } else {
+                            robotNavigator.shiftLeft(4, 10000);
+                        }
+                    }
+
+                    break;
                 }
                 i++;
             }
-            if (foundSkytone) {
-                opMode.telemetry.update();
-                robotNavigator.moveForward(15, 10000);
+        }
+        else{
+            // Did not find skytone, so assume skystone is the 3rd block
+            i = 2;
+            opMode.telemetry.addData("Skystone: ", "Not Detected");
+            if (alliance == Alliance.RED) {
+                robotNavigator.shiftLeft(7, 10000);
             } else {
-                if(alliance== Alliance.RED){
-                robotNavigator.shiftLeft(6, 1000);
-                }
-                else{
-                    robotNavigator.shiftRight(6,1000);
-                }
-                robotNavigator.moveForward(18, 10000);
+                robotNavigator.shiftRight(7, 10000);
             }
         }
+
+        opMode.telemetry.update();
+        robotNavigator.moveForward(15, 10000);
+
         return i;
     }
+
     public void init(){
         robotNavigator = new RoboNavigator(opMode);
         robotNavigator.init();
@@ -142,23 +139,23 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnRight(90,5000);
         }
         //moving to foundation after gettign first skystone based on position
-        if(position==1){
-            robotNavigator.moveForward(80,50000);
+        if(position==0){
+            robotNavigator.moveForward(60,50000);
         }
-        else if(position==0){
-            robotNavigator.moveForward(72,50000);
+        else if(position==1){
+            robotNavigator.moveForward(68,50000);
         }
         else{
-            robotNavigator.moveForward(88,50000);
+            robotNavigator.moveForward(76,50000);
         }
-
 
         if(alliance==Alliance.BLUE)
             robotNavigator.turnRight(90,5000);
         else
             robotNavigator.turnLeft(90,5000);
 
-        elevator.goUpByInches(1,6);
+        elevator.goUpByInches(1,4);
+
         opMode.sleep(100);
         hook.halfattach(.5);
         robotNavigator.moveForward(6,10000);
