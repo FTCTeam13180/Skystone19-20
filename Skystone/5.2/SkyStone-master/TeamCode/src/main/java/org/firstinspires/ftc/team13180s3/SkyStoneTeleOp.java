@@ -48,6 +48,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean grabber_spin_left;
         boolean grabber_spin_right;
         double shift;
+        boolean home;
+        boolean play;
 
         /*
         Anton:
@@ -82,6 +84,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
             shift = gamepad2.right_stick_x;
             grabber_spin_left=gamepad2.dpad_left;
             grabber_spin_right=gamepad2.dpad_right;
+            home = gamepad2.x;
+            play = gamepad2.y;
 
             // Navigation Controls
             if(nav_speed_up){
@@ -120,27 +124,19 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
 
             // Arm Controls
-            if(arm_out && currotations<9){
-                currotations++;
+            if(arm_out){
                 elevator.goOutbyOne();
             }
-            else if(arm_in && currotations>0){
-                currotations--;
+            else if(arm_in){
                 elevator.goInbyOne();
-            }
-            else {
-                elevator.stopInOut();
             }
 
             if(arm_vert>0){
-                elevator.goUp(arm_vert);
-                //vWinch.encoderDrive(1,6,1000);
+                elevator.goUp(Math.abs(arm_vert));
             }
             else if(arm_vert<0){
-                elevator.goDown(-1*arm_vert);
-                //vWinch.encoderDrive(1,-6,1000);
+                elevator.goDown(Math.abs(arm_vert));
             }
-            //
             else {
                 elevator.stopUpDown();
             }
@@ -164,6 +160,18 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
             else if (shift>0) {
                 roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, shift, 5, 5000);
+            }
+
+            if (home) {
+                Gripper.rotateToDegrees_180();
+                Gripper.release();
+                elevator.homeposition();
+            }
+
+            if (play) {
+                elevator.playposition();
+                Gripper.release();
+                Gripper.rotateToDegrees_0();
             }
 
             // Foundation Hook Controls

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 public class Elevator {
     public LinearOpMode opMode;
@@ -18,6 +19,8 @@ public class Elevator {
     public int outDistance=0;
 
     private final double MSECS_PER_ROTATION = 840;
+    private double curr_inout_pos;
+    private double max_inout_pos = 2.0;
 
     Elevator(LinearOpMode op) {
         opMode = op;
@@ -27,33 +30,42 @@ public class Elevator {
         inOutWinch = opMode.hardwareMap.get(CRServo.class, "horizontalWinch");
         upDownWinchL=opMode.hardwareMap.get(DcMotor.class,"verticalWinchL");
         upDownWinchR=opMode.hardwareMap.get(DcMotor.class,"verticalWinchR");
+
+        curr_inout_pos = 0;
     }
 
     //
     // InOutWinch Controls used by telescopic arm
     //
-    public void goOut(double power) {
+    private void goOut(double power) {
         inOutWinch.setPower(abs(power));
     }
-    public void goIn(double power) {
+    private void goIn(double power) {
         inOutWinch.setPower(-abs(power));
     }
-
-    public void stopInOut() {
+    private void stopInOut() {
         inOutWinch.setPower(0);
     }
 
     public void goOutByRotations(double power, double rotations) {
+        if (curr_inout_pos >= max_inout_pos)
+            return;
+        double diff = (curr_inout_pos + rotations <= max_inout_pos) ? rotations : (curr_inout_pos + rotations - max_inout_pos);
         goOut(power);
-        opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
+        opMode.sleep((long)(diff * MSECS_PER_ROTATION));
         stopInOut();
+        curr_inout_pos += diff;
+    }
+    public void goInByRotations(double power, double rotations) {
+        if (curr_inout_pos <= 0)
+            return;
+        double diff = (curr_inout_pos - rotations >= 0) ? rotations : (curr_inout_pos);
+        goIn(power);
+        opMode.sleep((long)(diff * MSECS_PER_ROTATION));
+        stopInOut();
+        curr_inout_pos -= diff;
     }
 
-    public void goInByRotations(double power, double rotations) {
-        goIn(power);
-        opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
-        stopInOut();
-    }
     public void goUpByRotations(double power, double rotations) {
         goUp(power);
         opMode.sleep((long)(rotations * MSECS_PER_ROTATION));
@@ -186,17 +198,19 @@ public class Elevator {
         }
     }
     double rotations = 3; //used to be 6, but for qual 3, geared 2:1
+
     public void playposition(){
-
-        goOutByRotations(1.0,rotations);
+        goOutByRotations(1.0,max_inout_pos);
     }
+
     public void homeposition(){
-
-        goInByRotations(1.0,rotations);
+        goInByRotations(1.0,curr_inout_pos);
     }
+
     public void goOutbyOne(){
         goOutByRotations(1.0,1);
     }
+
     public void goInbyOne(){
         goInByRotations(1.0,1);
     }

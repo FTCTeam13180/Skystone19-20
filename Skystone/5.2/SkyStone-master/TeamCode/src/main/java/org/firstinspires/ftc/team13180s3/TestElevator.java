@@ -12,46 +12,32 @@ public class TestElevator extends LinearOpMode {
         elevator.init();
         waitForStart();
         while (opModeIsActive()){
-            double updir=gamepad1.left_stick_y;
-            double sidedir=gamepad1.right_stick_x;
-            if (Math.abs(updir)>.1){
-                elevator.goUp(updir);
-                //in/out winch controls
-            } else if(Math.abs(sidedir)>.1) {
-                elevator.goOut(sidedir);
+            double y=gamepad1.left_stick_y;
+            if (y > 0.1){
+                elevator.goUp(y);
             }
-              else if(gamepad2.y){
-                elevator.goOutByRotations(1.0,5);
+            else if (y < -0.1)
+            {
+                elevator.goDown(y);
             }
-              else if(gamepad2.x){
-                elevator.goInByRotations(1.0, 5);
-            }
-              else if(gamepad2.right_bumper){
-                  elevator.goOut(1.0);
+            else
+                elevator.stopUpDown();
+
+
+            if(gamepad2.right_bumper){
+                elevator.goOutByRotations(1.0,1);
             }
               else if(gamepad2.left_bumper){
-                  elevator.goIn(1.0);
+                elevator.goInByRotations(1.0, 1);
             }
 
-              //up and down winch controls
 
-              else if(gamepad1.dpad_up){
-                  elevator.goUp(1.0);
-            }
-              else if(gamepad1.dpad_down){
-                  elevator.goDown(1.0);
-            }
-             else if(gamepad1.a){
+             if(gamepad2.a){
                 elevator.homeposition();
             }
-            else if(gamepad1.b){
+            else if(gamepad2.b){
                 elevator.playposition();
             }
-             else{
-                elevator.stopInOut();
-                elevator.stopUpDown();
-            }
-
         }
     }
 }
