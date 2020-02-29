@@ -36,6 +36,7 @@ public class LoadingZoneFullAuto {
     }
 
     private int skystone() {
+        opMode.sleep(500);
         List<Recognition> blocks = detect.scan();
 
         if (blocks == null || blocks.size() != 2) {
@@ -45,7 +46,7 @@ public class LoadingZoneFullAuto {
             else{
                 robotNavigator.shiftLeft(3, 10000);
             }
-
+            opMode.sleep(500);
             blocks = detect.scan();
         }
 
@@ -61,18 +62,19 @@ public class LoadingZoneFullAuto {
             for (Recognition recog : blocks) {
                 if (recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)) {
                     foundSkytone = true;
-                    opMode.telemetry.addData("found skytone i=", i);
 
                     //Closer to bridge if i == 0
-                    if (i == 0) {
+                    if (recog.getLeft() > 200) {
+                        i = 0;
                         if (alliance == Alliance.RED) {
-                            robotNavigator.shiftRight(12, 10000);
+                            robotNavigator.shiftRight(16, 10000);
                         } else {
-                            robotNavigator.shiftLeft(12, 10000);
+                            robotNavigator.shiftLeft(16, 10000);
                         }
                     }
                     //second closest to bridge if i == 1;
-                    else if (i == 1) {
+                    else if (recog.getLeft() < 100) {
+                        i = 1;
                         if (alliance == Alliance.RED) {
                             robotNavigator.shiftRight(4, 10000);
                         } else {
@@ -80,6 +82,7 @@ public class LoadingZoneFullAuto {
                         }
                     }
 
+                    opMode.telemetry.addData("found skytone i=", i);
                     break;
                 }
                 i++;
@@ -131,6 +134,7 @@ public class LoadingZoneFullAuto {
         robotNavigator.moveForward(6,1000);
         int position=skystone();
         grab.grabIn();
+        opMode.sleep(500);
         robotNavigator.moveBackward(6,1000);
         if(alliance==Alliance.BLUE){
             robotNavigator.turnLeft(90,5000);
@@ -148,24 +152,21 @@ public class LoadingZoneFullAuto {
         else{
             robotNavigator.moveForward(76,50000);
         }
-
+        elevator.goUpByInches(1,6);
         if(alliance==Alliance.BLUE)
             robotNavigator.turnRight(90,5000);
         else
             robotNavigator.turnLeft(90,5000);
-
-        elevator.goUpByInches(1,6);
-
+        hook.halfattach(.4);
         opMode.sleep(100);
-        hook.halfattach(.5);
         robotNavigator.moveForward(6,10000);
-        opMode.sleep(500);
         hook.attach();
         //robotNavigator.setNavigatorPower(0.4);
         //robotNavigator.moveForward(1.5,5000);
         robotNavigator.setNavigatorPower(1.0);
         grab.release();
-        int turnAngle=90;
+        //problems
+        /*int turnAngle=90;
         //have to test turn angle
         if(alliance == Alliance.RED){
             robotNavigator.turnRight(turnAngle,1000);
@@ -175,7 +176,7 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(turnAngle,1000);
         }
         hook.detach();
-        robotNavigator.moveForward(24,1000);
+        robotNavigator.moveForward(12,1000);
         robotNavigator.moveBackward(5,1000);
         elevator.goDownByInches(1,6);
         if(position==0){
