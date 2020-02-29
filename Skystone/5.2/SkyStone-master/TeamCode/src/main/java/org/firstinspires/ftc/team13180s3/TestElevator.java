@@ -38,6 +38,12 @@ public class TestElevator extends LinearOpMode {
             else if(gamepad2.b){
                 elevator.playposition();
             }
+            if(gamepad1.x){
+                elevator.goUpByInches(1,4);
+            }
+            else if(gamepad1.y){
+                elevator.goDownByInches(1,4);
+            }
         }
     }
 }

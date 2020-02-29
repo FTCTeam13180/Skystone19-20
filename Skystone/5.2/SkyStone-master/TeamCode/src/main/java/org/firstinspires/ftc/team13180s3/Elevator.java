@@ -20,7 +20,7 @@ public class Elevator {
 
     private final double MSECS_PER_ROTATION = 840;
     private double curr_inout_pos;
-    private double max_inout_pos = 2.0;
+    private double max_inout_pos = 3.0;
 
     Elevator(LinearOpMode op) {
         opMode = op;

@@ -157,9 +157,11 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             if (shift<0) {
                 roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, shift*-1, 5, 5000);
+                //roboNav.shiftLeft(multiplier);
             }
             else if (shift>0) {
                 roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, shift, 5, 5000);
+                //roboNav.shiftRight(multiplier);
             }
 
             if (home) {
@@ -183,6 +185,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
             else if(gamepad1.dpad_right){
                 hook.halfattach(0.4);
+            }
+
+            if(gamepad1.right_stick_x < 0){
+                roboNav.shiftLeft(multiplier);
+            }
+            else if(gamepad1.right_stick_x >0){
+                roboNav.shiftRight(multiplier);
             }
         }
 

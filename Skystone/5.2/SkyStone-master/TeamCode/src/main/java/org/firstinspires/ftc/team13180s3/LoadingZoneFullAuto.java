@@ -97,7 +97,7 @@ public class LoadingZoneFullAuto {
         }
 
         opMode.telemetry.update();
-        robotNavigator.moveForward(15, 10000);
+        robotNavigator.moveForward(18, 10000);
 
         return i;
     }
@@ -131,7 +131,7 @@ public class LoadingZoneFullAuto {
         robotNavigator.moveForward(6,1000);
         int position=skystone();
         grab.grabIn();
-        robotNavigator.moveBackward(3,1000);
+        robotNavigator.moveBackward(6,1000);
         if(alliance==Alliance.BLUE){
             robotNavigator.turnLeft(90,5000);
         }
@@ -154,15 +154,15 @@ public class LoadingZoneFullAuto {
         else
             robotNavigator.turnLeft(90,5000);
 
-        elevator.goUpByInches(1,4);
+        elevator.goUpByInches(1,6);
 
         opMode.sleep(100);
         hook.halfattach(.5);
         robotNavigator.moveForward(6,10000);
-        opMode.sleep(100);
+        opMode.sleep(500);
         hook.attach();
-        robotNavigator.setNavigatorPower(0.4);
-        robotNavigator.moveForward(1.5,5000);
+        //robotNavigator.setNavigatorPower(0.4);
+        //robotNavigator.moveForward(1.5,5000);
         robotNavigator.setNavigatorPower(1.0);
         grab.release();
         int turnAngle=90;
