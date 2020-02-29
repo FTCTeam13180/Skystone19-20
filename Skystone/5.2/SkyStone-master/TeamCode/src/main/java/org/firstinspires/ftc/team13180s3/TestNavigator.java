@@ -55,7 +55,9 @@ public class TestNavigator extends LinearOpMode {
 
             // EncoderMode
             else if (gamepad1.y) {
-                robotnav.moveForward(96, 10000);
+                //robotnav.moveForward(96, 10000);
+                // Testing encode with Rampup. Start slow in first two seconds and then full speed.
+                robotnav.moveForwardWithRampup(96,10000, 2000);
             }
             else if (gamepad1.a) {
                 robotnav.moveBackward(96, 10000);
@@ -65,6 +67,12 @@ public class TestNavigator extends LinearOpMode {
             }
             else if (gamepad1.x) {
                 robotnav.shiftLeft(96, 10000);
+            }
+            else if(gamepad1.dpad_up){
+                robotnav.setNavigatorPower(0.4);
+            }
+            else if(gamepad1.dpad_down){
+                robotnav.setNavigatorPower(1.0);
             }
 
             else if (gamepad1.left_trigger > 0.1) {

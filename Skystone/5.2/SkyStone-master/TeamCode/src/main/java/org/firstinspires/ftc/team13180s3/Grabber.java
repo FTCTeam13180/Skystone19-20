@@ -11,6 +11,8 @@ public class Grabber {
     //spinner servo for the rotation on grabber
     private Servo spinner;
 
+    private Servo capstone;
+
     private final double FINE_ROTATION_INCREMENT = 0.1;
 
     Grabber(LinearOpMode op) {
@@ -20,6 +22,7 @@ public class Grabber {
     public void init() {
         grab = opMode.hardwareMap.get(Servo.class, "Grabber");
         spinner = opMode.hardwareMap.get(Servo.class, "Spinner");
+        capstone = opMode.hardwareMap.get(Servo.class, "Capstone");
 
     }
 
@@ -32,6 +35,9 @@ public class Grabber {
     public void release() {
         grab.setPosition(0);
 
+    }
+    public void drop(){
+        capstone.setPosition(0);
     }
 
     public void rotateToDegrees_0()

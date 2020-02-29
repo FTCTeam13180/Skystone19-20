@@ -193,6 +193,11 @@ public class SkyStoneTeleOp extends LinearOpMode {
             else if(gamepad1.right_stick_x >0){
                 roboNav.shiftRight(multiplier);
             }
+
+            if(gamepad2.dpad_up){
+                Gripper.drop();
+
+            }
         }
 
     }

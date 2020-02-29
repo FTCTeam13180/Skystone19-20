@@ -175,6 +175,10 @@ public class RoboNavigator {
         encoderDrive(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs);
     }
 
+    public void moveForwardWithRampup (double inches, long timeoutMs, double rampup) {
+        encoderDriveWithRampup(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs, rampup);
+    }
+
     public void moveBackward (double inches, long timeoutMs) {
         encoderDrive(DIRECTION.BACKWARD, navigatorPower, inches * 2.54, timeoutMs);
     }
@@ -457,6 +461,71 @@ public class RoboNavigator {
             setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
+
+    public void encoderDriveWithRampup(DIRECTION direction,
+                             double speed,
+                             double cms,
+                             double timeoutMs, double rampup) {
+
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator: ", "Resetting Encoders");    //
+        }
+
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator:", "Encoders reset");
+        }
+
+        // Send telemetry message to indicate currentPosition
+        logCurrentPosition();
+
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+
+            // Set Target Position
+
+            setTargetPosition(direction, cms);
+
+            // Turn On RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            ElapsedTime runtime = new ElapsedTime();
+
+            runtime.reset();
+
+            double R = runtime.seconds();
+            double rspeed;
+
+            // keep looping while we are still active, and there is time left, and motor is running.
+            while (opMode.opModeIsActive() &&
+                    (runtime.milliseconds() < timeoutMs) &&
+                    (isBusy())) {
+                if (R < rampup) {
+                    double ramp = R / rampup;
+                    rspeed = speed * ramp;
+                    // Based on direction call corresponding Move function
+                    setPower (rspeed);
+                }//if rampup time has passed, use set speed
+                else {
+                    // Based on direction call corresponding Move function
+                    setPower (speed);
+                }
+
+                // Display it for the driver.zz
+                logCurrentPosition();
+            }
+
+            // Stop all motion;
+            stopMotor();
+
+            // Turn off RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+    }
+
 
     public void setLogging(boolean value) {
         logging = value;

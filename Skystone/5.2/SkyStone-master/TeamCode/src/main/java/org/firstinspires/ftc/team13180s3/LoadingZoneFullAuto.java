@@ -36,7 +36,7 @@ public class LoadingZoneFullAuto {
     }
 
     private int skystone() {
-        opMode.sleep(500);
+        //opMode.sleep(500);
         List<Recognition> blocks = detect.scan();
 
         if (blocks == null || blocks.size() != 2) {
@@ -46,7 +46,7 @@ public class LoadingZoneFullAuto {
             else{
                 robotNavigator.shiftLeft(3, 10000);
             }
-            opMode.sleep(500);
+            //opMode.sleep(500);
             blocks = detect.scan();
         }
 
@@ -76,9 +76,9 @@ public class LoadingZoneFullAuto {
                     else if (recog.getLeft() < 100) {
                         i = 1;
                         if (alliance == Alliance.RED) {
-                            robotNavigator.shiftRight(4, 10000);
+                            robotNavigator.shiftRight(6, 10000);
                         } else {
-                            robotNavigator.shiftLeft(4, 10000);
+                            robotNavigator.shiftLeft(6, 10000);
                         }
                     }
 
@@ -134,6 +134,7 @@ public class LoadingZoneFullAuto {
         robotNavigator.moveForward(6,1000);
         int position=skystone();
         grab.grabIn();
+        elevator.goUpByInches(1,1);
         opMode.sleep(500);
         robotNavigator.moveBackward(6,1000);
         if(alliance==Alliance.BLUE){
@@ -159,11 +160,11 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(90,5000);
         hook.halfattach(.4);
         opMode.sleep(100);
-        robotNavigator.moveForward(6,10000);
+        robotNavigator.moveForward(8,10000);
         hook.attach();
+        opMode.sleep(100);
         //robotNavigator.setNavigatorPower(0.4);
         //robotNavigator.moveForward(1.5,5000);
-        robotNavigator.setNavigatorPower(1.0);
         grab.release();
         //problems
         /*int turnAngle=90;
