@@ -28,16 +28,18 @@ public class Grabber {
 
     public void grabIn() {
         grab.setPosition(1);
-
-
     }
 
     public void release() {
         grab.setPosition(0);
-
     }
-    public void drop(){
+
+    public void dropCapstone() {
         capstone.setPosition(0);
+    }
+
+    public void holdCapstone() {
+        capstone.setPosition(1);
     }
 
     public void rotateToDegrees_0()
