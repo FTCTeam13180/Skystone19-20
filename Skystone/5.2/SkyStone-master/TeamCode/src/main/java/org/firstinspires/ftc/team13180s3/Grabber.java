@@ -35,11 +35,11 @@ public class Grabber {
     }
 
     public void dropCapstone() {
-        capstone.setPosition(0);
+        capstone.setPosition(1);
     }
 
     public void holdCapstone() {
-        capstone.setPosition(1);
+        capstone.setPosition(0);
     }
 
     public void rotateToDegrees_0()
