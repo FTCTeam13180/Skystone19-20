@@ -223,18 +223,18 @@ public class RoboNavigator {
         // Floor the y to certain value.
         // This controls how fast the robot makes the sharpest turns
         // Higher the value the faster robot will be at the turns
-        y = (y > 0 && y < 0.707) ? 0.707 : y;
-        y = (y < 0 && y > -0.707) ? -0.707 : y;
+        y = (y > 0 && y < 0.9) ? 0.9 : y;
+        y = (y < 0 && y > -0.9) ? -0.9 : y;
 
         // Ceil the turns to certain value
         // This controls how sharp the turns can be.
         // Higher the value, the sharper the turns. Lower value is better for smooth turns.
-        x = (x > 0 && x > 0.5) ? 0.5 : x;
-        x = (x < 0 && x < -0.5) ? -0.5 : x;
+        x = (x > 0 && x > 0.9) ? 0.9 : x;
+        x = (x < 0 && x < -0.9) ? -0.9 : x;
 
         // Reverse x direction for lateral inversion of turns when moving backwards.
-        if (y<0)
-            x = -x;
+//        if (y<0)
+//            x = -x;
 
         topr.setPower(power_scale*(y-x)/power);
         topl.setPower(power_scale*(y+x)/power);
