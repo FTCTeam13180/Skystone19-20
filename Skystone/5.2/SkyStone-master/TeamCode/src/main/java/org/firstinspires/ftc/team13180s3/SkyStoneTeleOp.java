@@ -12,7 +12,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
     double vWinchPowerUp=1.0;
     int currotations=0;
     double vWinchPowerDown=0.6;
-    double multiplier=0.5;
+    double navspeed_multiplier = 1.0;
+    double shiftspeed_multiplier = 1.0;
     boolean hookPosition = false; //False=Up, True=Down
     boolean gripperPos=false;
 
@@ -47,7 +48,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean gripper_grab;
         boolean grabber_spin_left;
         boolean grabber_spin_right;
-        double shift;
         boolean home;
         boolean play;
 
@@ -56,7 +56,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
         left bumper--> arm in
         right bumper  arm out
         dpad left/right--> spin grabber
-        right stick--> shift left/right rlly slowly
         a is close
         b is open
         left stick elevator up
@@ -93,7 +92,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             gripper_release=gamepad2.b;
             gripper_grab=gamepad2.a;
-            shift = gamepad2.right_stick_x;
             grabber_spin_left=gamepad2.dpad_left;
             grabber_spin_right=gamepad2.dpad_right;
             home = gamepad2.x;
@@ -101,10 +99,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             // Navigation Controls
             if(nav_speed_up){
-                multiplier= 1.0;
+                navspeed_multiplier = 1.0;
+                shiftspeed_multiplier = 1.0;
             }
             else if(nav_speed_down){
-                multiplier = 0.5;
+                navspeed_multiplier = 0.5;
+                shiftspeed_multiplier = 0.8;
             }
 
 //            if(nav_init_IMU){
@@ -119,16 +119,16 @@ public class SkyStoneTeleOp extends LinearOpMode {
                     // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
                     telemetry.addData("", "x=%f, y=%f", nav_omni_x, nav_omni_y);
 
-//                    roboNav.OmniImu(nav_omni_x, nav_omni_y, multiplier);
-//                    roboNav.AnyMecanum(nav_omni_x, nav_omni_y, multiplier);
-                    roboNav.AnyMecanumSwerve(nav_omni_x, nav_omni_y, multiplier);
+//                    roboNav.OmniImu(nav_omni_x, nav_omni_y, navspeed_multiplier);
+//                    roboNav.AnyMecanum(nav_omni_x, nav_omni_y, navspeed_multiplier);
+                    roboNav.AnyMecanumSwerve(nav_omni_x, nav_omni_y, navspeed_multiplier);
                 }
                 // Allow tight turns while
                 if(nav_left_turn){
-                    roboNav.turnLeft(multiplier);
+                    roboNav.turnLeft(navspeed_multiplier);
                 }
                 else if(nav_right_turn){
-                    roboNav.turnRight(multiplier);
+                    roboNav.turnRight(navspeed_multiplier);
                 }
             }
             else{
@@ -167,15 +167,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 Gripper.rotateIncrementalClockwise();
             }
 
-            if (shift<0) {
-                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_LEFT, shift*-1, 5, 5000);
-                //roboNav.shiftLeft(multiplier);
-            }
-            else if (shift>0) {
-                roboNav.encoderDrive(RoboNavigator.DIRECTION.SHIFT_RIGHT, shift, 5, 5000);
-                //roboNav.shiftRight(multiplier);
-            }
-
             if (home) {
                 Gripper.rotateToDegrees_180();
                 Gripper.release();
@@ -200,10 +191,10 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
 
             if(gamepad1.right_stick_x < 0){
-                roboNav.shiftLeft(multiplier);
+                roboNav.shiftLeft(shiftspeed_multiplier);
             }
             else if(gamepad1.right_stick_x >0){
-                roboNav.shiftRight(multiplier);
+                roboNav.shiftRight(shiftspeed_multiplier);
             }
 
             if (gamepad2.dpad_up) {
