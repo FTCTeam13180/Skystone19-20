@@ -156,7 +156,7 @@ public class LoadingZoneFullAuto {
                 robotNavigator.shiftRight(7, 10000);
             }
         }
-        robotNavigator.moveForward(12.5, 10000);
+        robotNavigator.moveForward(14, 10000);
         grab.grabIn();
         elevator.goUpByInches(1,1);
         opMode.sleep(500);
