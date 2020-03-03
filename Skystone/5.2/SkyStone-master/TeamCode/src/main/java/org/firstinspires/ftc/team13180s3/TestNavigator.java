@@ -48,11 +48,9 @@ public class TestNavigator extends LinearOpMode {
 
                     // OmniImu still has a bug where left and right are reversed, until that is fixed we use AnyMecanum drive.
                     //roboNav.OmniImu(nav_omni_x, -nav_omni_y, multiplier);
-                    robotnav.OmniImu(gamepad1.left_stick_x, -gamepad1.left_stick_y, SPEED);
+                    robotnav.AnyMecanumSwerve(gamepad1.left_stick_x, -gamepad1.left_stick_y, SPEED);
                 }
-                // Allow tight turns while
             }
-
             // EncoderMode
             else if (gamepad1.y) {
                 //robotnav.moveForward(96, 10000);
@@ -68,37 +66,9 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.x) {
                 robotnav.shiftLeft(96, 10000);
             }
-            else if(gamepad1.dpad_up){
-                robotnav.setNavigatorPower(0.4);
-            }
-            else if(gamepad1.dpad_down){
-                robotnav.setNavigatorPower(1.0);
-            }
-
-            else if (gamepad1.left_trigger > 0.1) {
-                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_LEFT, SPEED, 90,5000);
-            }
-            else if (gamepad1.right_trigger > 0.1){
-                robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,5000);
-            }
-            else if(gamepad2.left_stick_x>0.1 ||gamepad2.left_stick_y>0.1){
-                double ang=Math.atan2(gamepad2.left_stick_y,-gamepad2.left_stick_y);
-                if(ang<0){
-                    ang=Math.abs(ang)+Math.PI;
-                }
-                double turn=0;
-                if(gamepad2.left_trigger>0){
-                    turn=-1*gamepad2.left_trigger;
-                }
-                else{
-                    turn=gamepad2.right_trigger;
-                }
-                robotnav.SwerveDrive(ang,turn,Math.sqrt(gamepad2.left_stick_x*gamepad2.left_stick_x+gamepad2.left_stick_y*gamepad2.left_stick_y));
-            }
             else {
                 robotnav.stopMotor();
             }
-
 
         }
     }

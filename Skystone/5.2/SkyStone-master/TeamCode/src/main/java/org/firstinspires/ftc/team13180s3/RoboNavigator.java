@@ -496,13 +496,14 @@ public class RoboNavigator {
 
             runtime.reset();
 
-            double elapsedTimeMs = runtime.seconds();
+            double elapsedTimeMs;
             double rspeed;
 
             // keep looping while we are still active, and there is time left, and motor is running.
             while (opMode.opModeIsActive() &&
                     (runtime.milliseconds() < timeoutMs) &&
                     (isBusy())) {
+                elapsedTimeMs = runtime.milliseconds();
                 if (elapsedTimeMs < rampupTimeMs) {
                     double rampFactor = elapsedTimeMs / rampupTimeMs;
                     rspeed = speed * rampFactor;
