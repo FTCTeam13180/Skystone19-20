@@ -35,13 +35,13 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.dpad_right) {
                 robotnav.shiftRight(SPEED);
             }
-            if (gamepad1.right_bumper) {
+            else if (gamepad1.right_bumper) {
                 robotnav.turnRight(SPEED);
             }
-            if (gamepad1.left_bumper) {
+            else if (gamepad1.left_bumper) {
                 robotnav.turnLeft(SPEED);
             }
-            if(Math.abs(gamepad1.left_stick_x)>0.1 || Math.abs(gamepad1.left_stick_y)>0.1){   //can go any direction 360 degrees based on controller input
+            else if(Math.abs(gamepad1.left_stick_x)>0.1 || Math.abs(gamepad1.left_stick_y)>0.1){   //can go any direction 360 degrees based on controller input
                 if(Math.abs(gamepad1.left_stick_x)> 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1) {
                     // VERY IMPORTANT: Gamepad joystick y-axis positive points downward, x-axis points right
                     // Always remember to reverse joystick stick_y value.
@@ -81,7 +81,7 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.right_trigger > 0.1){
                 robotnav.encoderDrive(RoboNavigator.DIRECTION.TURN_RIGHT,SPEED, 90,5000);
             }
-            if(gamepad2.left_stick_x>0.1 ||gamepad2.left_stick_y>0.1){
+            else if(gamepad2.left_stick_x>0.1 ||gamepad2.left_stick_y>0.1){
                 double ang=Math.atan2(gamepad2.left_stick_y,-gamepad2.left_stick_y);
                 if(ang<0){
                     ang=Math.abs(ang)+Math.PI;
