@@ -459,6 +459,8 @@ public class RoboNavigator {
 
             // Turn off RUN_TO_POSITION
             setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            //sleep to kill momentum
+            opMode.sleep(1000);
         }
     }
 
