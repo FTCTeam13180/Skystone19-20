@@ -47,6 +47,11 @@ public class RoboNavigator {
         rearr = opMode.hardwareMap.get(DcMotor.class, "Rearr");
         topr.setDirection(DcMotor.Direction.REVERSE);
         rearr.setDirection(DcMotor.Direction.REVERSE);
+        topl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        topr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         navigatorPower = 1.0;
         if(logging) {
             opMode.telemetry.addData("RoboNavigator:", "Initialized");
