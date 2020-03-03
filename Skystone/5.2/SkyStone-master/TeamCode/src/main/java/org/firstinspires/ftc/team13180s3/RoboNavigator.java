@@ -175,8 +175,8 @@ public class RoboNavigator {
         encoderDrive(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs);
     }
 
-    public void moveForwardWithRampup (double inches, long timeoutMs, double rampup) {
-        encoderDriveWithRampup(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs, rampup);
+    public void moveForwardWithRampup (double inches, long timeoutMs, double rampupMs) {
+        encoderDriveWithRampup(DIRECTION.FORWARD, navigatorPower, inches * 2.54, timeoutMs, rampupMs);
     }
 
     public void moveBackward (double inches, long timeoutMs) {
@@ -465,7 +465,7 @@ public class RoboNavigator {
     public void encoderDriveWithRampup(DIRECTION direction,
                              double speed,
                              double cms,
-                             double timeoutMs, double rampup) {
+                             double timeoutMs, double rampupTimeMs) {
 
         if(logging) {
             opMode.telemetry.addData("RoboNavigator: ", "Resetting Encoders");    //
@@ -496,16 +496,16 @@ public class RoboNavigator {
 
             runtime.reset();
 
-            double R = runtime.seconds();
+            double elapsedTimeMs = runtime.seconds();
             double rspeed;
 
             // keep looping while we are still active, and there is time left, and motor is running.
             while (opMode.opModeIsActive() &&
                     (runtime.milliseconds() < timeoutMs) &&
                     (isBusy())) {
-                if (R < rampup) {
-                    double ramp = R / rampup;
-                    rspeed = speed * ramp;
+                if (elapsedTimeMs < rampupTimeMs) {
+                    double rampFactor = elapsedTimeMs / rampupTimeMs;
+                    rspeed = speed * rampFactor;
                     // Based on direction call corresponding Move function
                     setPower (rspeed);
                 }//if rampup time has passed, use set speed
