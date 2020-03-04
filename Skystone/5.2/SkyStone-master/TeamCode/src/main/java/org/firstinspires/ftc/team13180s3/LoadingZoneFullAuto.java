@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.team13180s3;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -34,9 +33,9 @@ public class LoadingZoneFullAuto {
         this.alliance = al;
         this.parking = pa;
     }
-/*
+
     private int skystone() {
-        //opMode.sleep(500);
+        opMode.sleep(500);
         List<Recognition> blocks = detect.scan();
 
         if (blocks == null || blocks.size() != 2) {
@@ -60,25 +59,25 @@ public class LoadingZoneFullAuto {
         // Align to the skystone
         if (numblocks == 2) {
             for (Recognition recog : blocks) {
-                if (recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT)) {
+                if ((recog.getLabel().equalsIgnoreCase(Detector.LABEL_SECOND_ELEMENT))&&(((recog.getImageWidth()/recog.getImageHeight()))<1.6)) {
                     foundSkytone = true;
 
                     //Closer to bridge if i == 0
                     if (recog.getLeft() > 200) {
                         i = 0;
                         if (alliance == Alliance.RED) {
-                            robotNavigator.shiftRight(16, 10000);
+                            robotNavigator.shiftRight(15, 10000);
                         } else {
-                            robotNavigator.shiftLeft(16, 10000);
+                            robotNavigator.shiftLeft(15, 10000);
                         }
                     }
                     //second closest to bridge if i == 1;
                     else if (recog.getLeft() < 100) {
                         i = 1;
                         if (alliance == Alliance.RED) {
-                            robotNavigator.shiftRight(6, 10000);
+                            robotNavigator.shiftRight(5, 10000);
                         } else {
-                            robotNavigator.shiftLeft(6, 10000);
+                            robotNavigator.shiftLeft(5, 10000);
                         }
                     }
 
@@ -100,11 +99,11 @@ public class LoadingZoneFullAuto {
         }
 
         opMode.telemetry.update();
-        robotNavigator.moveForward(18, 10000);
+        robotNavigator.moveForward(20, 10000);
 
         return i;
     }
-    */
+
     public void init(){
         robotNavigator = new RoboNavigator(opMode);
         robotNavigator.init();
@@ -120,47 +119,25 @@ public class LoadingZoneFullAuto {
         elevator = new Elevator(opMode);
         elevator.init();
 
-        //detect = new Detector(opMode);
-        //detect.init();
+        detect = new Detector(opMode);
+        detect.init();
 
 
 
-        opMode.telemetry.addLine("Front of Robot Should be forward");
+        opMode.telemetry.addLine("Front of Robot Should be forward. Since forward is forward");
         opMode.telemetry.update();
     }
     public void run() {
         elevator.playposition();
         grab.rotateToDegrees_0();
-        robotNavigator.setNavigatorPower(0.5);
+        robotNavigator.setNavigatorPower(0.9);
         robotNavigator.moveForward(6,1000);
-        int position=0;//skystone();
+        int position=skystone();
 
-        if(position==0){
-            if (alliance == Alliance.RED) {
-                robotNavigator.shiftRight(14, 10000);
-            } else {
-                robotNavigator.shiftLeft(14, 10000);
-            }
-        }
-        else if(position==1){
-            if (alliance == Alliance.RED) {
-                robotNavigator.shiftRight(6, 10000);
-            } else {
-                robotNavigator.shiftLeft(6, 10000);
-            }
-        }
-        else{
-            if (alliance == Alliance.RED) {
-                robotNavigator.shiftLeft(7, 10000);
-            } else {
-                robotNavigator.shiftRight(7, 10000);
-            }
-        }
-        robotNavigator.moveForward(14, 10000);
         grab.grabIn();
         elevator.goUpByInches(1,1);
         opMode.sleep(500);
-        robotNavigator.moveBackward(6,1000);
+        robotNavigator.moveBackward(10,1000);
         if(alliance==Alliance.BLUE){
             robotNavigator.turnLeft(90,5000);
         }
@@ -169,13 +146,13 @@ public class LoadingZoneFullAuto {
         }
         //moving to foundation after gettign first skystone based on position
         if(position==0){
-            robotNavigator.moveForward(68,50000);
+            robotNavigator.moveForward(73,50000);
         }
         else if(position==1){
-            robotNavigator.moveForward(76,50000);
+            robotNavigator.moveForward(81,50000);
         }
         else{
-            robotNavigator.moveForward(84,50000);
+            robotNavigator.moveForward(89,50000);
         }
         elevator.goUpByInches(1,6);
         if(alliance==Alliance.BLUE)
@@ -184,15 +161,19 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(90,5000);
         hook.halfattach(.4);
         opMode.sleep(100);
+        robotNavigator.setNavigatorPower(0.4);
         robotNavigator.moveForward(12,10000);
         hook.attach();
         opMode.sleep(100);
-        //robotNavigator.setNavigatorPower(0.4);
-        //robotNavigator.moveForward(1.5,5000);
+
+        robotNavigator.moveForward(1.5,5000);
+        robotNavigator.setNavigatorPower(1.0);
         grab.release();
+        opMode.sleep(100);
+        robotNavigator.moveBackward(20,5000);
+        robotNavigator.shiftLeft(18,5000);
         //problems
-        opMode.sleep(5000);
-        int turnAngle=90;
+        int turnAngle=130;
         //have to test turn angle
         if(alliance == Alliance.RED){
             robotNavigator.turnRight(turnAngle,1000);
@@ -202,7 +183,22 @@ public class LoadingZoneFullAuto {
             robotNavigator.turnLeft(turnAngle,1000);
         }
         hook.detach();
-        robotNavigator.moveForward(12,1000);
+        robotNavigator.moveForward(25,1000);
+        robotNavigator.moveBackward(20,50000);
+        elevator.goDownByInches(1,6);
+        if(position==0){
+            robotNavigator.moveBackward(84,50000);
+        }
+        else if(position==1){
+            robotNavigator.moveBackward(92,50000);
+        }
+        else{
+            robotNavigator.moveBackward(52,50000);
+        }
+        elevator.goUpByInches(1,2);
+        robotNavigator.turnLeft(90,50000);
+        robotNavigator.moveForward(15,50000);
+        grab.grabIn();
         /*
         robotNavigator.moveBackward(5,1000);
         elevator.goDownByInches(1,6);
