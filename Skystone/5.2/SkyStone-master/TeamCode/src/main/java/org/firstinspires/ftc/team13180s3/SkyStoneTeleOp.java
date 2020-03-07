@@ -35,6 +35,8 @@ public class SkyStoneTeleOp extends LinearOpMode {
         boolean nav_init_IMU;
         boolean nav_left_turn;
         boolean nav_right_turn;
+        boolean nav_left_shift;
+        boolean nav_right_shift;
         boolean nav_speed_up;
         boolean nav_speed_down;
         boolean hook_attach;
@@ -77,6 +79,15 @@ public class SkyStoneTeleOp extends LinearOpMode {
             nav_speed_up=gamepad1.a;
             nav_speed_down=gamepad1.b;
             nav_init_IMU=gamepad1.dpad_left;
+            nav_left_shift = false;
+            nav_right_shift = false;
+            
+            if(gamepad1.right_stick_x < -0.1){
+                nav_left_shift = true;
+            }
+            else if(gamepad1.right_stick_x > 0.1){
+                nav_right_shift = true;
+            }
 
 
             /*
@@ -111,7 +122,11 @@ public class SkyStoneTeleOp extends LinearOpMode {
 //                roboNav.ResetImu();
 //            }
 
-            if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1 || nav_left_turn || nav_right_turn){
+
+
+            if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1
+                    || nav_left_turn || nav_right_turn
+                    || nav_left_shift || nav_right_shift){
                 if(Math.abs(nav_omni_x)> 0.1 || Math.abs(nav_omni_y) > 0.1) {
                     // VERY IMPORTANT: Gamepad joystick y-axis positive points downward, x-axis points right
                     // Always remember to reverse joystick stick_y value.
@@ -129,6 +144,12 @@ public class SkyStoneTeleOp extends LinearOpMode {
                 }
                 else if(nav_right_turn){
                     roboNav.turnRight(navspeed_multiplier);
+                }
+                else if (nav_left_shift) {
+                    roboNav.shiftLeft(shiftspeed_multiplier);
+                }
+                else if (nav_right_shift) {
+                    roboNav.shiftRight(shiftspeed_multiplier);
                 }
             }
             else{
@@ -188,13 +209,6 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
             else if(gamepad1.dpad_right){
                 hook.halfattach(0.4);
-            }
-
-            if(gamepad1.right_stick_x < 0){
-                roboNav.shiftLeft(shiftspeed_multiplier);
-            }
-            else if(gamepad1.right_stick_x >0){
-                roboNav.shiftRight(shiftspeed_multiplier);
             }
 
             if (gamepad2.dpad_up) {
