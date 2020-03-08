@@ -334,6 +334,8 @@ public class RoboNavigator {
     private  static final double CMS_PER_DEGREE = 3.1415 * ROBO_DIAMETER_CM / 360;
     private  static final double COUNTS_PER_DEGREE = COUNTS_PER_CM * CMS_PER_DEGREE;
     private static final double SHIFT_SLIPPAGE_CORRECTION = 1.14;
+    private static final double TURN_SLIPPAGE_CORRECTION = 90/89;
+    private static final double STRAIGHT_SLIPPAGE_CORRECTION = 96/97.5;
 
 
     private void setRunMode (DcMotor.RunMode runMode) {
@@ -364,16 +366,16 @@ public class RoboNavigator {
     private void setTargetPosition(DIRECTION direction, double cms) {
         // Determine new target position, and pass to motor controller
         if (direction == DIRECTION.FORWARD) {
-            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
         }
         else if (direction == DIRECTION.BACKWARD) {
-            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM)));
-            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_CM * STRAIGHT_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM) * STRAIGHT_SLIPPAGE_CORRECTION));
         } else if (direction == DIRECTION.SHIFT_RIGHT) {
             topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
             topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
@@ -385,16 +387,16 @@ public class RoboNavigator {
             rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
             rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_CM * SHIFT_SLIPPAGE_CORRECTION)));
         } else if (direction == DIRECTION.TURN_LEFT){
-            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE *TURN_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE *TURN_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() - (cms * COUNTS_PER_DEGREE *TURN_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() + (cms * COUNTS_PER_DEGREE *TURN_SLIPPAGE_CORRECTION)));
         }
         else if (direction == DIRECTION.TURN_RIGHT) {
-            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
-            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE)));
-            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE)));
+            topl.setTargetPosition((int) (topr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE * TURN_SLIPPAGE_CORRECTION)));
+            topr.setTargetPosition((int) (topl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE * TURN_SLIPPAGE_CORRECTION)));
+            rearl.setTargetPosition((int) (rearr.getCurrentPosition() + (cms * COUNTS_PER_DEGREE * TURN_SLIPPAGE_CORRECTION)));
+            rearr.setTargetPosition((int) (rearl.getCurrentPosition() - (cms * COUNTS_PER_DEGREE *TURN_SLIPPAGE_CORRECTION)));
         }
     }
 
@@ -455,6 +457,7 @@ public class RoboNavigator {
                     (runtime.milliseconds() < timeoutMs) &&
                     (isBusy())) {
 
+
                 // Display it for the driver.zz
                 logCurrentPosition();
             }
@@ -468,7 +471,63 @@ public class RoboNavigator {
 
         }
     }
+    public void encoderDriveRampDown(DIRECTION direction,
+                             double speed,
+                             double cms,
+                             double timeoutMs, double rampDownCm) {
 
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator: ", "Resetting Encoders");    //
+        }
+
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if(logging) {
+            opMode.telemetry.addData("RoboNavigator:", "Encoders reset");
+        }
+
+        // Send telemetry message to indicate currentPosition
+        logCurrentPosition();
+
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+
+            // Set Target Position
+
+            setTargetPosition(direction, cms);
+
+            // Turn On RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            ElapsedTime runtime = new ElapsedTime();
+
+            runtime.reset();
+
+            // Based on direction call corresponding Move function
+            setPower (speed);
+
+            // keep looping while we are still active, and there is time left, and motor is running.
+            while (opMode.opModeIsActive() &&
+                    (runtime.milliseconds() < timeoutMs) &&
+                    (isBusy())) {
+
+                double gradualAcceleration=(topl.getTargetPosition()-topl.getCurrentPosition())/(rampDownCm*COUNTS_PER_CM);
+                setPower(gradualAcceleration);
+                // Display it for the driver.zz
+                logCurrentPosition();
+            }
+
+            // Stop all motion;
+            stopMotor();
+
+            // Turn off RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            //sleep to kill momentum
+
+        }
+    }
     public void encoderDriveWithRampup(DIRECTION direction,
                              double speed,
                              double cms,

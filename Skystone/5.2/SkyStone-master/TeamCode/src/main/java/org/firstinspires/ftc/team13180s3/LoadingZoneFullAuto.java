@@ -35,7 +35,6 @@ public class LoadingZoneFullAuto {
     }
 
     private int skystone() {
-        opMode.sleep(500);
         List<Recognition> blocks = detect.scan();
 
         if (blocks == null || blocks.size() != 2) {

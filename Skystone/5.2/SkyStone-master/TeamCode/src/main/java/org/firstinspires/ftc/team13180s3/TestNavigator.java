@@ -11,13 +11,14 @@ public class TestNavigator extends LinearOpMode {
 
     private RoboNavigator robotnav;
 
-    static final double SPEED = 0.8;
+    static final double SPEED = 1.0;
 
     @Override
     public void runOpMode() {
 
         robotnav = new RoboNavigator(this);
         robotnav.init();
+        robotnav.setNavigatorPower(1.0);
 
         waitForStart();
 
@@ -36,10 +37,10 @@ public class TestNavigator extends LinearOpMode {
                 robotnav.shiftRight(SPEED);
             }
             else if (gamepad1.right_bumper) {
-                robotnav.turnRight(SPEED);
+                robotnav.turnRight(90,10000);
             }
             else if (gamepad1.left_bumper) {
-                robotnav.turnLeft(SPEED);
+                robotnav.turnLeft(90,10000);
             }
             else if(Math.abs(gamepad1.left_stick_x)>0.1 || Math.abs(gamepad1.left_stick_y)>0.1){   //can go any direction 360 degrees based on controller input
                 if(Math.abs(gamepad1.left_stick_x)> 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1) {
@@ -55,7 +56,8 @@ public class TestNavigator extends LinearOpMode {
             else if (gamepad1.y) {
                 //robotnav.moveForward(96, 10000);
                 // Testing encode with Rampup. Start slow in first two seconds and then full speed.
-                robotnav.moveForwardWithRampup(96,10000, 100);
+                //robotnav.moveForwardWithRampup(96,10000, 100);
+                robotnav.moveForward(96,10000);
             }
             else if (gamepad1.a) {
                 robotnav.moveBackward(96, 10000);
