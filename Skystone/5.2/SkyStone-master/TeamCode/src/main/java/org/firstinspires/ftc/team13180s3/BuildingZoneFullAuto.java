@@ -43,98 +43,65 @@ public class BuildingZoneFullAuto {
 
         elevator = new Elevator(opMode);
         elevator.init();
-        opMode.sleep(15000);
+        elevator.goUpByInches(1,6);
+        opMode.sleep(14000);
         // Set hook in attach position
-        hook.halfattach(0.5);
+        hook.halfattach(0.4);
 
         // Go to Foundation and grab it
-        robotNavigator.moveBackward(29, 10000);
+        robotNavigator.moveForward(29, 10000);
         hook.attach();
-        opMode.sleep(200);
+        robotNavigator.setNavigatorPower(0.7);
+        robotNavigator.moveForward(1.5,10000);
+        robotNavigator.setNavigatorPower(1.0);
+        opMode.sleep(100);
 
 
         /*
          * Move the foundation to the triangle build ZONE
          */
         // Move foundation away from opposing alliance foundation
-        robotNavigator.moveForward(12, 10000);
         //pull foundation towards the bridges, away from north wall
         // then turning the foundation
-        double turn_degrees = 175;
-        if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftLeft(12, 10000);
-            robotNavigator.turnLeft(turn_degrees, 10000);
-            robotNavigator.shiftRight(24,1000);
-        } else {
-            robotNavigator.shiftRight(12, 10000);
-            robotNavigator.turnRight(turn_degrees, 10000);
-            robotNavigator.shiftLeft(24,1000);
-        }
+        robotNavigator.moveBackward(24,5000);
+        if(alliance == Alliance.RED){
+            robotNavigator.shiftLeft(24,5000);
+            robotNavigator.shiftRight(6,5000);
 
-        // Pushing foundation into depot
-        /*
-         * Detach from the foundation
-         */
-        opMode.sleep(200);
-        hook.detach();
-        opMode.sleep(200);
-        robotNavigator.moveBackward(15,1000);
-        if(alliance == Alliance.BLUE){
-            if (parking == Parking.WALL) {
-                robotNavigator.shiftRight(23, 10000);
-            }
         }
         else {
-            if (parking == Parking.WALL) {
-                robotNavigator.shiftLeft(23, 10000);
+            robotNavigator.shiftRight(24, 5000);
+            robotNavigator.shiftLeft(6, 5000);
+
+        }
+        int turnAngle=115;
+        //have to test turn angle
+        if(alliance == Alliance.RED){
+            robotNavigator.turnRight(turnAngle,10000);
+        }
+        else{
+            robotNavigator.turnLeft(turnAngle,10000);
+        }
+        hook.detach();
+        robotNavigator.moveForward(30,10000);
+        if (parking==Parking.WALL){
+            if(alliance == Alliance.RED){
+                robotNavigator.shiftRight(25,10000);
+                robotNavigator.shiftLeft(5,10000);
+                robotNavigator.moveBackward(5,10000);
             }
+            else{
+                robotNavigator.shiftLeft(25,10000);
+                robotNavigator.shiftRight(5,10000);
+                robotNavigator.moveBackward(5,10000);
+            }
+
         }
-        robotNavigator.moveForward(24, 10000);
-       /* if (alliance == Alliance.BLUE) {
-            robotNavigator.shiftRight(15, 1000);
-        } else {
-            robotNavigator.shiftLeft(15, 10000);
-        }*/
-        //opMode.sleep(2000);
-        //robotNavigator.moveForward(6,10000)
-
-        /*if (alliance == Alliance.BLUE) {
-            robotNavigator.turnLeft(90, 1000);
-        } else {
-            robotNavigator.turnRight(90, 10000);
-        }
-
-        elevator.playposition();
-        grab.rotateToDegrees_0();
-
-        robotNavigator.moveForward(14, 10000);
-        //elevator.upDownEncoderDrive(0.8, -5 * 2.54, 10000);
-        grab.grabIn();
-        robotNavigator.moveBackward(14,1000);
-        if (alliance == Alliance.BLUE) {
-            robotNavigator.turnLeft(90, 1000);
-
-
-        } else {
-            robotNavigator.turnRight(90, 10000);
-        }
-        robotNavigator.moveForward(68, 1000);
-        elevator.goUpByRotations(1,1.3);
-        robotNavigator.moveForward(24,10000);
-        grab.release();
-        elevator.goDownByRotations(1,1.3);
-        robotNavigator.moveBackward(48,1000);*/
-
-
+        elevator.goDownByInches(1,4);
+        robotNavigator.moveBackward(40,1000);
 
 
     }
-
-
-
-
-
-
         // ROBOT IS PARKED UNDER THE ALLIANCE SKYBRIDGE*/
 
 
