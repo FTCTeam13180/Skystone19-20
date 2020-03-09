@@ -3,8 +3,8 @@ package org.firstinspires.ftc.team13180s3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="ParkRight", group="autonomousGroup1")
-public class ParkRight extends LinearOpMode {
+@Autonomous(name="ParkRightBeg", group="autonomousGroup1")
+public class ParkRightBeg extends LinearOpMode {
     private Elevator elevator;
     private Grabber grab;
     private RoboNavigator robo;
@@ -14,7 +14,6 @@ public class ParkRight extends LinearOpMode {
         robo.init();
         waitForStart();
         while (opModeIsActive()){
-            sleep(25000);
             robo.shiftRight(36,5000);
             break;
         }

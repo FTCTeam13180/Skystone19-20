@@ -104,7 +104,7 @@ public class LoadingZoneFullAuto {
             opMode.telemetry.addData("Skystone: ", "Not Found, but 2 normal stones were");
             if (alliance == Alliance.RED) {
                 position = 2;
-                robotNavigator.shiftLeft(7, 10000);
+                robotNavigator.shiftLeft(4, 10000);
             } else {
                 position = 1;
                 robotNavigator.shiftLeft(7, 10000);
